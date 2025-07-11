@@ -1,0 +1,18 @@
+export const categorias = [
+  { id: "1", title: "ação", image: "/action.webp" },
+  { id: "2", title: "mundo aberto", image: "/open_world.webp" },
+  { id: "3", title: "VR", image: "/vr_titles.webp" },
+  { id: "4", title: "Hístoria rica", image: "/story_rich.webp" },
+  { id: "5", title: "arte marcial", image: "/fighting_martial_arts.webp" },
+  { id: "6", title: "anime", image: "/anime.webp" },
+  { id: "7", title: "Grátis", image: "/freetoplay.webp" },
+  { id: "8", title: "corrida", image: "/racing.webp" },
+  { id: "9", title: "rogue like", image: "/rogue_like_rogue_lite.webp" },
+  { id: "10", title: "RPG", image: "/rpg.webp" },
+  { id: "11", title: "sobrevivência", image: "/survival.webp" },
+  { id: "12", title: "quebra cabeça", image: "/puzzle.webp" },
+  { id: "13", title: "aventura", image: "/adventure.webp" },
+  { id: "14", title: "casual", image: "/casual.webp" },
+  { id: "15", title: "ficção científica", image: "/science_fiction.webp" },
+  { id: "16", title: "horro", image: "/horror.webp" },
+];

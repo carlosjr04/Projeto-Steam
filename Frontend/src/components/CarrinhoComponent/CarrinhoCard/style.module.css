@@ -1,0 +1,148 @@
+.container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.25);
+  gap: 3rem;
+  padding: 16px 16px 16px 16px;
+}
+
+.detalhe {
+  display: flex;
+  gap: 4rem;
+}
+
+.cover {
+  width: 200px;
+  height: 94px;
+}
+.esquerda img {
+    margin-top: 8px;
+  width: 20px;
+  height: 20px;
+}
+.esquerda{
+    display: flex;
+    flex-direction: column;
+    gap:32px;
+}
+.esquerda h1 {
+  font-size: 16px;
+  line-height: 20px;
+  color: #fff;
+  font-weight: 500;
+}
+.dropDown{
+    border-radius: 3px;
+    background: rgba(59, 63, 72, 0.5);
+    box-shadow: inset 0px 0px 0px #0000;
+    padding: 5px 7px 5px 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:24px;
+    min-width: 161px;
+    
+}
+.dropDown svg{
+    padding-top: 2px;
+}
+.dropDownLink {
+  cursor: pointer;
+  width: 100%;
+  font-size: 12px;
+  
+  border-radius: 3px;
+ 
+  color: #dfe3e6;
+  font-family: "Motiva Sans", Arial, Helvetica, sans-serif;
+  
+  color: rgb(223, 227, 230);
+  cursor: pointer;
+  text-decoration: none;
+}
+.dropDownLink::after {
+  display: none !important;
+}
+.direita{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-direction: column;
+    gap:16px;
+}
+.desconto{
+    
+    box-sizing: border-box;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 3px 5px;
+    background-color: #4c6b22;
+    color: #a4d007;
+    display: flex;
+    align-items: center;
+    margin-right: 3px;
+}
+.precoDesconto{
+    text-decoration: line-through;
+    color: #626366;
+    font-size: 11px;
+    line-height: 11px;
+    margin-top: 2px;
+}
+.preco{
+    color: rgb(198, 212, 223);
+    font-family: "Motiva Sans", Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    display: flex;
+
+}
+.botoes{
+    display: flex;
+    gap:6px;
+}
+.botao{
+    background-color: none;
+    border:none;
+    background: none;
+    
+
+    color: #606f7f;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 14px;
+}
+.botap:hover{
+    color:white;
+}
+
+@media (max-width:712px) {
+  .container{
+    flex-direction: column;
+    width: 100%;
+  }
+  .cover{
+    height: auto;
+    width: 100%;
+  }
+  .detalhe{
+    width: 100%;
+    justify-content: space-between;
+    gap:0px;
+  }
+  .botoes{
+    gap:0px;
+  }
+  .dropDown{
+    gap:0px;
+    justify-content: flex-start;
+    min-width: 128.5px;
+  }
+  .dropDownLink{
+    font-size: 11px;
+    width: auto;
+  }
+}
+

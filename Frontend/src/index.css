@@ -1,0 +1,11 @@
+* {
+  --header-font: "Motiva Sans", "Twemoji", "Noto Sans", Helvetica, sans-serif;
+  --nav-font: Arial, Helvetica, sans-serif;
+  --header-color: #171a21;
+  --main-color: #1D2D4A;
+  scrollbar-color: rgb(96,101,109) rgb(25, 34, 46);
+}
+
+body {
+  background-color: var(--main-color);
+}

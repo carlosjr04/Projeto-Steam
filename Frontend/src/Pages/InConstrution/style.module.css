@@ -1,0 +1,47 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.main {
+  background-color: var(--main-color);
+  min-height: 100vh;
+  padding-bottom: 2rem;
+  min-width: 270px;
+}
+
+.main {
+  background-image: url('/background_maincap_2.jpg');
+  background-size: cover;
+  margin-top: 0;
+}
+
+.footer {
+  padding-bottom: 0;
+}
+
+.in_construction {
+  color: #ccc;
+  font-weight: 600;
+  font-size: 3rem;
+  font-family: "Motiva Sans", Sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.spinner-grow {
+  position: absolute;
+  width: 25rem; /* Aumenta a largura do spinner */
+  height: 25rem; /* Aumenta a altura do spinner */
+  border-width: 0.5rem; /* Ajusta a espessura do spinner */
+  color: #0D1720 !important;
+}
+
+@media (max-width: 420px) {
+  .spinner-grow {
+    display: none;
+  }
+}
