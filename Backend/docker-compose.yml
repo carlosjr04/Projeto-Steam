@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: bitnami/postgresql:16
+    container_name: postgres_backendsteam
+    environment:
+      - POSTGRESQL_DATABASE=desweb_09_11
+      - POSTGRESQL_USERNAME=root
+      - POSTGRESQL_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/bitnami/postgresql
+    healthcheck:
+      test: ["CMD", "/opt/bitnami/scripts/postgresql/healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
