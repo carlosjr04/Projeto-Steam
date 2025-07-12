@@ -23,6 +23,17 @@ public class GameController {
 		return gameService.recuperarGames().stream().map(GameDTO::new).toList();
 	}
 
+	// Rota para retornar um jogo aleatório
+	@GetMapping("random")
+	public GameDTO recuperarGameAleatorio() {
+		List<Game> games = gameService.recuperarGames();
+		if (games.isEmpty()) {
+			throw new RuntimeException("Nenhum jogo cadastrado.");
+		}
+		int idx = (int) (Math.random() * games.size());
+		return new GameDTO(games.get(idx));
+	}
+
 	// Requisição do tipo GET para http://localhost:8080/games/1
 	@GetMapping("{idGame}")
 	public GameDTO recuperarGamePorId(@PathVariable("idGame") long id) {
