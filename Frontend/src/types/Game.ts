@@ -5,7 +5,7 @@ import type { Category } from "./Category";
 import type { Genre } from "./Genre";
 
 export interface Game {
-  id: number;
+  id: string;
   image: string;
   titulo: string;
   desenvolvedora: string;
