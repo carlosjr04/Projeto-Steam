@@ -3,11 +3,25 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./style.module.css";
 import { Link } from "react-router-dom";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
+import React, { useState } from 'react';
+import CategoryNav from '../CategoryNav/CategoryNav';
 
 export default function NavBar() {
-  const numJogos = useCarrinhoStore((state) => state.numJogos)
+  const numJogos = useCarrinhoStore((state) => state.numJogos);
+  const [isCategoryNavOpen, setIsCategoryNavOpen] = useState(false);
+
+  const toggleCategoryNav = (event: React.MouseEvent) => {
+    event.preventDefault();
+    setIsCategoryNavOpen(prevState => !prevState);
+  };
+
+  const closeCategoryNav = () => {
+    setIsCategoryNavOpen(false);
+  };
+
   return (
-    <div>
+    // Esta div externa ainda é importante para z-index e para conter tudo.
+    <div style={{ position: 'relative', zIndex: 10 }}>
       <nav className={`navbar navbar-dark mb-3 ${styles["main-nav"]}`}>
         <div className={styles.carrinho}>
           <Link className={styles.carrinhoLink} to="/carrinho">
@@ -27,7 +41,7 @@ export default function NavBar() {
         <div
           style={{
             marginLeft: "0px",
-            ["--bs-gutter-x" as any]: "0",
+            ["--bs-gutter-x" as string]: "0",
           }}
           className={`${styles["container"]} ${styles["container-nav-home"]}`}
         >
@@ -43,12 +57,27 @@ export default function NavBar() {
             >
               Novidades e tendências
             </Link>
-            <Link
-              to="inConstrution"
-              className="nav-link nav-item fs-6"
-            >
-              Categorias
-            </Link>
+            {/* NOVO CONTAINER para o link Categorias e o CategoryNav */}
+            <div className={styles['category-dropdown-wrapper']}>
+              <span
+                className={`nav-link nav-item fs-6 ${isCategoryNavOpen ? styles.activeCategoryLink : ''}`}
+                onClick={toggleCategoryNav}
+                style={{
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '100%',
+                  width: '100%',
+                  textAlign: 'center',
+                }}
+              >
+                Categorias
+              </span>
+              {/* CategoryNav agora é filho do novo wrapper */}
+              <CategoryNav isOpen={isCategoryNavOpen} onClose={closeCategoryNav} />
+            </div>
+            {/* FIM DO NOVO CONTAINER */}
             <Link
               to="inConstrution"
               className="nav-link nav-item fs-6"
