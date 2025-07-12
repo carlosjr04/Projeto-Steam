@@ -26,7 +26,7 @@ public class Game {
 	private Long id;
 
 	private String image;
-	private String titulo;
+// Removido campo titulo, usar apenas title
 	private String desenvolvedora;
 	private String publicadora;
 
@@ -47,19 +47,7 @@ public class Game {
 	)
 	private Set<Category> categories = new HashSet<>();
 
-	@ManyToMany
-	@JoinTable(
-		name = "game_genre",
-		joinColumns = @JoinColumn(name = "game_id"),
-		inverseJoinColumns = @JoinColumn(name = "genre_id"))
-	private Set<Genre> genres = new HashSet<>();
-
-	@ManyToMany
-	@JoinTable(
-		name = "game_platform",
-		joinColumns = @JoinColumn(name = "game_id"),
-		inverseJoinColumns = @JoinColumn(name = "platform_id"))
-	private Set<Platform> platforms = new HashSet<>();
+	// Removidos relacionamentos de genero e plataforma
 
 	@ManyToMany
 	@JoinTable(
@@ -114,10 +102,9 @@ public class Game {
 
 	public Game(
 		String image,
-		String titulo,
+		String title,
 		String desenvolvedora,
 		String publicadora,
-		Set<Genre> genres,
 		String plataforma,
 		LocalDate dataLancamento,
 		BigDecimal preco,
@@ -126,14 +113,12 @@ public class Game {
 		boolean multiplayer,
 		String classificacaoEtaria,
 		String idioma,
-		Set<Platform> platforms,
 		Set<Language> languages
 	) {
 		this.image = image;
-		this.titulo = titulo;
+		this.title = title;
 		this.desenvolvedora = desenvolvedora;
 		this.publicadora = publicadora;
-		this.genres = genres;
 		this.plataforma = plataforma;
 		this.dataLancamento = dataLancamento;
 		this.preco = preco;
@@ -142,7 +127,6 @@ public class Game {
 		this.multiplayer = multiplayer;
 		this.classificacaoEtaria = classificacaoEtaria;
 		this.idioma = idioma;
-		this.platforms = platforms;
 		this.languages = languages;
 	}
 

@@ -77,9 +77,10 @@ public class GameController {
 	public ResultadoPaginado<GameDTO> recuperarGamesComPaginacao(
 		@RequestParam(value = "pagina", defaultValue = "0") int pagina,
 		@RequestParam(value = "tamanho", defaultValue = "5") int tamanho,
-		@RequestParam(value = "nome", defaultValue = "") String nome) {
+		@RequestParam(value = "nome", defaultValue = "") String nome,
+		@RequestParam(value = "slugCategory", required = false) String slugCategory) {
 		Pageable pageable = PageRequest.of(pagina, tamanho);
-		Page<Game> page = gameService.recuperarGamesComPaginacao(pageable, nome);
+		Page<Game> page = gameService.recuperarGamesComPaginacao(pageable, nome, slugCategory);
 		ResultadoPaginado<GameDTO> resultadoPaginado =
 			new ResultadoPaginado<>(
 				page.getTotalElements(), page.getTotalPages(), page.getNumber(), page.getContent().stream().map(GameDTO::new).toList());
