@@ -1,0 +1,128 @@
+.saleSectionCtn {
+  background: #171a21;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  margin: 24px auto;
+  max-width: 900px;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.carouselPanel {
+  display: flex;
+  flex-direction: row;
+  background: #1b2838;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mediaRow {
+  flex: 1 1 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #23262e;
+  min-width: 340px;
+  max-width: 400px;
+  height: 260px;
+}
+
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.infoSection {
+  flex: 2 1 500px;
+  padding: 32px 32px 32px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.titleRow {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.gameTitle {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.developer {
+  color: #c7d5e0;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.tagsRow {
+  margin: 16px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background: #2a475e;
+  color: #c7d5e0;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.aboutRow {
+  color: #c7d5e0;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.3rem;
+  margin-top: 12px;
+}
+
+.price {
+  color: #66c0f4;
+  font-weight: bold;
+}
+
+.oldPrice {
+  color: #c7d5e0;
+  text-decoration: line-through;
+  font-size: 1.1rem;
+}
+
+.discount {
+  background: #4b69ff;
+  color: #fff;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+@media (max-width: 800px) {
+  .carouselPanel {
+    flex-direction: column;
+  }
+  .mediaRow {
+    min-width: 100%;
+    max-width: 100%;
+    height: 200px;
+  }
+  .infoSection {
+    padding: 20px;
+  }
+}

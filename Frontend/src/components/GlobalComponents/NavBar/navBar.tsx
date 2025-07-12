@@ -6,7 +6,26 @@ import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import React, { useState } from 'react';
 import CategoryNav from '../CategoryNav/CategoryNav';
 
-export default function NavBar() {
+interface NavBarProps {
+  variant?: string;
+}
+
+export default function NavBar({ variant }: NavBarProps) {
+  const [bannerScene, setBannerScene] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (variant === 'category') {
+      fetch('http://localhost:8080/games/random')
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          if (data && Array.isArray(data.scenes) && data.scenes.length > 0) {
+            setBannerScene(data.scenes[0]);
+          }
+        })
+        .catch(() => setBannerScene(null));
+    }
+  }, [variant]);
   const numJogos = useCarrinhoStore((state) => state.numJogos);
   const [isCategoryNavOpen, setIsCategoryNavOpen] = useState(false);
 
@@ -20,9 +39,64 @@ export default function NavBar() {
   };
 
   return (
-    // Esta div externa ainda é importante para z-index e para conter tudo.
-    <div style={{ position: 'relative', zIndex: 10 }}>
-      <nav className={`navbar navbar-dark mb-3 ${styles["main-nav"]}`}>
+    <div
+      style={
+        variant === 'category'
+          ? {
+              position: 'relative',
+              zIndex: 10,
+              minHeight: '320px',
+              background:
+                bannerScene
+                  ? `url(${bannerScene}) center/cover no-repeat`
+                  : 'linear-gradient(to right, #304e7a 49%, #304e7a 51%)',
+              boxShadow: '0 2px 12px rgba(48,78,122,0.4)',
+              overflow: 'hidden',
+            }
+          : { position: 'relative', zIndex: 10 }
+      }
+    >
+      {variant === 'category' && (
+        <>
+          <div
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              width: '60px',
+              height: '100%',
+              background: 'linear-gradient(to left, rgba(48,78,122,0) 0%, #304e7a 100%)',
+              pointerEvents: 'none',
+              zIndex: 11,
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              width: '60px',
+              height: '100%',
+              background: 'linear-gradient(to right, rgba(48,78,122,0) 0%, #304e7a 100%)',
+              pointerEvents: 'none',
+              zIndex: 11,
+            }}
+          />
+        </>
+      )}
+      <nav
+        className={`navbar navbar-dark mb-3 ${styles["main-nav"]}`}
+        style={
+          variant === 'category'
+            ? {
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+              }
+            : undefined
+        }
+      >
         <div className={styles.carrinho}>
           <Link className={styles.carrinhoLink} to="/carrinho">
             <svg
@@ -65,7 +139,7 @@ export default function NavBar() {
                 style={{
                   cursor: 'pointer',
                   display: 'flex',
-                  alignItems: 'center',
+                  alignItems: 'start',
                   justifyContent: 'center',
                   height: '100%',
                   width: '100%',
