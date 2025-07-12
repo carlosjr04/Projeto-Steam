@@ -1,4 +1,4 @@
-export interface Idioma {
+export interface Language {
   lingua:string
   interface: boolean;
   dublagem: boolean;

@@ -19,9 +19,9 @@ export default function Home() {
       <div className={style["login-footer"]}>
         <div className={style["login-div"]}>
           <p>Iniciar sessão para ver recomendações personalizadas</p>
-          <a className={style["button-login"]} href="./src/login.html">
+          <Link className={style["button-login"]} to="/login">
             <span>Iniciar sessão</span>
-          </a>
+          </Link>
           <p>
             Ou <Link to="/inConstrution">registre-se</Link> na Steam
             gratuitamente.
