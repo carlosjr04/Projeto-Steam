@@ -4,6 +4,7 @@ import styles from "./style.module.css";
 import { Link } from "react-router-dom";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import React, { useState } from 'react';
+import { useRandomGame } from '../../../hooks/Jogo/useRandomGame';
 import CategoryNav from '../CategoryNav/CategoryNav';
 
 interface NavBarProps {
@@ -11,21 +12,10 @@ interface NavBarProps {
 }
 
 export default function NavBar({ variant }: NavBarProps) {
-  const [bannerScene, setBannerScene] = useState<string | null>(null);
-
-  React.useEffect(() => {
-    if (variant === 'category') {
-      fetch('http://localhost:8080/games/random')
-        .then(res => res.json())
-        .then(data => {
-          console.log(data)
-          if (data && Array.isArray(data.scenes) && data.scenes.length > 0) {
-            setBannerScene(data.scenes[0]);
-          }
-        })
-        .catch(() => setBannerScene(null));
-    }
-  }, [variant]);
+  const randomGame = useRandomGame();
+  const bannerScene = variant === 'category' && randomGame && Array.isArray(randomGame.scenes) && randomGame.scenes.length > 0
+    ? randomGame.scenes[0]
+    : null;
   const numJogos = useCarrinhoStore((state) => state.numJogos);
   const [isCategoryNavOpen, setIsCategoryNavOpen] = useState(false);
 

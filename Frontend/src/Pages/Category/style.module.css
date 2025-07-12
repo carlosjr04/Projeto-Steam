@@ -21,12 +21,9 @@
   padding-left: 32px;
 }
 
-.games-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 32px;
-  padding: 0 32px;
-}
+
+
+/* Removido o grid, agora usando flexbox do Bootstrap no componente */
 
 .game-card {
   background: #1b2838;
@@ -72,16 +69,18 @@
   margin: 24px 0;
 }
 
-@media (max-width: 600px) {
-  .category-title {
-    font-size: 1.4rem;
-    padding-left: 12px;
-  }
+
+@media (max-width: 900px) {
   .games-grid {
-    padding: 0 8px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 16px;
+    padding: 0 8px;
   }
   .game-card {
     padding-bottom: 8px;
+  }
+  .category-title {
+    font-size: 1.4rem;
+    padding-left: 12px;
   }
 }
