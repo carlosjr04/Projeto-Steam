@@ -1,4 +1,3 @@
-import type { Jogo } from "../../../Utils/gameData";
 import { useCarrosselStore } from "../../../store/useCarrosselStore";
 import style from "./style.module.css"
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
