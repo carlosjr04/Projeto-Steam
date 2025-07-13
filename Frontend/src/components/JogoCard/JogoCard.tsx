@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./JogoCard.module.css";
 import type { Game } from "../../types/Game";
 
@@ -49,6 +50,31 @@ const JogoCard: React.FC<JogoCardProps> = ({ jogo }) => {
             ) : (
               <span className={styles.price}>R$ {jogo.price.toFixed(2)}</span>
             )}
+          </div>
+          <div className={styles.redirectButtonRow} style={{ marginTop: '20px' }}>
+            <Link
+              to={`/Jogo/${jogo.id}`}
+              className={styles.redirectButton}
+              style={{
+                display: 'inline-block',
+                padding: '10px 20px',
+                backgroundColor: '#304e7a',
+                color: '#fff',
+                textDecoration: 'none',
+                borderRadius: '5px',
+                fontWeight: 'bold',
+                textAlign: 'center',
+                transition: 'background-color 0.3s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#1f3555';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#304e7a';
+              }}
+            >
+              Ver mais detalhes
+            </Link>
           </div>
         </div>
       </div>
