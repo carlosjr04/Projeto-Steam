@@ -95,5 +95,3 @@ O projeto está dividido em duas pastas principais:
 3. Inicie o frontend em modo de desenvolvimento:
    ```bash
    npm run dev
-
-   
