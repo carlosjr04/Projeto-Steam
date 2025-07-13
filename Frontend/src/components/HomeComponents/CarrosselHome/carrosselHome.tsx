@@ -2,12 +2,14 @@ import { useState } from "react";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import style from "./style.module.css";
-import { games } from "../../../Utils/gameData";
 import { Link } from "react-router-dom";
+import { useGetGame } from "../../../hooks/Games/useGetGame";
 
 export default function CarrosselHome() {
+  const {games,loading,error} = useGetGame()
   const [mainImages, setMainImages] = useState(
-    games.reduce((acc, game) => {
+    
+    (games ?? []).reduce((acc, game) => {
       acc[game.id] = game.cover;
       return acc;
     }, {} as Record<string, string>)
@@ -18,10 +20,11 @@ export default function CarrosselHome() {
   };
 
   const handleMouseOut = (gameId: string) => {
-    const originalCover = games.find((g) => g.id === gameId)?.cover;
+    const originalCover = games ? games.find((g) => g.id === gameId)?.cover : undefined;
     setMainImages((prev) => ({ ...prev, [gameId]: originalCover! }));
   };
 
+  
   
 
   return (
@@ -45,7 +48,7 @@ export default function CarrosselHome() {
         </button>
         
         <div className={`carousel-inner ${style.grow}`}>
-          {games.map((game, index) => (
+          {games && games.map((game, index) => (
             <Link to={`/Jogo/${game.id}`} className={style.verMais}>
             
             <div

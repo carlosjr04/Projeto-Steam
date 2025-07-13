@@ -2,7 +2,7 @@ import Hollow from "../components/DescricaoJogo/Hollow";
 import Marvel from "../components/DescricaoJogo/Marvel";
 import Skyrim from "../components/DescricaoJogo/Skyrim";
 import Terraria from "../components/DescricaoJogo/Terraria";
-import type { Jogo } from "../types/Jogo";
+import type { Jogo } from "../types/Game";
 
 
 

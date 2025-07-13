@@ -1,17 +1,15 @@
 import style from "./style.module.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
-import type { Idioma } from "../../../Utils/gameData";
 import IdiomaUnd from "./IdiomaUnd";
 import { useState } from "react";
 
-interface Props {
-  idiomas: Idioma[];
+interface IdiomaProps {
+  idiomas: string[];
 }
 
-export default function Idioma(idiomas: Props) {
+export default function Idioma({ idiomas }: IdiomaProps) {
   const [verMais, setVerMais] = useState<boolean>(false);
-
   return (
     <div className={style.idiomas}>
       <span className={style["idiomas-texto"]}>Idiomas</span>
@@ -21,21 +19,21 @@ export default function Idioma(idiomas: Props) {
           <span className={style["idiomas-texto"]}>Dublagem</span>
           <span className={style["idiomas-texto"]}>Legendas</span>
         </div>
-        {idiomas.idiomas.slice(0, 5).map((idioma) => (
-          <div>
-            
+
+        {idiomas.slice(0, 4).map((idioma, index) => (
+          <div key={index}>
             <IdiomaUnd
-              lingua={idioma.lingua}
-              interface={idioma.interface}
-              dublagem={idioma.dublagem}
-              legenda={idioma.legenda}
+              lingua={idioma}
+              interface={true}
+              dublagem={false}
+              legenda={false}
             />
           </div>
         ))}
 
-        {!verMais ? (
+        {!verMais && idiomas.length > 4 && (
           <button
-            onClick={() => setVerMais(!verMais)}
+            onClick={() => setVerMais(true)}
             className={`${style.mais_idiomas} btn btn-primary mt-2`}
             type="button"
             data-bs-toggle="collapse"
@@ -43,25 +41,24 @@ export default function Idioma(idiomas: Props) {
             aria-expanded={verMais}
             aria-controls="idiomasCollapse"
           >
-            {`Ver todos os ${idiomas.idiomas.length - 5} idiomas disponíveis`}
+            {`Ver todos os ${idiomas.length - 2} idiomas disponíveis`}
           </button>
-        ) : null}
-        
-        <div className="collapse " id="idiomasCollapse">
-          {idiomas.idiomas.slice(5).map((idioma) => (
-            <div>
-              
+        )}
+
+        <div className="collapse" id="idiomasCollapse">
+          {idiomas.slice(2).map((idioma, index) => (
+            <div key={index}>
               <IdiomaUnd
-                lingua={idioma.lingua}
-                interface={idioma.interface}
-                dublagem={idioma.dublagem}
-                legenda={idioma.legenda}
+                lingua={idioma}
+                interface={true}
+                dublagem={false}
+                legenda={false}
               />
             </div>
           ))}
-          {verMais ? (
+          {verMais && (
             <button
-              onClick={() => setVerMais(!verMais)}
+              onClick={() => setVerMais(false)}
               className={`${style.mais_idiomas} btn btn-primary mt-2`}
               type="button"
               data-bs-toggle="collapse"
@@ -69,9 +66,9 @@ export default function Idioma(idiomas: Props) {
               aria-expanded={verMais}
               aria-controls="idiomasCollapse"
             >
-              {`Ver menos`}
+              Ver menos
             </button>
-          ) : null}
+          )}
         </div>
       </div>
     </div>
