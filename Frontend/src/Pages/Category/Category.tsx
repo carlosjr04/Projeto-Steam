@@ -42,6 +42,31 @@ const CategoryPage: React.FC = () => {
     return () => clearTimeout(timeout);
   }, [inView, loading, pagina, data]);
 
+  useEffect(() => {
+    const ajustarAlturaDosCards = () => {
+      const cards = document.querySelectorAll(`.${styles['category-main']} .JogoCard`);
+      let alturaMaxima = 0;
+
+      cards.forEach((card) => {
+        const altura = card.getBoundingClientRect().height;
+        if (altura > alturaMaxima) {
+          alturaMaxima = altura;
+        }
+      });
+
+      cards.forEach((card) => {
+        (card as HTMLElement).style.height = `${alturaMaxima}px`;
+      });
+    };
+
+    ajustarAlturaDosCards();
+    window.addEventListener('resize', ajustarAlturaDosCards);
+
+    return () => {
+      window.removeEventListener('resize', ajustarAlturaDosCards);
+    };
+  }, [jogos]);
+
   return (
     <div className={styles['category-page-container']}>
       <header className={styles['category-header']}>

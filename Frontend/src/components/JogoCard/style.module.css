@@ -16,6 +16,7 @@
   background: #1b2838;
   border-radius: 12px;
   overflow: hidden;
+  height: 100%;
 }
 
 .mediaRow {

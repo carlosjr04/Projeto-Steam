@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from "./JogoCard.module.css";
+import styles from "./style.module.css";
 import type { Game } from "../../types/Game";
 
 interface JogoCardProps {
@@ -45,10 +45,12 @@ const JogoCard: React.FC<JogoCardProps> = ({ jogo }) => {
               <>
                 <span className={styles.discount}>-{jogo.desconto}%</span>
                 <span className={styles.oldPrice}>R$ {(jogo.price).toFixed(2)}</span>
-                <span className={styles.price}>R$ {(jogo.price * (1 - jogo.desconto / 100)).toFixed(2)}</span>
+                <span className={styles.price}>
+                  {jogo.price * (1 - jogo.desconto / 100) === 0 ? 'Grátis' : `R$ ${(jogo.price * (1 - jogo.desconto / 100)).toFixed(2)}`}
+                </span>
               </>
             ) : (
-              <span className={styles.price}>R$ {jogo.price.toFixed(2)}</span>
+              <span className={styles.price}>{jogo.price === 0 ? 'Grátis' : `R$ ${jogo.price.toFixed(2)}`}</span>
             )}
           </div>
           <div className={styles.redirectButtonRow} style={{ marginTop: '20px' }}>
