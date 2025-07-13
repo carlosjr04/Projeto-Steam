@@ -76,7 +76,7 @@ public class GameController {
 	@GetMapping("paginacao")
 	public ResultadoPaginado<GameDTO> recuperarGamesComPaginacao(
 		@RequestParam(value = "pagina", defaultValue = "0") int pagina,
-		@RequestParam(value = "tamanho", defaultValue = "5") int tamanho,
+		@RequestParam(value = "tamanho", defaultValue = "4") int tamanho,
 		@RequestParam(value = "nome", defaultValue = "") String nome,
 		@RequestParam(value = "slugCategory", required = false) String slugCategory) {
 		Pageable pageable = PageRequest.of(pagina, tamanho);

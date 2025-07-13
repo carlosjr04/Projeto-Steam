@@ -45,7 +45,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 	List<Game> recuperarGamesPorSlugCategory(@Param("slugCategory") String slugCategory);
 	
 	@Query(
-		value = "select p from Game p join p.categories c where p.title like :nome and c.slug = :slugCategory order by p.id",
-		countQuery = "select count(p) from Game p join p.categories c where p.title like :nome and c.slug = :slugCategory")
+		value = "select p from Game p left join p.categories c where p.title like :nome and c.slug = :slugCategory order by p.id",
+		countQuery = "select count(p) from Game p left join p.categories c where p.title like :nome and c.slug = :slugCategory")
 	Page<Game> recuperarGamesComPaginacaoPorCategoria(Pageable pageable, @Param("nome") String nome, @Param("slugCategory") String slugCategory);
 }
