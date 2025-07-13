@@ -2,6 +2,9 @@ package com.devweb.backendsteam.model;
 
 import jakarta.persistence.*;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +25,7 @@ public class Category {
 	private String image;
 	private String title;
 
+	@JsonIgnore
 	@ManyToMany(mappedBy = "categories")
 	private Set<Game> games = new java.util.HashSet<>();
 

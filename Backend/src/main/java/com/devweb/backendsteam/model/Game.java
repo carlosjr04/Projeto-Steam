@@ -39,10 +39,10 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String image;
-    private String titulo;
-    private String desenvolvedora;
-    private String publicadora;
+	private String image;
+// Removido campo titulo, usar apenas title
+	private String desenvolvedora;
+	private String publicadora;
 
     private String plataforma;
     private LocalDate dataLancamento;
@@ -64,19 +64,7 @@ public class Game {
     )
     private Set<Category> categories = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "game_genre",
-            joinColumns = @JoinColumn(name = "game_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private Set<Genre> genres = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "game_platform",
-            joinColumns = @JoinColumn(name = "game_id"),
-            inverseJoinColumns = @JoinColumn(name = "platform_id"))
-    private Set<Platform> platforms = new HashSet<>();
+	// Removidos relacionamentos de genero e plataforma
 
     @ManyToMany
     @JoinTable(
@@ -129,39 +117,35 @@ public class Game {
     @ElementCollection
     private List<String> classificacao = new ArrayList<>();
 
-    public Game(
-            String image,
-            String titulo,
-            String desenvolvedora,
-            String publicadora,
-            Set<Genre> genres,
-            String plataforma,
-            LocalDate dataLancamento,
-            BigDecimal preco,
-            double avaliacao,
-            String descricao,
-            boolean multiplayer,
-            String classificacaoEtaria,
-            String idioma,
-            Set<Platform> platforms,
-            Set<Language> languages
-    ) {
-        this.image = image;
-        this.titulo = titulo;
-        this.desenvolvedora = desenvolvedora;
-        this.publicadora = publicadora;
-        this.genres = genres;
-        this.plataforma = plataforma;
-        this.dataLancamento = dataLancamento;
-        this.preco = preco;
-        this.avaliacao = avaliacao;
-        this.descricao = descricao;
-        this.multiplayer = multiplayer;
-        this.classificacaoEtaria = classificacaoEtaria;
-        this.idioma = idioma;
-        this.platforms = platforms;
-        this.languages = languages;
-    }
+	public Game(
+		String image,
+		String title,
+		String desenvolvedora,
+		String publicadora,
+		String plataforma,
+		LocalDate dataLancamento,
+		BigDecimal preco,
+		double avaliacao,
+		String descricao,
+		boolean multiplayer,
+		String classificacaoEtaria,
+		String idioma,
+		Set<Language> languages
+	) {
+		this.image = image;
+		this.title = title;
+		this.desenvolvedora = desenvolvedora;
+		this.publicadora = publicadora;
+		this.plataforma = plataforma;
+		this.dataLancamento = dataLancamento;
+		this.preco = preco;
+		this.avaliacao = avaliacao;
+		this.descricao = descricao;
+		this.multiplayer = multiplayer;
+		this.classificacaoEtaria = classificacaoEtaria;
+		this.idioma = idioma;
+		this.languages = languages;
+	}
 
     @com.fasterxml.jackson.annotation.JsonProperty("idiomas")
     public Set<Language> getIdiomas() {
