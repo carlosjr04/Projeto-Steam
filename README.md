@@ -35,7 +35,7 @@ Cada jogo possui sua própria página dedicada com informações detalhadas, e �
 - Zustand (gerenciamento de estado)
 - React Hook Form (formulários)
 - Vite (empacotador)
-- JavaScript/TypeScript (dependendo da implementação)
+- TypeScript
 
 ### Backend (Spring Boot)
 
@@ -43,7 +43,7 @@ Cada jogo possui sua própria página dedicada com informações detalhadas, e �
 - Spring Web
 - Spring Data JPA
 - Lombok
-- H2 (banco em memória) ou outro banco relacional
+- Postgresql
 - Java 21
 - Maven
 
