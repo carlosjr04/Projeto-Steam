@@ -42,4 +42,10 @@ public class CategoryService {
 	public Category buscarPorSlug(String slug) {
 	return categoryRepository.findBySlug(slug).orElse(null);
 	}
+
+	public List<Category> listarCategoriasComImagem() {
+		return categoryRepository.findAll().stream()
+			.filter(categoria -> categoria.getImage() != null)
+			.toList();
+	}
 }

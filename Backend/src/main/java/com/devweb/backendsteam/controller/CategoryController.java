@@ -30,6 +30,11 @@ public class CategoryController {
 		return categoryService.listarCategorias();
 	}
 
+	@GetMapping("com-imagem")
+	public List<Category> listarCategoriasComImagem() {
+		return categoryService.listarCategoriasComImagem();
+	}
+
 	@GetMapping("{id}")
 	public Category buscarPorId(@PathVariable Long id) {
 		return categoryService.buscarPorId(id);
