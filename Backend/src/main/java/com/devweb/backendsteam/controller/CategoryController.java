@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@CrossOrigin("http://localhost:5173")
 @RestController
 @RequestMapping("categories")
 public class CategoryController {
@@ -27,6 +28,11 @@ public class CategoryController {
 	@GetMapping
 	public List<Category> listarCategorias() {
 		return categoryService.listarCategorias();
+	}
+
+	@GetMapping("com-imagem")
+	public List<Category> listarCategoriasComImagem() {
+		return categoryService.listarCategoriasComImagem();
 	}
 
 	@GetMapping("{id}")
