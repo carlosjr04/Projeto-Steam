@@ -48,16 +48,26 @@ const CategoryPage: React.FC = () => {
         <div className={styles['category-header-bg']} />
         <div className={styles['category-header-content']}>
           <h1 className={styles['category-title']}>{categoryName}</h1>
-          <p className={styles['category-description']}>Explore os melhores jogos desta categoria na Steam.</p>
+          {!loading && jogos.length > 0 && (
+            <p className={styles['category-description']}>
+              Explore os melhores jogos desta categoria na Steam.
+            </p>
+          )}
         </div>
       </header>
 
       <main className={styles['category-main']}>
-        <div className={`d-flex flex-wrap justify-content-center`} style={{ gap: '32px', padding: '0 32px' }}>
-          {jogos.map((jogo) => (
-            <JogoCard key={jogo.id} jogo={jogo} />
-          ))}
-        </div>
+        {jogos.length === 0 && !loading ? (
+          <div style={{ textAlign: 'center', fontSize: '24px', marginTop: '50px' }}>
+            Ainda não há jogos nesta categoria
+          </div>
+        ) : (
+          <div className={`d-flex flex-wrap justify-content-center`} style={{ gap: '32px', padding: '0 32px' }}>
+            {jogos.map((jogo) => (
+              <JogoCard key={jogo.id} jogo={jogo} />
+            ))}
+          </div>
+        )}
         {loading && <div>Carregando jogos...</div>}
         {/* Elemento que dispara o carregamento ao ficar visível */}
         <div ref={ref} style={{ height: '50px', backgroundColor: 'transparent' }} />
