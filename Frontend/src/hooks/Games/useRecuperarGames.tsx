@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import API_BASE_URL from '../../config/apiBaseUrl';
-import type { Jogo } from '../../types/Jogo';
+import { ENV } from '../../env';
+import type { Game } from '../../types/Game';
 
 export function useRecuperarGames() {
-  const [games, setGames] = useState<Jogo[]>([]);
+  const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get<Jogo[]>(`${API_BASE_URL}/games`)
+      .get<Game[]>(`${ENV.API_URL}/games`)
       .then(res => setGames(res.data))
       .catch(err => setError(err.message))
       .finally(() => setLoading(false));

@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./JogoCard.module.css";
-import type { Jogo } from "../../types/Jogo";
+import type { Game } from "../../types/Game";
 
 interface JogoCardProps {
-  jogo: Jogo;
+  jogo: Game;
 }
 
 const JogoCard: React.FC<JogoCardProps> = ({ jogo }) => {

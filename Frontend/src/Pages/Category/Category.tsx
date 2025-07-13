@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import styles from './style.module.css';
 import JogoCard from '../../components/JogoCard/JogoCard';
-import { usePaginatedGames } from '../../hooks/Jogo/usePaginatedGames';
-import type { Jogo } from '../../types/Jogo';
+import { usePaginatedGames } from '../../hooks/Games/usePaginatedGames';
+import type { Game } from '../../types/Game';
 
 function formatCategoryName(slug?: string) {
   if (!slug) return 'Categoria';
@@ -15,7 +15,7 @@ function formatCategoryName(slug?: string) {
 
 const CategoryPage: React.FC = () => {
   const [pagina, setPagina] = useState(0);
-  const [jogos, setJogos] = useState<Jogo[]>([]);
+  const [jogos, setJogos] = useState<Game[]>([]);
   const tamanho = 4;
   const { categoria } = useParams();
   const { data, loading } = usePaginatedGames(pagina, tamanho, '', categoria ?? '');

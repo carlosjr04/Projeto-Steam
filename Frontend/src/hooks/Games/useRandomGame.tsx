@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import API_BASE_URL from '../../config/apiBaseUrl';
+import { ENV } from '../../env';
 import axios from 'axios';
-import type { Jogo } from '../../types/Jogo';
+import type { Game } from '../../types/Game';
 
 export function useRandomGame() {
-  const [game, setGame] = useState<Jogo | null>(null);
+  const [game, setGame] = useState<Game | null>(null);
 
   useEffect(() => {
-    axios.get<Jogo>(`${API_BASE_URL}/games/random`)
+    axios.get<Game>(`${ENV.API_URL}/games/random`)
       .then((res) => {
         setGame(res.data);
       })

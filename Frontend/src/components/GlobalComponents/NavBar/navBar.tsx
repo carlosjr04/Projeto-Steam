@@ -4,7 +4,7 @@ import styles from "./style.module.css";
 import { Link } from "react-router-dom";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import React, { useState } from 'react';
-import { useRandomGame } from '../../../hooks/Jogo/useRandomGame';
+import { useRandomGame } from '../../../hooks/Games/useRandomGame';
 import CategoryNav from '../CategoryNav/CategoryNav';
 
 interface NavBarProps {
