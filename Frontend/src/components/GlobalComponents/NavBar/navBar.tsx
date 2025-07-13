@@ -1,7 +1,7 @@
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./style.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import React, { useState } from 'react';
 import { useRandomGame } from '../../../hooks/Games/useRandomGame';
@@ -13,11 +13,13 @@ interface NavBarProps {
 
 export default function NavBar({ variant }: NavBarProps) {
   const randomGame = useRandomGame();
-  const bannerScene = variant === 'category' && randomGame && Array.isArray(randomGame.scenes) && randomGame.scenes.length > 0
-    ? randomGame.scenes[0]
+  const bannerScene = variant === 'category' && randomGame && randomGame.cover
+    ? randomGame.cover
     : null;
   const numJogos = useCarrinhoStore((state) => state.numJogos);
   const [isCategoryNavOpen, setIsCategoryNavOpen] = useState(false);
+  const navigate = useNavigate();
+  const [hover, setHover] = useState(false);
 
   const toggleCategoryNav = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -30,56 +32,48 @@ export default function NavBar({ variant }: NavBarProps) {
 
   return (
     <div
-      style={
-        variant === 'category'
+      style={{
+        ...(variant === 'category'
           ? {
               position: 'relative',
               zIndex: 10,
               minHeight: '320px',
-              background:
-                bannerScene
-                  ? `url(${bannerScene}) center/cover no-repeat`
-                  : 'linear-gradient(to right, #304e7a 49%, #304e7a 51%)',
+              background: bannerScene
+                ? `url(${bannerScene}) center/cover no-repeat`
+                : 'linear-gradient(to right, #304e7a 49%, #304e7a 51%)',
               boxShadow: '0 2px 12px rgba(48,78,122,0.4)',
               overflow: 'hidden',
             }
-          : { position: 'relative', zIndex: 10 }
-      }
+          : {
+              position: 'relative',
+              zIndex: 10,
+            }),
+        cursor: 'pointer',
+        transition: 'opacity 0.3s ease',
+        opacity: hover ? 0.7 : 1,
+      }}
+      onMouseOver={(e) => {
+        if (e.target === e.currentTarget) {
+          setHover(true);
+        }
+      }}
+      onMouseOut={(e) => {
+        if (e.target === e.currentTarget) {
+          setHover(false);
+        }
+      }}
+      onClick={(event) => {
+        if (event.target === event.currentTarget && randomGame?.id) {
+          navigate(`/Jogo/${randomGame.id}`);
+        }
+      }}
     >
-      {variant === 'category' && (
-        <>
-          <div
-            style={{
-              position: 'absolute',
-              left: 0,
-              top: 0,
-              width: '60px',
-              height: '100%',
-              background: 'linear-gradient(to left, rgba(48,78,122,0) 0%, #304e7a 100%)',
-              pointerEvents: 'none',
-              zIndex: 11,
-            }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              right: 0,
-              top: 0,
-              width: '60px',
-              height: '100%',
-              background: 'linear-gradient(to right, rgba(48,78,122,0) 0%, #304e7a 100%)',
-              pointerEvents: 'none',
-              zIndex: 11,
-            }}
-          />
-        </>
-      )}
       <nav
         className={`navbar navbar-dark mb-3 ${styles["main-nav"]}`}
         style={
           variant === 'category'
             ? {
-                position: 'absolute',
+                position: 'relative',
                 top: 0,
                 left: 0,
                 width: '100%',

@@ -18,7 +18,7 @@ const JogoCard: React.FC<JogoCardProps> = ({ jogo }) => {
                 <source src={jogo.scenes[0]} type="video/mp4" />
               </video>
             ) : (
-              <img className={styles.media} src={jogo.scenes[0]} alt={jogo.title} />
+              <img className={styles.media} src={jogo.cover} alt={jogo.title} />
             )
           ) : (
             <img className={styles.media} src={jogo.cover} alt={jogo.title} />
