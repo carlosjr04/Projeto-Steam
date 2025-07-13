@@ -6,6 +6,7 @@ import Login from "./Pages/Login/login";
 import About from "./Pages/About/about";
 import Carrinho from "./Pages/Carrinho/carrinho";
 import InConstrution from "./Pages/InConstrution/InConstrution";
+import CategoryPage from "./Pages/Category/Category";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
         path: "/carrinho",
         element: <Carrinho />,
       },
+      {
+        path: "/category/:categoria",
+        element: <CategoryPage />
+      }
     ],
   },
   {
