@@ -69,12 +69,13 @@ public class BackendSteamApplication implements CommandLineRunner {
 		Category casual = categoryRepository.save(new Category("Casual", "casual", "/casual.webp", "Casual"));
 		Category ficcaoCientifica = categoryRepository.save(new Category("Ficção Científica", "ficcao-cientifica", "/science_fiction.webp", "Ficção Científica"));
 		Category horror = categoryRepository.save(new Category("Horror", "horror", "/horror.webp", "Horror"));
-		Category fantasia = categoryRepository.save(new Category("fantasia", "fantasia", null, "Fantasia"));
-		Category cooperativo = categoryRepository.save(new Category("cooperativo", "cooperativo", null, "Cooperativo"));
-		Category humor = categoryRepository.save(new Category("humor", "humor", null, "Humor"));
+		Category fantasia = categoryRepository.save(new Category("Fantasia", "fantasia", null, "Fantasia"));
+		Category cooperativo = categoryRepository.save(new Category("Cooperativo", "cooperativo", null, "Cooperativo"));
+		Category humor = categoryRepository.save(new Category("Humor", "humor", null, "Humor"));
 		Category plataforma = categoryRepository.save(new Category("Plataforma", "plataforma", null, "Plataforma"));
 		Category doisD = categoryRepository.save(new Category("2D", "dois-d", null, "2D"));
 		Category estrategia = categoryRepository.save(new Category("Estratégia", "estrategia", null, "Estratégia"));
+		Category roguelike = categoryRepository.save(new Category("Roguelike", "roguelike", "/rogue_like_rogue_lite.webp", "Roguelike"));
 
 		// --- Games ---
 		Game hollowKnight = new Game();
@@ -95,7 +96,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 				"Controle de Xbox"
 		)));
 		hollowKnight.setDataLancamento(java.time.LocalDate.of(2017, 2, 24));
-		hollowKnight.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(metroidvania)));
+		hollowKnight.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(metroidvania, doisD, plataforma, acao, mundoAberto)));
 		hollowKnight.setAbout("Forje seu caminho em Hollow Knight! Uma aventura de ação épica em um vasto reino arruinado de insetos e heróis. Explore cavernas serpenteantes, lute contra criaturas malignas e alie-se a insetos bizarros num estilo clássico 2D desenhado à mão.");
 		hollowKnight.setDescricao("Sonhos Escondidos - Poderosos inimigos emergem! Novos Chefes. Novos Aprimoramentos. Novas Músicas.Enfrente as profundezas de um reino esquecido. Abaixo da cidade moribunda de Dirtmouth jaz um reino antigo e arruinado. Muitos são atraídos para o subterrâneo em busca de riquezas, glórias ou respostas para antigos segredos. Hollow Knight é uma aventura de ação clássica em estilo 2D por um vasto mundo interligado. Explore cavernas serpenteantes, cidades antigas e ermos mortais; lute contra criaturas malignas e alie-se a insetos bizarros, e solucione mistérios antigos no centro do reino.");
 		hollowKnight.setScenes(new java.util.ArrayList<>(java.util.List.of(
@@ -138,7 +139,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 				"Controle de Xbox"
 		)));
 		marvelRivals.setDataLancamento(java.time.LocalDate.of(2017, 2, 24));
-		marvelRivals.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(metroidvania)));
+		marvelRivals.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(acao, ficcaoCientifica, gratis)));
 		marvelRivals.setAbout("Marvel Rivals é um jogo de tiro JxJ em equipe com Super Heróis! Reúna um grupo de estrelas da Marvel, crie estratégias e combine seus poderes para executar poderosas habilidades de equipe. Lute em cenários destrutíveis e campos de batalha dinâmicos pelo universo Marvel em constante evolução.");
 		marvelRivals.setDescricao("Marvel Rivals é um jogo de tiro JxJ em equipe com Super Heróis! Reúna um grupo de estrelas da Marvel, crie estratégias e combine seus poderes para executar poderosas habilidades de equipe. Lute em cenários destrutíveis e campos de batalha dinâmicos pelo universo Marvel em constante evolução.Elenco Extenso e Variado de Personagens MarvelEscolha entre vários Super Heróis e Supervilões favoritos dos fãs. como os Vingadores, os Guardiões da Galáxia, os X-Men e muitos outros de todo o Multiverso Marvel. O Teste Alfa começará em maio, quando os jogadores terão acesso a vários Super Heróis e Supervilões jogáveis, incluindo personagens icônicos como Pantera Negra, Homem-Aranha, Magneto e Magia.");
 		marvelRivals.setScenes(new java.util.ArrayList<>(java.util.List.of(
@@ -171,7 +172,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 		terraria.setCover("/Terraria.avif");
 		terraria.setDesconto(0);
 		terraria.setDesenvolvedora("Team Cherry");
-		terraria.setClassificacao(new java.util.ArrayList<>(java.util.List.of("10 anos", "Violência", "Violência")));
+		terraria.setClassificacao(new java.util.ArrayList<>(java.util.List.of("10 anos", "Violência")));
 		terraria.setIdiomas(new java.util.HashSet<>(java.util.Arrays.asList(ingles, portugues, espanhol, alemao, frances, italiano, japones, coreano, chines, russo, polones, turco)));
 		terraria.setCompatibilidade(new java.util.ArrayList<>(java.util.List.of(
 				"Um jogador",
@@ -183,7 +184,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 				"Controle de Xbox"
 		)));
 		terraria.setDataLancamento(java.time.LocalDate.of(2017, 2, 24));
-		terraria.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(metroidvania)));
+		terraria.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(sobrevivencia, aventura, doisD, rpg, plataforma, mundoAberto)));
 		terraria.setAbout("Forje seu caminho em Hollow Knight! Uma aventura de ação épica em um vasto reino arruinado de insetos e heróis. Explore cavernas serpenteantes, lute contra criaturas malignas e alie-se a insetos bizarros num estilo clássico 2D desenhado à mão.");
 		terraria.setDescricao("Cave, lute, explore, construa! Nada é impossível nesse jogo de aventura cheio de ação. O mundo é a sua tela de pintar e o chão em si é a sua tinta.Pegue suas ferramentas e vá! Faça novas armas para lutar contra uma variedades de inimigos em numerosos biomas. Cave profundamente no subsolo para encontrar acessórios, dinheiro e outras coisas úteis. Reúna recursos para criar tudo o que você precisa para tornar o mundo o seu próprio. Construa uma casa, um forte ou até mesmo um castelo. Pessoas vão se mudar e viver lá e talvez até vender para você diferentes mercadorias para ajudá-lo em sua jornada.Mas cuidado, há ainda mais desafios à sua espera...Você está à altura da tarefa?");
 		terraria.setScenes(new java.util.ArrayList<>(java.util.List.of(
@@ -228,7 +229,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 				"Controle de Xbox"
 		)));
 		skyrim.setDataLancamento(java.time.LocalDate.of(2017, 2, 24));
-		skyrim.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(metroidvania)));
+		skyrim.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(mundoAberto, aventura, rpg, acao)));
 		skyrim.setAbout("Forje seu caminho em Hollow Knight! Uma aventura de ação épica em um vasto reino arruinado de insetos e heróis. Explore cavernas serpenteantes, lute contra criaturas malignas e alie-se a insetos bizarros num estilo clássico 2D desenhado à mão.");
 		skyrim.setDescricao("Vencedor de mais de 200 prémios de Jogo do Ano, The Elder Scrolls V: Skyrim Special Edition dá vida à fantasia épica com um nível de detalhe espantoso. A Special Edition inclui o jogo aclamado pela crítica e suplementos com novas funcionalidades como arte e efeitos remasterizados, raios volumétricos, profundidade de campo dinâmica, reflexos espaciais e muito mais.Skyrim Special Edition também traz todo o poder de Bethesda Game Studios Creations ao PC e às consolas. Novas missões, cenários, personagens, diálogos, armaduras, armas e muito mais: com Creations, não há limites para o que poderás encontrar.");
 		skyrim.setScenes(new java.util.ArrayList<>(java.util.List.of(
@@ -273,7 +274,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 				"Controle de Xbox"
 		)));
 		stardewValley.setDataLancamento(java.time.LocalDate.of(2016, 2, 26));
-		stardewValley.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(metroidvania)));
+		stardewValley.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(rpg, doisD, casual, mundoAberto)));
 		stardewValley.setAbout("Stardew Valley é um RPG de simulação agrícola onde você pode construir sua fazenda dos sonhos, explorar cavernas e formar relacionamentos com os habitantes da cidade.");
 		stardewValley.setDescricao("Você herdou a antiga fazenda de seu avô em Stardew Valley. Armado com ferramentas de segunda mão e algumas moedas, você começa sua nova vida. Você conseguirá transformar os campos cobertos de mato em uma fazenda próspera? Não será fácil. Desde que a Joja Corporation chegou à cidade, os antigos modos de vida desapareceram. O centro comunitário, outrora o centro mais vibrante da cidade, está agora em ruínas. Mas o vale parece cheio de oportunidades. Com um pouco de dedicação, você pode ser quem restaura Stardew Valley à grandeza!");
 		stardewValley.setScenes(new java.util.ArrayList<>(java.util.List.of(
@@ -304,7 +305,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 		celeste.setCover("/celeste-cover.jpg");
 		celeste.setDesconto(0);
 		celeste.setDesenvolvedora("Maddy Makes Games");
-		celeste.setClassificacao(new java.util.ArrayList<>(java.util.List.of("Livre", "Desafiante")));
+		celeste.setClassificacao(new java.util.ArrayList<>(java.util.List.of("Livre", "Desafiador")));
 		celeste.setIdiomas(new java.util.HashSet<>(java.util.Arrays.asList(ingles, portugues, espanhol, alemao, frances, italiano, japones, coreano)));
 		celeste.setCompatibilidade(new java.util.ArrayList<>(java.util.List.of(
 				"Um jogador",
@@ -316,7 +317,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 				"Controle de Xbox"
 		)));
 		celeste.setDataLancamento(java.time.LocalDate.of(2018, 1, 25));
-		celeste.setCategories(new java.util.HashSet<>(java.util.Arrays.asList()));
+		celeste.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(plataforma, doisD, anime, quebraCabeca)));
 		celeste.setAbout("Ajude Madeline a sobreviver aos seus demônios internos em sua jornada até o topo da montanha Celeste, neste jogo de plataforma super apertado e feito à mão.");
 		celeste.setDescricao("Celeste é um jogo de plataforma de ação e aventura que desafia os jogadores a escalar uma montanha cheia de perigos e mistérios. Com controles precisos e uma história emocionante, Celeste é uma experiência inesquecível para jogadores de todas as idades.");
 		celeste.setScenes(new java.util.ArrayList<>(java.util.List.of(
@@ -344,7 +345,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 		// The Witcher
 		Game theWitcher3 = new Game();
 		theWitcher3.setTitle("The Witcher 3: Wild Hunt");
-		theWitcher3.setPreco(new java.math.BigDecimal("79.99"));
+		theWitcher3.setPreco(new java.math.BigDecimal("129.99"));
 		theWitcher3.setCover("/the-witcher-3-cover.jpg");
 		theWitcher3.setDesconto(10);
 		theWitcher3.setDesenvolvedora("CD Projekt Red");
@@ -360,7 +361,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 				"Controle de Xbox"
 		)));
 		theWitcher3.setDataLancamento(java.time.LocalDate.of(2015, 5, 19));
-		theWitcher3.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(mundoAberto, historiaRica, rpg)));
+		theWitcher3.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(mundoAberto, historiaRica, rpg, aventura, fantasia)));
 		theWitcher3.setAbout("The Witcher 3: Wild Hunt é um RPG de mundo aberto com uma história rica e envolvente.");
 		theWitcher3.setDescricao("Em The Witcher 3: Wild Hunt, você assume o papel de Geralt de Rívia, um caçador de monstros profissional em busca de sua filha adotiva desaparecida, que está sendo perseguida pela Caçada Selvagem, uma força sobrenatural e destrutiva.");
 		theWitcher3.setScenes(new java.util.ArrayList<>(java.util.List.of(
@@ -391,7 +392,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 		portal2.setCover("/portal-2-cover.jpg");
 		portal2.setDesconto(0);
 		portal2.setDesenvolvedora("Valve");
-		portal2.setClassificacao(new java.util.ArrayList<>(java.util.List.of("Livre", "Quebra Cabeça")));
+		portal2.setClassificacao(new java.util.ArrayList<>(java.util.List.of("Livre")));
 		portal2.setIdiomas(new java.util.HashSet<>(java.util.Arrays.asList(ingles, portugues, espanhol, alemao, frances, italiano, japones, coreano, chines)));
 		portal2.setCompatibilidade(new java.util.ArrayList<>(java.util.List.of(
 				"Um jogador",
@@ -404,7 +405,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 				"Controle de Xbox"
 		)));
 		portal2.setDataLancamento(java.time.LocalDate.of(2011, 4, 18));
-		portal2.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(quebraCabeca, ficcaoCientifica)));
+		portal2.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(quebraCabeca, ficcaoCientifica, plataforma, cooperativo, aventura)));
 		portal2.setAbout("Portal 2 é um jogo de quebra-cabeça e ficção científica que desafia sua mente.");
 		portal2.setDescricao("Portal 2 expande a jogabilidade inovadora do original com novos elementos de quebra-cabeça, uma história envolvente e um modo cooperativo que redefine o gênero.");
 		portal2.setScenes(new java.util.ArrayList<>(java.util.List.of(
@@ -435,7 +436,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 		deadByDaylight.setCover("/dead-by-daylight-cover.jpg");
 		deadByDaylight.setDesconto(0);
 		deadByDaylight.setDesenvolvedora("Behaviour Interactive");
-		deadByDaylight.setClassificacao(new java.util.ArrayList<>(java.util.List.of("18 anos", "Horror", "Multijogador")));
+		deadByDaylight.setClassificacao(new java.util.ArrayList<>(java.util.List.of("18 anos")));
 		deadByDaylight.setIdiomas(new java.util.HashSet<>(java.util.Arrays.asList(ingles, portugues, espanhol, alemao, frances, italiano, japones, coreano, chines)));
 		deadByDaylight.setCompatibilidade(new java.util.ArrayList<>(java.util.List.of(
 				"Multijogador",
@@ -447,7 +448,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 				"Controle de Xbox"
 		)));
 		deadByDaylight.setDataLancamento(java.time.LocalDate.of(2016, 6, 14));
-		deadByDaylight.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(horror, cooperativo, sobrevivencia)));
+		deadByDaylight.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(horror, cooperativo, sobrevivencia, acao)));
 		deadByDaylight.setAbout("Dead By Daylight é um jogo de terror e sobrevivência multijogador.");
 		deadByDaylight.setDescricao("Dead By Daylight é um jogo de terror e sobrevivência multijogador onde um jogador assume o papel de um assassino brutal e os outros quatro jogam como sobreviventes tentando escapar do assassino e evitar serem capturados e mortos.");
 		deadByDaylight.setScenes(new java.util.ArrayList<>(java.util.List.of(
@@ -477,8 +478,8 @@ public class BackendSteamApplication implements CommandLineRunner {
 		repo.setPreco(new java.math.BigDecimal("35.99"));
 		repo.setCover("/repo-cover.jpg");
 		repo.setDesconto(20);
-		repo.setDesenvolvedora("Indie Dev");
-		repo.setClassificacao(new java.util.ArrayList<>(java.util.List.of("Livre", "Casual", "Quebra Cabeça")));
+		repo.setDesenvolvedora("Pixelated Milk");
+		repo.setClassificacao(new java.util.ArrayList<>(java.util.List.of("16 anos", "Violência")));
 		repo.setIdiomas(new java.util.HashSet<>(java.util.Arrays.asList(ingles, portugues, espanhol)));
 		repo.setCompatibilidade(new java.util.ArrayList<>(java.util.List.of(
 				"Um jogador",
@@ -488,9 +489,9 @@ public class BackendSteamApplication implements CommandLineRunner {
 				"Remote play"
 		)));
 		repo.setDataLancamento(java.time.LocalDate.of(2023, 3, 15));
-		repo.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(casual, quebraCabeca)));
-		repo.setAbout("REPO é um jogo casual e de quebra-cabeça com uma abordagem única.");
-		repo.setDescricao("REPO desafia os jogadores com quebra-cabeças criativos e uma jogabilidade relaxante, ideal para momentos casuais.");
+		repo.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(horror, cooperativo, acao, ficcaoCientifica, sobrevivencia, humor)));
+		repo.setAbout("R.E.P.O é um jogo de ação e sobrevivência em um mundo pós-apocalíptico cheio de desafios.");
+		repo.setDescricao("Em R.E.P.O, você assume o papel de um sobrevivente em um mundo devastado, enfrentando inimigos perigosos e resolvendo mistérios enquanto luta para reconstruir a civilização.");
 		repo.setScenes(new java.util.ArrayList<>(java.util.List.of(
 				"/repo-scene-1.jpg",
 				"/repo-scene-2.jpg",
@@ -525,7 +526,7 @@ public class BackendSteamApplication implements CommandLineRunner {
 				"Conquistas Steam"
 		)));
 		balatro.setDataLancamento(java.time.LocalDate.of(2024, 7, 10));
-		balatro.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(casual, estrategia)));
+		balatro.setCategories(new java.util.HashSet<>(java.util.Arrays.asList(casual, estrategia, roguelike, doisD)));
 		balatro.setAbout("Balatro é um jogo de estratégia baseado em cartas com uma jogabilidade inovadora.");
 		balatro.setDescricao("Balatro combina estratégia e construção de baralhos em um jogo de cartas único e desafiador.");
 		balatro.setScenes(new java.util.ArrayList<>(java.util.List.of(
@@ -548,53 +549,6 @@ public class BackendSteamApplication implements CommandLineRunner {
 		for (int i = 1; i <= 5; i++) {
 			achievementRepository.save(new Achievement("/conquista" + i + "_balatro.jpg", "Descricao generica", false, balatro));
 		}
-
-		// --- Mapping Categories to Games ---
-		hollowKnight.getCategories().add(fantasia);
-		hollowKnight.getCategories().add(historiaRica);
-		hollowKnight.getCategories().add(rpg);
-		gameRepository.save(hollowKnight);
-
-		marvelRivals.getCategories().add(acao);
-		marvelRivals.getCategories().add(anime);
-		marvelRivals.getCategories().add(cooperativo);
-		marvelRivals.getCategories().add(gratis);
-		gameRepository.save(marvelRivals);
-
-		terraria.getCategories().add(sobrevivencia);
-		terraria.getCategories().add(aventura);
-		terraria.getCategories().add(rpg);
-		gameRepository.save(terraria);
-
-		skyrim.getCategories().add(mundoAberto);
-		skyrim.getCategories().add(historiaRica);
-		skyrim.getCategories().add(rpg);
-		skyrim.getCategories().add(fantasia);
-		gameRepository.save(skyrim);
-
-		stardewValley.getCategories().add(casual);
-		stardewValley.getCategories().add(aventura);
-		stardewValley.getCategories().add(sobrevivencia);
-		stardewValley.getCategories().add(cooperativo);
-		gameRepository.save(stardewValley);
-
-		celeste.getCategories().add(plataforma);
-		celeste.getCategories().add(doisD);
-		celeste.getCategories().add(quebraCabeca);
-		celeste.getCategories().add(humor);
-		gameRepository.save(celeste);
-
-		theWitcher3.getCategories().add(mundoAberto);
-		theWitcher3.getCategories().add(historiaRica);
-		theWitcher3.getCategories().add(rpg);
-		theWitcher3.getCategories().add(fantasia);
-		gameRepository.save(theWitcher3);
-
-		portal2.getCategories().add(quebraCabeca);
-		portal2.getCategories().add(ficcaoCientifica);
-		portal2.getCategories().add(humor);
-		portal2.getCategories().add(cooperativo);
-		gameRepository.save(portal2);
 
 		userService.adicionarUsuarioBase();
 	}
