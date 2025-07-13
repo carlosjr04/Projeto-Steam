@@ -31,11 +31,11 @@ const JogoCard: React.FC<JogoCardProps> = ({ jogo }) => {
             <span className={styles.developer}>{jogo.desenvolvedora}</span>
           </div>
           <div className={styles.tagsRow}>
-            {jogo.categorias.map((cat) => (
-              <span key={cat} className={styles.tag}>{cat}</span>
+            {jogo.categorias.map((cat, index) => (
+              <span key={`${cat}-${index}`} className={styles.tag}>{cat}</span>
             ))}
-            {jogo.classificacao.map((cls) => (
-              <span key={cls} className={styles.tag}>{cls}</span>
+            {jogo.classificacao.map((cls, index) => (
+              <span key={`${cls}-${index}`} className={styles.tag}>{cls}</span>
             ))}
           </div>
           <div className={styles.aboutRow}>{jogo.about}</div>
