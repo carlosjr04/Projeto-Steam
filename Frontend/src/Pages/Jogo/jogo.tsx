@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { games, type Jogo } from "../../Utils/gameData";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import style from "./style.module.css";
@@ -13,14 +12,16 @@ import Compatibilidade from "../../components/JogoComponents/Compatibilidade/Com
 import Idioma from "../../components/JogoComponents/Idioma/Idioma";
 import Classificacao from "../../components/JogoComponents/Classificacao/Classificacao";
 import Conquistas from "../../components/JogoComponents/Conquista/Conquista";
+import { useGetGameId } from "../../hooks/Games/useGetGameId";
 
 export default function Jogo() {
   const { jogoID } = useParams();
-  const [jogo, setJogo] = useState<Jogo | null>(null);
+  const {game,loading,error} = useGetGameId(jogoID ?? "")
   const { paginaAtual, avancar, voltar } = useCarrosselStore();
+  console.log(game)
 
   function getHighDef(): string {
-    const highResSrc = jogo?.exemplo[paginaAtual].replace(
+    const highResSrc = game?.exemplo[paginaAtual].replace(
       /(\d+)x(\d+)/,
       "600x338"
     );
@@ -56,14 +57,7 @@ export default function Jogo() {
       carousel?.removeEventListener("slide.bs.carousel", handleSlide);
     };
   }, [avancar, voltar]);
-  useEffect(() => {
-    const jogoTemp = games.find((jogo) => jogo.id === jogoID);
-    if (jogoTemp) {
-      setJogo(jogoTemp);
-    } else {
-      setJogo(null);
-    }
-  }, [jogoID]);
+  
 
   return (
     <div>
@@ -85,17 +79,17 @@ export default function Jogo() {
                   className={`breadcrumb-item ${style["caminho-jogo"]}`}
                   aria-current="page"
                 >
-                  {jogo?.categorias[1]}
+                  {game?.categorias}
                 </li>
                 <li
                   className={`breadcrumb-item ${style["caminho-jogo"]}`}
                   aria-current="page"
                 >
-                  {jogo?.title}
+                  {game?.title}
                 </li>
               </ol>
             </nav>
-            <h1 className={style["titulo-jogo"]}>{jogo?.title}</h1>
+            <h1 className={style["titulo-jogo"]}>{game?.title}</h1>
           </div>
 
           <img
@@ -116,19 +110,19 @@ export default function Jogo() {
                 className="carousel-item active"
                 style={{ backgroundColor: "transparent" }}
               >
-                {jogo ? <CarrosselJogoUnd exemplo={jogo.exemplo} /> : null}
+                {game ? <CarrosselJogoUnd exemplo={game.exemplo} /> : null}
               </div>
               <div className="carousel-item ">
-                {jogo ? <CarrosselJogoUnd exemplo={jogo.exemplo} /> : null}
+                {game ? <CarrosselJogoUnd exemplo={game.exemplo} /> : null}
               </div>
               <div className="carousel-item ">
-                {jogo ? <CarrosselJogoUnd exemplo={jogo.exemplo} /> : null}
+                {game ? <CarrosselJogoUnd exemplo={game.exemplo} /> : null}
               </div>
               <div className="carousel-item ">
-                {jogo ? <CarrosselJogoUnd exemplo={jogo.exemplo} /> : null}
+                {game ? <CarrosselJogoUnd exemplo={game.exemplo} /> : null}
               </div>
               <div className="carousel-item ">
-                {jogo ? <CarrosselJogoUnd exemplo={jogo.exemplo} /> : null}
+                {game ? <CarrosselJogoUnd exemplo={game.exemplo} /> : null}
               </div>
             </div>
 
@@ -176,11 +170,11 @@ export default function Jogo() {
 
         <div className={style["infos-direita"]} style={{ minWidth: "30%" }}>
           <div className={style["imagem-direita"]}>
-            <img src={jogo?.cover} alt="" />
+            <img src={game?.cover} alt="" />
           </div>
 
           <div className={style["texto-direita"]}>
-            <p>{jogo?.about}</p>
+            <p>{game?.about}</p>
             <br />
             <span className={style["analise"]}>
               Análise Recentes:{" "}
@@ -201,28 +195,21 @@ export default function Jogo() {
               style={{ marginTop: "0.5rem", marginBottom: "1rem" }}
             >
               Data de lançamento:{" "}
-              <span>{`${jogo?.DataLancamento.getDate()
-                .toString()
-                .padStart(2, "0")}/${jogo?.DataLancamento.getMonth()
-                .toString()
-                .padStart(
-                  2,
-                  "0"
-                )}/${jogo?.DataLancamento.getFullYear()}`}</span>
+              <span>{`${game?.dataLancamento}/${game?.dataLancamento}`}</span>
             </span>
             <br />
             <br />
             <span className={style["analise"]}>
               Desenvolvedor:{" "}
               <span className={style["analise-azul"]}>
-                {jogo?.desenvolvedora}
+                {game?.desenvolvedora}
               </span>
             </span>
             <br />
             <span className={style["analise"]}>
               Distribuidora:{" "}
               <span className={style["analise-azul"]}>
-                {jogo?.desenvolvedora}
+                {game?.desenvolvedora}
               </span>
             </span>
             <br />
@@ -231,7 +218,7 @@ export default function Jogo() {
               Marcadores populares para este produto:
             </span>
             <br />
-            {jogo?.categorias.map((categoria) => (
+            {game?.categorias.map((categoria) => (
               <button className={style["botao-genero"]}>{categoria}</button>
             ))}
             <button className={style["botao-genero"]}>+</button>
@@ -240,15 +227,15 @@ export default function Jogo() {
       </div>
       <div className={style["jogo-bottom"]}>
         <div className={style["esquerda"]}>
-          {jogo ? <CompraJogo id={jogo.id} price={jogo?.price} title={jogo?.title} /> : null}
-          {jogo ? <SobreJogo descricao={jogo?.descricao} /> : null}
-          {jogo ? <Requisitos /> : null}
+          {game ? <CompraJogo id={game.id} price={game?.price} title={game?.title} /> : null}
+          {game ? <SobreJogo descricao={game?.descricao} /> : null}
+          {game ? <Requisitos /> : null}
         </div>
         <div className={style["direita"]}>
-          {jogo ? <Compatibilidade compatibilidades={jogo.compatibilidade} /> : null}
-          {jogo ? <Idioma idiomas={jogo.idiomas} /> : null}
-          {jogo ? <Classificacao classificacao={jogo.classificacao} /> : null}
-          {jogo ? <Conquistas conquistas={jogo.conquista} /> : null}
+          {game ? <Compatibilidade compatibilidades={game.compatibilidade} /> : null}
+          {game ? <Idioma idiomas={game.idiomas} /> : null}
+          {game ? <Classificacao classificacao={game.classificacao} /> : null}
+          {game ? <Conquistas conquistas={game.conquista} /> : null}
         </div>
       </div>
     </div>

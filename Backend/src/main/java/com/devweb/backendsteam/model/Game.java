@@ -1,15 +1,28 @@
 package com.devweb.backendsteam.model;
 
-import com.devweb.backendsteam.dto.AchievementDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import com.devweb.backendsteam.dto.AchievementDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,12 +34,13 @@ import lombok.ToString;
 @ToString
 @Entity
 public class Game {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String image;
-	private String titulo;
+// Removido campo titulo, usar apenas title
 	private String desenvolvedora;
 	private String publicadora;
 
@@ -34,38 +48,29 @@ public class Game {
 	private LocalDate dataLancamento;
 	private BigDecimal preco;
 	private double avaliacao;
-	private String descricao;
+
 	private boolean multiplayer;
 	private String classificacaoEtaria;
 	private String idioma;
 
+	@Column(columnDefinition = "TEXT")
+	private String descricao;
+
 	@ManyToMany
 	@JoinTable(
-		name = "game_category",
-		joinColumns = @JoinColumn(name = "game_id"),
-		inverseJoinColumns = @JoinColumn(name = "category_id")
+			name = "game_category",
+			joinColumns = @JoinColumn(name = "game_id"),
+			inverseJoinColumns = @JoinColumn(name = "category_id")
 	)
 	private Set<Category> categories = new HashSet<>();
 
-	@ManyToMany
-	@JoinTable(
-		name = "game_genre",
-		joinColumns = @JoinColumn(name = "game_id"),
-		inverseJoinColumns = @JoinColumn(name = "genre_id"))
-	private Set<Genre> genres = new HashSet<>();
+	// Removidos relacionamentos de genero e plataforma
 
 	@ManyToMany
 	@JoinTable(
-		name = "game_platform",
-		joinColumns = @JoinColumn(name = "game_id"),
-		inverseJoinColumns = @JoinColumn(name = "platform_id"))
-	private Set<Platform> platforms = new HashSet<>();
-
-	@ManyToMany
-	@JoinTable(
-		name = "game_language",
-		joinColumns = @JoinColumn(name = "game_id"),
-		inverseJoinColumns = @JoinColumn(name = "language_id"))
+			name = "game_language",
+			joinColumns = @JoinColumn(name = "game_id"),
+			inverseJoinColumns = @JoinColumn(name = "language_id"))
 	private Set<Language> languages = new HashSet<>();
 
 	@JsonIgnore
@@ -114,10 +119,9 @@ public class Game {
 
 	public Game(
 		String image,
-		String titulo,
+		String title,
 		String desenvolvedora,
 		String publicadora,
-		Set<Genre> genres,
 		String plataforma,
 		LocalDate dataLancamento,
 		BigDecimal preco,
@@ -126,14 +130,12 @@ public class Game {
 		boolean multiplayer,
 		String classificacaoEtaria,
 		String idioma,
-		Set<Platform> platforms,
 		Set<Language> languages
 	) {
 		this.image = image;
-		this.titulo = titulo;
+		this.title = title;
 		this.desenvolvedora = desenvolvedora;
 		this.publicadora = publicadora;
-		this.genres = genres;
 		this.plataforma = plataforma;
 		this.dataLancamento = dataLancamento;
 		this.preco = preco;
@@ -142,7 +144,6 @@ public class Game {
 		this.multiplayer = multiplayer;
 		this.classificacaoEtaria = classificacaoEtaria;
 		this.idioma = idioma;
-		this.platforms = platforms;
 		this.languages = languages;
 	}
 
@@ -150,6 +151,7 @@ public class Game {
 	public Set<Language> getIdiomas() {
 		return this.languages;
 	}
+
 	@com.fasterxml.jackson.annotation.JsonProperty("idiomas")
 	public void setIdiomas(Set<Language> idiomas) {
 		this.languages = idiomas;

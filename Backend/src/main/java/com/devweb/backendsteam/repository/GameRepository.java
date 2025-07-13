@@ -26,8 +26,6 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 	@Query("""
 		select distinct g from Game g
 		left join fetch g.categories
-		left join fetch g.genres
-		left join fetch g.platforms
 		left join fetch g.languages
 		where g.id = :id
 	""")
@@ -35,8 +33,8 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
 	@Query(
 		value =
-			"select p from Game p left join fetch p.categories where p.titulo like :nome order by p.id",
-		countQuery = "select count(p) from Game p where p.titulo like :nome")
+			"select p from Game p where p.title like :nome order by p.id",
+		countQuery = "select count(p) from Game p where p.title like :nome")
 	Page<Game> recuperarGamesComPaginacao(Pageable pageable, @Param("nome") String nome);
 
 	@Query(
@@ -45,4 +43,9 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 			+ "where c.slug = :slugCategory "
 			+ "order by p.id")
 	List<Game> recuperarGamesPorSlugCategory(@Param("slugCategory") String slugCategory);
+	
+	@Query(
+		value = "select p from Game p left join p.categories c where p.title like :nome and c.slug = :slugCategory order by p.id",
+		countQuery = "select count(p) from Game p left join p.categories c where p.title like :nome and c.slug = :slugCategory")
+	Page<Game> recuperarGamesComPaginacaoPorCategoria(Pageable pageable, @Param("nome") String nome, @Param("slugCategory") String slugCategory);
 }

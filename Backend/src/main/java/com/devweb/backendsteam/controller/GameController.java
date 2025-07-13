@@ -23,6 +23,17 @@ public class GameController {
 		return gameService.recuperarGames().stream().map(GameDTO::new).toList();
 	}
 
+	// Rota para retornar um jogo aleatório
+	@GetMapping("random")
+	public GameDTO recuperarGameAleatorio() {
+		List<Game> games = gameService.recuperarGames();
+		if (games.isEmpty()) {
+			throw new RuntimeException("Nenhum jogo cadastrado.");
+		}
+		int idx = (int) (Math.random() * games.size());
+		return new GameDTO(games.get(idx));
+	}
+
 	// Requisição do tipo GET para http://localhost:8080/games/1
 	@GetMapping("{idGame}")
 	public GameDTO recuperarGamePorId(@PathVariable("idGame") long id) {
@@ -65,10 +76,11 @@ public class GameController {
 	@GetMapping("paginacao")
 	public ResultadoPaginado<GameDTO> recuperarGamesComPaginacao(
 		@RequestParam(value = "pagina", defaultValue = "0") int pagina,
-		@RequestParam(value = "tamanho", defaultValue = "5") int tamanho,
-		@RequestParam(value = "nome", defaultValue = "") String nome) {
+		@RequestParam(value = "tamanho", defaultValue = "4") int tamanho,
+		@RequestParam(value = "nome", defaultValue = "") String nome,
+		@RequestParam(value = "slugCategory", required = false) String slugCategory) {
 		Pageable pageable = PageRequest.of(pagina, tamanho);
-		Page<Game> page = gameService.recuperarGamesComPaginacao(pageable, nome);
+		Page<Game> page = gameService.recuperarGamesComPaginacao(pageable, nome, slugCategory);
 		ResultadoPaginado<GameDTO> resultadoPaginado =
 			new ResultadoPaginado<>(
 				page.getTotalElements(), page.getTotalPages(), page.getNumber(), page.getContent().stream().map(GameDTO::new).toList());
