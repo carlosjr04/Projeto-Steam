@@ -1,9 +1,15 @@
 package com.devweb.backendsteam.model;
 
-import com.devweb.backendsteam.model.EmbeddedIds.OwnedGameId;
-import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import com.devweb.backendsteam.model.EmbeddedIds.OwnedGameId;
+
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +21,8 @@ import lombok.ToString;
 @ToString
 @Entity
 public class OwnedGame {
-	@EmbeddedId private OwnedGameId id;
+	@EmbeddedId 
+	private OwnedGameId id;
 
 	@ManyToOne
 	@MapsId("userId")

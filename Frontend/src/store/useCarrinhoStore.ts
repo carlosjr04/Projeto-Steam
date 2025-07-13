@@ -30,7 +30,7 @@ export const useCarrinhoStore = create<CarrinhoState>()(
       },
 
       remover: (id) => {
-        const index = get().jogos.findIndex((j) => j.id === id);
+        const index = get().jogos.findIndex((j) => j.id.toString() === id);
         if (index === -1) return;
 
         const jogosAtualizados = [...get().jogos];

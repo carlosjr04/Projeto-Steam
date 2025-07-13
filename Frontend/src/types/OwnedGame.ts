@@ -1,7 +1,8 @@
 import type { Game } from "./Game";
 
 export interface OwnedGame{
-    game: Game;
+    userId:string
+    gameId: number;
     price:number
-    boughtAt:Date
+    boughtAt: string;
 }

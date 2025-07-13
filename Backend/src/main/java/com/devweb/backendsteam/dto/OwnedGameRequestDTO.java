@@ -3,19 +3,26 @@ package com.devweb.backendsteam.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.devweb.backendsteam.model.Game;
+public class OwnedGameRequestDTO {
 
-public class GameCompraDTO {
-    private Game game;
+    private String userId;
+   private Long gameId;
     private LocalDate boughtAt;
     private BigDecimal price;
 
-    public Game getGame() {
-        return game;
+    public Long getGameId() {
+        return gameId;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public void setgameId(Long game) {
+        this.gameId = game;
+    }
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public LocalDate getBoughtAt() {

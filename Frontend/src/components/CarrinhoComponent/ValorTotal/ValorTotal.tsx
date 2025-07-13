@@ -4,6 +4,13 @@ import style from "./style.module.css";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import { useAuthStore } from "../../../store/authStore";
 import { useComprar } from "../../../hooks/User/useComprar";
+import type { OwnedGame } from "../../../types/OwnedGame";
+import axios from "axios";
+
+interface ComprarParams {
+  OwnedGame: OwnedGame;
+  token: string;
+}
 
 export default function ValorTotal() {
   const valorTotal = useCarrinhoStore((state) => state.valorTotal);
@@ -13,34 +20,72 @@ export default function ValorTotal() {
   const clear = useCarrinhoStore((state) => state.clear);
   const comprarMutation = useComprar();
 
-  async function comprar() {
-    const confirmar = confirm("Deseja realizar a compra?");
-    if (!confirmar) return;
-
-    if (!userId || !token) {
-      alert("Usuário não autenticado.");
-      return;
-    }
-
-    try {
-      await Promise.all(
-        jogos.map((jogo) => {
-          if (!jogo) return;
-          return comprarMutation.mutateAsync({
-            userId,
-            jogo: { ...jogo, id: Number(jogo.id) },
-            token,
-          });
-        })
-      );
-
-      alert("Compra realizada com sucesso!");
-      clear();
-    } catch (error) {
-      console.error("Erro ao realizar a compra:", error);
-      alert("Ocorreu um erro ao comprar os jogos.");
-    }
+  async function comprarJogo({ OwnedGame, token }: ComprarParams) {
+    return axios.patch(
+      `http://localhost:8080/users/${OwnedGame.userId}/add-game`,
+      {
+        userId: OwnedGame.userId,
+        gameId: Number(OwnedGame.gameId),
+        boughtAt: new Date().toISOString().substring(0, 10), // formato ISO: yyyy-MM-dd
+        price: OwnedGame.price,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   }
+  async function comprar() {
+  const confirmar = confirm("Deseja realizar a compra?");
+  if (!confirmar) return;
+
+  if (!userId || !token) {
+    alert("Usuário não autenticado.");
+    return;
+  }
+
+  if (!jogos || jogos.length === 0) {
+    alert("Nenhum jogo selecionado para compra.");
+    return;
+  }
+
+  console.log(token);
+
+  try {
+    // Filtra jogos válidos e cria array de promises de requisição PATCH
+    const promises = jogos
+      .filter(jogo => jogo) // filtra jogos não nulos/undefined
+      .map(jogo => {
+        const ownedGame: OwnedGame = {
+          boughtAt: new Date().toISOString().substring(0, 10),
+          gameId: Number(jogo.id),
+          price: jogo.price,
+          userId: userId,
+        };
+        console.log(ownedGame)
+        return axios.patch(
+          `http://localhost:8080/users/add-game`,
+          ownedGame, // envia o objeto diretamente
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      });
+
+    // Aguarda todas as requisições finalizarem
+    await Promise.all(promises);
+
+    alert("Compra realizada com sucesso!");
+    clear();
+  } catch (error) {
+    console.error("Erro ao realizar a compra:", error);
+    alert("Ocorreu um erro ao comprar os jogos.");
+  }
+}
+
 
   return (
     <div className={style.container}>

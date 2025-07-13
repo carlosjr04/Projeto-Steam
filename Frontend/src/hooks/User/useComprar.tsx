@@ -1,22 +1,25 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import type { OwnedGame } from "../../types/OwnedGame";
 
-type ComprarParams = {
-  userId: string;
-  jogo: { id: number; price: number };
+interface ComprarParams {
+  OwnedGame: OwnedGame
   token: string;
-};
+}
 
-async function comprarJogo({ userId, jogo, token }: ComprarParams) {
+async function comprarJogo({ OwnedGame, token }: ComprarParams) {
   return axios.patch(
-    `http://localhost:8080/users/${userId}/add-game`,
+    `http://localhost:8080/users/${OwnedGame.userId}/add-game`,
     {
-      game: { id: jogo.id },
-      boughtAt: new Date().toISOString().substring(0, 10),
-      price: jogo.price,
+      userId: OwnedGame.userId,
+      gameId: OwnedGame.gameId,
+      boughtAt: new Date().toISOString().substring(0, 10), // formato ISO: yyyy-MM-dd
+      price: OwnedGame.price,
     },
     {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 }

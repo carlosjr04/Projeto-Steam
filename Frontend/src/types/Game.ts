@@ -1,7 +1,7 @@
 import type { Achievement } from "./Achievement";
 
 export interface Game {
-  id: string; // pode ser number no backend, mas está vindo como string aqui
+  id: number; 
   title: string;
   about: string;
   avaliacao: number;
