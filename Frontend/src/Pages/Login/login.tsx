@@ -18,10 +18,16 @@ export default function Login() {
   const { mutate: login, isPending, isError, error } = useLogin();
 
   const aoEnviar = (dados: { email: string; password: string }) => {
-    login(dados, {
-      onSuccess: () => navigate("/"),
-    });
-  };
+  login(dados, {
+    onSuccess: () => {
+      navigate("/");
+    },
+    onError: (error) => {
+      alert("E-mail ou senha inválidos");
+      console.error(error);
+    },
+  });
+};
   return (
     <div>
       <Header />

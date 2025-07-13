@@ -2,35 +2,34 @@ import style from "./style.module.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
-import { games, type Jogo } from "../../../Utils/gameData";
+import { useGetGameId } from "../../../hooks/Games/useGetGameId";
 
 interface Props {
   id: string;
-  title: string;
-  price: number;
+ 
 }
 
 export default function CompraJogo(jogo: Props) {
   const jogos = useCarrinhoStore((state) => state.jogos);
   const adicionarJogo = useCarrinhoStore((state) => state.adicionar);
+  const {game} = useGetGameId(jogo.id ?? "")
 
-  function pegarJogoId(id: string): Jogo | undefined {
-    const jogoEncontrado = games.find((jogo) => jogo.id == id);
-    const jogoDuplicado = jogos.find((jogo) => jogo.id === jogoEncontrado?.id);
-    return jogoDuplicado ? undefined : jogoEncontrado;
+  function pegarJogoId(id: string): boolean {
+    const jogoEncontrado = jogos.find((jogo) => jogo.id == id);
+    return jogoEncontrado ? false : true;
   }
 
   
   return (
     <div className={style["div-compra"]}>
-      <h1>Comprar {jogo.title}</h1>
+      <h1>Comprar {game?.title}</h1>
       <div className={style["carrinho"]}>
-        <p>{jogo.price>0?`R$${jogo.price}`:"Gratuito"}</p>
+        <p>{game && game?.price>0 ?`R$${game?.price}`:"Gratuito"}</p>
         <button
           type="button"
           onClick={() => {
             if (pegarJogoId(jogo.id)) {
-              adicionarJogo(pegarJogoId(jogo.id));
+              adicionarJogo(game);
             }
           }}
           className={style["botao-compra"]}

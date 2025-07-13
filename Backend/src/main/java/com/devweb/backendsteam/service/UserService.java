@@ -1,13 +1,15 @@
 package com.devweb.backendsteam.service;
 
-import com.devweb.backendsteam.model.User;
-import com.devweb.backendsteam.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.devweb.backendsteam.model.User;
+import com.devweb.backendsteam.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -35,6 +37,7 @@ public class UserService {
 
 	public User adicionarUsuarioBase() {
 		User user = new User();
+		user.setUserId("1");
 		user.setName("Admin");
 		user.setUsername("admin");
 		user.setEmail("admin@backendsteam.com");

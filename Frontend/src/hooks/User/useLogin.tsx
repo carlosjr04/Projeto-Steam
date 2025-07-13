@@ -10,9 +10,14 @@ interface LoginRequest {
 
 interface TokenResponse {
   token: string;
-  type: string;
-  userId: number;
-  cargo: 'ADMIN' | 'CLIENTE';
+  user: {
+    userId: string;
+    email: string;
+    name: string;
+    username: string;
+    role: 'ADMIN' | 'CLIENTE';
+    // Adicione mais campos se for usar no front
+  };
 }
 
 export function useLogin() {
@@ -26,8 +31,8 @@ export function useLogin() {
     onSuccess: (data) => {
       setAuthenticated({
         token: data.token,
-        userId: data.userId,
-        cargo: data.cargo,
+        userId: data.user.userId, 
+        cargo: data.user.role,
       });
     },
   });
