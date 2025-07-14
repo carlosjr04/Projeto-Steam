@@ -1,11 +1,19 @@
 package com.devweb.backendsteam.controller;
 
-import com.devweb.backendsteam.model.Wishlist;
-import com.devweb.backendsteam.model.EmbeddedIds.WishlistId;
-import com.devweb.backendsteam.service.WishlistService;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.devweb.backendsteam.model.Wishlist;
+import com.devweb.backendsteam.service.WishlistService;
 
 @CrossOrigin("http://localhost:5173")
 @RestController
@@ -21,8 +29,7 @@ public class WishlistController {
 	}
 
 	@GetMapping("/user/{userId}/game/{gameId}")
-	public Wishlist buscarPorId(@PathVariable String userId, @PathVariable Long gameId) {
-		WishlistId id = new WishlistId(userId, gameId);
+	public Wishlist buscarPorId(@PathVariable Long id) {
 		return wishlistService.buscarPorId(id);
 	}
 
@@ -37,8 +44,7 @@ public class WishlistController {
 	}
 
 	@DeleteMapping("/user/{userId}/game/{gameId}")
-	public void remover(@PathVariable String userId, @PathVariable Long gameId) {
-		WishlistId id = new WishlistId(userId, gameId);
+	public void remover(@PathVariable Long id) {
 		wishlistService.remover(id);
 	}
 }

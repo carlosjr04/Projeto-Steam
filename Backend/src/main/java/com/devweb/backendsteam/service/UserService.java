@@ -9,7 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.devweb.backendsteam.dto.OwnedGameRequestDTO;
-import com.devweb.backendsteam.model.EmbeddedIds.OwnedGameId;
 import com.devweb.backendsteam.model.Game;
 import com.devweb.backendsteam.model.OwnedGame;
 import com.devweb.backendsteam.model.User;
@@ -92,10 +91,7 @@ public class UserService {
 
         OwnedGame ownedGame = new OwnedGame();
 
-        String userIdTemp = user.getUserId();
-        OwnedGameId ownedGameId = new OwnedGameId(userIdTemp, game.getId());
 
-        ownedGame.setId(ownedGameId);
         ownedGame.setUser(user);
         ownedGame.setGame(game);
         ownedGame.setBoughtAt(dto.getBoughtAt());

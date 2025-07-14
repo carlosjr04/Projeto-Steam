@@ -1,8 +1,13 @@
 package com.devweb.backendsteam.model;
 
-import com.devweb.backendsteam.model.EmbeddedIds.WishlistId;
-import jakarta.persistence.*;
 import java.time.LocalDate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,15 +19,16 @@ import lombok.ToString;
 @ToString
 @Entity
 public class Wishlist {
-	@EmbeddedId private WishlistId id;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@ManyToOne
-	@MapsId("userId")
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 
 	@ManyToOne
-	@MapsId("gameId")
 	@JoinColumn(name = "game_id")
 	private Game game;
 
@@ -34,6 +40,5 @@ public class Wishlist {
 		this.game = game;
 		this.listedAt = listedAt;
 		this.priority = priority;
-		this.id = new WishlistId(user.getUserId(), game.getId());
 	}
 }

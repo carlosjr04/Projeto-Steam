@@ -1,11 +1,12 @@
 package com.devweb.backendsteam.service;
 
-import com.devweb.backendsteam.model.Wishlist;
-import com.devweb.backendsteam.model.EmbeddedIds.WishlistId;
-import com.devweb.backendsteam.repository.WishlistRepository;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.devweb.backendsteam.model.Wishlist;
+import com.devweb.backendsteam.repository.WishlistRepository;
 
 @Service
 public class WishlistService {
@@ -17,7 +18,7 @@ public class WishlistService {
 		return wishlistRepository.findAll();
 	}
 
-	public Wishlist buscarPorId(WishlistId id) {
+	public Wishlist buscarPorId(Long id) {
 		return wishlistRepository.findById(id).orElse(null);
 	}
 
@@ -29,7 +30,7 @@ public class WishlistService {
 		return wishlistRepository.save(wishlist);
 	}
 
-	public void remover(WishlistId id) {
+	public void remover(Long id) {
 		wishlistRepository.deleteById(id);
 	}
 }

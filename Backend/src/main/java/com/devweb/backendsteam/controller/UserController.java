@@ -53,7 +53,7 @@ public class UserController {
         return userService.alterar(user);
     }
 
-    @PatchMapping("/add-game")
+    @PatchMapping("/addGame")
     public ResponseEntity<?> adicionarOwnedGame(@RequestBody OwnedGameRequestDTO dto) {
         try {
             userService.adicionarOwnedGame(dto);

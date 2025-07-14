@@ -9,7 +9,7 @@ interface ComprarParams {
 
 async function comprarJogo({ OwnedGame, token }: ComprarParams) {
   return axios.patch(
-    `http://localhost:8080/users/${OwnedGame.userId}/add-game`,
+    `http://localhost:8080/users/addGame`,
     {
       userId: OwnedGame.userId,
       gameId: OwnedGame.gameId,

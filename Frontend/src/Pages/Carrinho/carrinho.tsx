@@ -4,6 +4,7 @@ import style from "./style.module.css";
 import CarrinhoCard from "../../components/CarrinhoComponent/CarrinhoCard/CarrinhoCard";
 import ValorTotal from "../../components/CarrinhoComponent/ValorTotal/ValorTotal";
 import { useCarrinhoStore } from "../../store/useCarrinhoStore";
+import { useAuthStore } from "../../store/authStore";
 
 export default function Carrinho() {
  

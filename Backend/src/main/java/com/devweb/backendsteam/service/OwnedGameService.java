@@ -1,35 +1,93 @@
 package com.devweb.backendsteam.service;
 
-import com.devweb.backendsteam.model.OwnedGame;
-import com.devweb.backendsteam.model.EmbeddedIds.OwnedGameId;
-import com.devweb.backendsteam.repository.OwnedGameRepository;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.devweb.backendsteam.dto.OwnedGameRequestDTO;
+import com.devweb.backendsteam.model.EmbeddedIds.OwnedGameId;
+import com.devweb.backendsteam.model.Game;
+import com.devweb.backendsteam.model.OwnedGame;
+import com.devweb.backendsteam.model.User;
+import com.devweb.backendsteam.repository.GameRepository;
+import com.devweb.backendsteam.repository.OwnedGameRepository;
+import com.devweb.backendsteam.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class OwnedGameService {
 
-	@Autowired
-	private OwnedGameRepository ownedGameRepository;
+    @Autowired
+    private OwnedGameRepository ownedGameRepository;
 
-	public List<OwnedGame> listarTodos() {
-		return ownedGameRepository.findAll();
-	}
+    @Autowired
+    private UserRepository userRepository;
 
-	public OwnedGame buscarPorId(OwnedGameId id) {
-	return ownedGameRepository.findById(id).orElse(null);
-	}
+    @Autowired
+    private GameRepository gameRepository;
 
-	public List<OwnedGame> listarPorUsuario(String userId) {
-		return ownedGameRepository.findByUser_UserId(userId);
-	}
+    public List<OwnedGame> listarTodos() {
+        return ownedGameRepository.findAll();
+    }
 
-	public OwnedGame adicionar(OwnedGame ownedGame) {
-	return ownedGameRepository.save(ownedGame);
-	}
+    public OwnedGame buscarPorId(Long id) {
+        return ownedGameRepository.findById(id).orElse(null);
+    }
 
-	public void remover(OwnedGameId id) {
-	ownedGameRepository.deleteById(id);
-	}
+    public List<OwnedGame> listarPorUsuario(String userId) {
+        return ownedGameRepository.findByUser_UserId(userId);
+    }
+
+    @Transactional
+    public OwnedGame adicionar(OwnedGameRequestDTO ownedGameDto) {
+        try {
+            User user = userRepository.findByUserId(ownedGameDto.getUserId())
+                    .orElseThrow(() -> new RuntimeException("Usuário com ID " + ownedGameDto.getUserId() + " não encontrado."));
+
+            Game game = gameRepository.findById(ownedGameDto.getGameId())
+                    .orElseThrow(() -> new RuntimeException("Jogo com ID " + ownedGameDto.getGameId() + " não encontrado."));
+
+            // Verifica se o usuário já possui o jogo
+            boolean jaPossui = user.getOwnedGames()
+                    .stream()
+                    .anyMatch(ownedGame -> ownedGame.getGame().getId().equals(game.getId()));
+
+            if (jaPossui) {
+                throw new RuntimeException("Usuário já possui esse jogo.");
+            }
+
+            // Cria o ID composto
+            OwnedGameId ownedGameId = new OwnedGameId(ownedGameDto.getUserId(), ownedGameDto.getGameId());
+
+            // Cria o objeto
+            OwnedGame ownedGame = new OwnedGame();
+            ownedGame.setUser(user);
+            ownedGame.setGame(game);
+            ownedGame.setBoughtAt(ownedGameDto.getBoughtAt());
+            ownedGame.setPrice(ownedGameDto.getPrice());
+
+            // Salva no repositório
+            OwnedGame saved = ownedGameRepository.save(ownedGame);
+
+            // Atualiza a lista de jogos do usuário (opcional, depende do cascade)
+            user.getOwnedGames().add(saved);
+            userRepository.save(user);
+
+            return saved;
+
+        } catch (Exception e) {
+            // Log do erro (recomendo usar um logger real em produção)
+            System.err.println("Erro ao adicionar jogo ao usuário: " + e.getMessage());
+            e.printStackTrace();
+
+            // Lança exceção genérica controlada para evitar erro 500
+            throw new RuntimeException("Erro ao adicionar jogo ao usuário. Verifique os dados informados.");
+        }
+    }
+
+    public void remover(Long id) {
+        ownedGameRepository.deleteById(id);
+    }
 }

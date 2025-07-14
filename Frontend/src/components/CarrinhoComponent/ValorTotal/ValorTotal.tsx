@@ -34,7 +34,7 @@ export default function ValorTotal() {
     return;
   }
 
-  console.log(userId);
+  console.log(token);
 
   try {
     // Filtra jogos válidos e cria array de promises de requisição PATCH
@@ -48,9 +48,9 @@ export default function ValorTotal() {
           userId: userId,
         };
         console.log(ownedGame)
-        return axios.patch(
-          `http://localhost:8080/users/add-game`,
-          ownedGame, // envia o objeto diretamente
+        return axios.post(
+          `http://localhost:8080/owned-games`,
+          ownedGame, 
           {
             headers: {
               Authorization: `Bearer ${token}`,
