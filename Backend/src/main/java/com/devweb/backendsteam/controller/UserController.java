@@ -45,7 +45,6 @@ public class UserController {
 
     @PostMapping
     public User adicionar(@RequestBody User user) {
-        // user_id sempre será gerado no service
         return userService.adicionar(user);
     }
 

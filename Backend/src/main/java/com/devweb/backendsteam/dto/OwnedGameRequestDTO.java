@@ -14,7 +14,7 @@ public class OwnedGameRequestDTO {
         return gameId;
     }
 
-    public void setgameId(Long game) {
+    public void setGameId(Long game) {
         this.gameId = game;
     }
     public String getUserId() {

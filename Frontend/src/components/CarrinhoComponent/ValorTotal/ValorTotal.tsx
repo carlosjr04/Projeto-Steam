@@ -20,22 +20,6 @@ export default function ValorTotal() {
   const clear = useCarrinhoStore((state) => state.clear);
   const comprarMutation = useComprar();
 
-  async function comprarJogo({ OwnedGame, token }: ComprarParams) {
-    return axios.patch(
-      `http://localhost:8080/users/${OwnedGame.userId}/add-game`,
-      {
-        userId: OwnedGame.userId,
-        gameId: Number(OwnedGame.gameId),
-        boughtAt: new Date().toISOString().substring(0, 10), // formato ISO: yyyy-MM-dd
-        price: OwnedGame.price,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  }
   async function comprar() {
   const confirmar = confirm("Deseja realizar a compra?");
   if (!confirmar) return;
@@ -50,7 +34,7 @@ export default function ValorTotal() {
     return;
   }
 
-  console.log(token);
+  console.log(userId);
 
   try {
     // Filtra jogos válidos e cria array de promises de requisição PATCH

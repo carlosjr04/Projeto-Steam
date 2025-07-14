@@ -4,7 +4,7 @@ import style from "./style.module.css";
 import Header from "../../components/GlobalComponents/Header/header";
 import Footer from "../../components/GlobalComponents/Footer/footer";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/User/useLogin";
 
 export default function Login() {
@@ -151,9 +151,9 @@ export default function Login() {
           <div className={style["login_footer_row"]}>
             <div className={style["login_main_row"]}>
               <div className={style["headline"]}>Primeira vez no Steam?</div>
-              <a href="#" className={style["register_button"]}>
+              <Link to="/cadastro" className={style["register_button"]}>
                 <span>Cadastrar-se</span>
-              </a>
+              </Link>
             </div>
 
             <div className={style["login_aside_row"]}>

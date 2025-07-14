@@ -75,14 +75,14 @@ public class UserService {
     }
 
     @Transactional
-	public void adicionarOwnedGame(OwnedGameRequestDTO dto) {
-    User user = userRepository.findByUserId(dto.getUserId())
-        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    public void adicionarOwnedGame(OwnedGameRequestDTO dto) {
+        User user = userRepository.findByUserId(dto.getUserId())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-    Game game = gameRepository.findById(dto.getGameId())
-        .orElseThrow(() -> new RuntimeException("Jogo não encontrado"));
+        Game game = gameRepository.findById(dto.getGameId())
+                .orElseThrow(() -> new RuntimeException("Jogo não encontrado"));
 
-		boolean jaPossui = user.getOwnedGames()
+        boolean jaPossui = user.getOwnedGames()
                 .stream()
                 .anyMatch(ownedGame -> ownedGame.getGame().getId().equals(game.getId()));
 
@@ -90,22 +90,22 @@ public class UserService {
             throw new RuntimeException("Usuário já possui esse jogo.");
         }
 
-    OwnedGame ownedGame = new OwnedGame();
+        OwnedGame ownedGame = new OwnedGame();
 
-    OwnedGameId ownedGameId = new OwnedGameId(user.getUserId(),game.getId());
+        String userIdTemp = user.getUserId();
+        OwnedGameId ownedGameId = new OwnedGameId(userIdTemp, game.getId());
 
-    ownedGame.setId(ownedGameId);
-    ownedGame.setUser(user);
-    ownedGame.setGame(game);
-    ownedGame.setBoughtAt(dto.getBoughtAt());
-    ownedGame.setPrice(dto.getPrice());
+        ownedGame.setId(ownedGameId);
+        ownedGame.setUser(user);
+        ownedGame.setGame(game);
+        ownedGame.setBoughtAt(dto.getBoughtAt());
+        ownedGame.setPrice(dto.getPrice());
 
-    ownedGameRepository.save(ownedGame);
+        ownedGameRepository.save(ownedGame);
 
-    user.getOwnedGames().add(ownedGame);
-    userRepository.save(user);
-}
-
+        user.getOwnedGames().add(ownedGame);
+        userRepository.save(user);
+    }
 
     public Optional<User> buscarPorEmail(String email) {
         return userRepository.findByEmail(email);
