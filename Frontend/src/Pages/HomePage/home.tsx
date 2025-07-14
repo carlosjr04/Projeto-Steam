@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import CarrosselHome from "../../components/HomeComponents/CarrosselHome/carrosselHome";
 import CarrosselHomeSlide from "../../components/HomeComponents/CarrosselHomeSlide/CarrosselHomeSlide";
-import CarouselCategory from "../../components/HomeComponents/CategoriaCarrossel/CateforiaCarrossel";
+import CarouselCategory from "../../components/HomeComponents/CategoriaCarrossel/CategoriaCarrossel";
 import CategoriaSlide from "../../components/HomeComponents/CategoriaSlide/CategoriaSlide";
 import style from "./style.module.css";
 
@@ -11,7 +11,7 @@ export default function Home() {
       <CarrosselHome />
       <CarrosselHomeSlide />
 
-      <div className="d-none d-md-block">
+      <div className="d-none d-lg-block">
         <CarouselCategory />
       </div>
 

@@ -3,7 +3,7 @@ import type { Game } from "../../types/Game";
 import axios from "axios";
 import { ENV } from "../../env";
 
-export function useGetGameId(id:string) {
+export function useGetGameId(id: string) {
   const [game, setGames] = useState<Game | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -13,6 +13,7 @@ export function useGetGameId(id:string) {
       try {
         const response = await axios.get(`${ENV.API_URL}/games/${id}`);
         setGames(response.data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         setError(err.message || "Erro ao buscar jogos");
       } finally {
@@ -20,7 +21,7 @@ export function useGetGameId(id:string) {
       }
     };
     getGame();
-  }, []);
+  }, [id]);
 
   return { game, loading, error };
 }

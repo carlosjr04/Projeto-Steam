@@ -30,12 +30,10 @@ private List<AchievementDTO> conquista; // Conquista DTO
 	private double avaliacao;
 	private String classificacaoEtaria;
 	private String idiomaPrincipal;
-	private List<String> generos;
-	private List<String> plataformas;
 
 	public GameDTO(Game game) {
 		this.id = game.getId() != null ? game.getId().toString() : null;
-		this.title = game.getTitle() != null ? game.getTitle() : game.getTitulo();
+		this.title = game.getTitle();
 		this.price = game.getPreco() != null ? game.getPreco().doubleValue() : 0.0;
 		this.cover = game.getCover();
 		this.desconto = game.getDesconto();
@@ -56,7 +54,5 @@ private List<AchievementDTO> conquista; // Conquista DTO
 		this.avaliacao = game.getAvaliacao();
 		this.classificacaoEtaria = game.getClassificacaoEtaria();
 		this.idiomaPrincipal = game.getIdioma();
-		this.generos = game.getGenres() != null ? game.getGenres().stream().map(g -> g.getNome()).toList() : List.of();
-		this.plataformas = game.getPlatforms() != null ? game.getPlatforms().stream().map(p -> p.getNome()).toList() : List.of();
 	}
 }

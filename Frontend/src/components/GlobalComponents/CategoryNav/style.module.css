@@ -1,0 +1,194 @@
+.category-nav-container {
+  /* Estilos padrão para telas MENORES QUE 992px */
+  /* Ele ocupa espaço e empurra o conteúdo */
+  position: static; /* Ocupa espaço no fluxo normal do documento */
+  width: 100vw; /* Ocupa 100% da largura do pai (agora .category-dropdown-wrapper) */
+  background-color: #1a2a3a;
+  color: #c6d4df;
+  border-top: 1px solid #363c44;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: none; /* Não tem sombra quando ocupa espaço */
+  z-index: auto; /* Z-index automático quando ocupa espaço */
+}
+
+.category-nav-container.open {
+  display: block; /* Mostra quando a classe 'open' é aplicada */
+}
+
+.category-nav-content {
+  max-width: 940px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.category-nav-content h3 {
+  color: #ffffff;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #c6d4df;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  display: block;
+}
+
+.close-button:hover {
+  color: #ffffff;
+}
+
+.category-columns {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.category-column {
+  flex: 1;
+  min-width: unset;
+  max-width: 100%;
+  text-align: center;
+}
+
+.category-column h4 {
+  color: #8f98a0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  white-space: normal;
+}
+
+.category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-item {
+  margin-bottom: 5px;
+}
+
+.category-item a {
+  color: #c6d4df;
+  text-decoration: none;
+  padding: 3px 0;
+  display: block;
+  font-size: 0.9rem;
+  white-space: normal;
+}
+
+.category-item a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* Media query para telas MAIORES OU IGUAIS a 992px */
+@media (min-width: 992px) {
+  .category-nav-container {
+    /* Retorna a ser um dropdown flutuante (não ocupa espaço) */
+    position: absolute; /* Flutua sobre o conteúdo */
+    /* top: 100%; agora se refere ao .category-dropdown-wrapper */
+    top: 100%;
+    left: 0;
+    /* Ajuste a largura para que o dropdown cubra a largura da NavBar, não apenas o wrapper */
+    /* Você pode precisar de um valor fixo ou um calc() se a NavBar não tiver largura 100% */
+    width: 100%; /* Ocupa 100% da viewport width */
+    left: 50%; /* Centraliza o dropdown */
+    transform: translateX(-50%); /* Ajusta para centralizar */
+    
+    background-color: #1a2a3a;
+    border-top: 1px solid #363c44;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.6);
+    z-index: 1000;
+  }
+
+  .category-nav-content {
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .category-nav-content h3 {
+    text-align: left;
+    display: block;
+  }
+
+  .close-button {
+    display: block;
+  }
+
+  .category-columns {
+    flex-direction: row;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .category-column {
+    flex: 1;
+    min-width: 150px;
+    max-width: 25%;
+    text-align: left;
+  }
+
+  .category-column h4 {
+    white-space: nowrap;
+  }
+
+  .category-item a {
+    white-space: nowrap;
+  }
+}
+
+/* Mídias queries para telas menores (mantidas para responsividade) */
+@media (max-width: 992px) {
+  .category-columns {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .category-column {
+    flex-basis: 45%;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .category-nav-container {
+    padding: 15px;
+  }
+  .category-nav-content h3 {
+    font-size: 1.2rem;
+  }
+  .category-columns {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .category-column {
+    flex-basis: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .close-button {
+    font-size: 1.2rem;
+    top: 5px;
+    right: 5px;
+  }
+}
