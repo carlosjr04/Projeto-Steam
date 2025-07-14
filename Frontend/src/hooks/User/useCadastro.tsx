@@ -17,7 +17,7 @@ export function useCadastrarUsuario() {
   const mutation = useMutation({
     mutationFn: async (usuario: Usuario) => {
       console.log(usuario)
-      const response = await axios.post("http://localhost:8080/users", usuario);
+      const response = await axios.post("http://localhost:8080/users/cadastro", usuario);
       setLoading(false);
       return response.data;
     },

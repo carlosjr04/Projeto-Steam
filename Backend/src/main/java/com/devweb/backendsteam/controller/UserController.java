@@ -43,7 +43,7 @@ public class UserController {
         return userService.buscarPorUserId(userId);
     }
 
-    @PostMapping
+    @PostMapping("/cadastro")
     public User adicionar(@RequestBody User user) {
         return userService.adicionar(user);
     }
