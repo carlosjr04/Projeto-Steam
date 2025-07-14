@@ -1,9 +1,16 @@
 package com.devweb.backendsteam.model;
 
-import com.devweb.backendsteam.model.EmbeddedIds.OwnedGameId;
-import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,26 +22,27 @@ import lombok.ToString;
 @ToString
 @Entity
 public class OwnedGame {
-	@EmbeddedId private OwnedGameId id;
 
-	@ManyToOne
-	@MapsId("userId")
-	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
-	private User user;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@ManyToOne
-	@MapsId("gameId")
-	@JoinColumn(name = "game_id")
-	private Game game;
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
 
-	private LocalDate boughtAt;
-	private BigDecimal price;
+    @ManyToOne
+    @JoinColumn(name = "game_id")
+    private Game game;
 
-	public OwnedGame(User user, Game game, LocalDate boughtAt, BigDecimal price) {
-		this.user = user;
-		this.game = game;
-		this.boughtAt = boughtAt;
-		this.price = price;
-		this.id = new OwnedGameId(user.getUserId(), game.getId());
-	}
+    private LocalDate boughtAt;
+    private BigDecimal price;
+
+    public OwnedGame(User user, Game game, LocalDate boughtAt, BigDecimal price) {
+        this.user = user;
+        this.game = game;
+        this.boughtAt = boughtAt;
+        this.price = price;
+    }
 }

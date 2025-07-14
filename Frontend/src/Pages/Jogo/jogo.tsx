@@ -227,7 +227,7 @@ export default function Jogo() {
       </div>
       <div className={style["jogo-bottom"]}>
         <div className={style["esquerda"]}>
-          {game ? <CompraJogo id={game.id} price={game?.price} title={game?.title} /> : null}
+          {game ? <CompraJogo id={game.id} /> : null}
           {game ? <SobreJogo descricao={game?.descricao} /> : null}
           {game ? <Requisitos /> : null}
         </div>

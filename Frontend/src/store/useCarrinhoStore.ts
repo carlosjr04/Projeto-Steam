@@ -1,12 +1,12 @@
 import { create } from "zustand";
-import type { Jogo } from "../Utils/gameData";
 import { persist } from "zustand/middleware";
+import type { Game } from "../types/Game";
 
 interface CarrinhoState {
   numJogos: number;
   valorTotal: number;
-  jogos: Jogo[];
-  adicionar: (jogo: Jogo | undefined) => void;
+  jogos: Game[];
+  adicionar: (jogo: Game | undefined) => void;
   remover: (id: string) => void;
   clear: () => void;
 }
@@ -30,7 +30,7 @@ export const useCarrinhoStore = create<CarrinhoState>()(
       },
 
       remover: (id) => {
-        const index = get().jogos.findIndex((j) => j.id === id);
+        const index = get().jogos.findIndex((j) => j.id.toString() === id);
         if (index === -1) return;
 
         const jogosAtualizados = [...get().jogos];

@@ -6,7 +6,9 @@ import Login from "./Pages/Login/login";
 import About from "./Pages/About/about";
 import Carrinho from "./Pages/Carrinho/carrinho";
 import InConstrution from "./Pages/InConstrution/InConstrution";
+import Cadastro from "./Pages/Cadastro/Cadastro";
 import CategoryPage from "./Pages/Category/Category";
+
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/cadastro",
+    element: <Cadastro />,
   },
   {
     path: "/inConstrution",

@@ -1,15 +1,25 @@
 package com.devweb.backendsteam.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Getter
 @Setter
@@ -18,91 +28,100 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @Table(name = "\"user\"")
 public class User implements org.springframework.security.core.userdetails.UserDetails {
-	@JsonIgnore
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
-	@Column(name = "user_id", unique = true)
-	private String userId;
+    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(unique = true, nullable = false)
-	private String email;
+    @Column(name = "user_id", unique = true)
+    private String userId;
 
-	private String name;
-	private String username;
-	private String password; // Password Hash
-	private Integer age;
-	private String genre;
-	private String role;
+    @Column(unique = true, nullable = false)
+    private String email;
 
-	@CreationTimestamp
-	@Column(updatable = false)
-	private LocalDate createdAt;
+    private String name;
+    private String username;
+    private String password; // Password Hash
+    private Integer age;
+    private String genre;
+    private String role;
 
-	@UpdateTimestamp private LocalDate updatedAt;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDate createdAt;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "user")
-	private List<OwnedGame> ownedGames;
+    @UpdateTimestamp
+    private LocalDate updatedAt;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "user")
-	private List<Wishlist> wishlist;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<OwnedGame> ownedGames;
 
-	public User(
-		String name,
-		String username,
-		String email,
-		String password,
-		Integer age,
-		String genre,
-		String role,
-		LocalDate createdAt,
-		LocalDate updatedAt
-		) {
-		this.name = name;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.age = age;
-		this.genre = genre;
-		this.role = role;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-	}
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Wishlist> wishlist;
 
-	public String getUserDisplayName() {
-	return this.username;
-	}
+    public User(
+            String name,
+            String username,
+            String email,
+            String password,
+            Integer age,
+            String genre,
+            String role,
+            LocalDate createdAt,
+            LocalDate updatedAt
+    ) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.age = age;
+        this.genre = genre;
+        this.role = role;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 
-	@Override
-	public java.util.Collection<? extends org.springframework.security.core.GrantedAuthority> getAuthorities() {
-		// Retorna a role do usuário como GrantedAuthority
-		return java.util.Collections.singletonList(
-			new org.springframework.security.core.authority.SimpleGrantedAuthority(this.role != null ? this.role : "USER")
-		);
-	}
+    public String getUserDisplayName() {
+        return this.username;
+    }
 
-	@Override
-	public String getPassword() {
-		return this.password;
-	}
+    @Override
+    public java.util.Collection<? extends org.springframework.security.core.GrantedAuthority> getAuthorities() {
+        // Retorna a role do usuário como GrantedAuthority
+        return java.util.Collections.singletonList(
+                new org.springframework.security.core.authority.SimpleGrantedAuthority(this.role != null ? this.role : "USER")
+        );
+    }
 
-	@Override
-	public String getUsername() {
-		return this.email;
-	}
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
 
-	@Override
-	public boolean isAccountNonExpired() { return true; }
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
 
-	@Override
-	public boolean isAccountNonLocked() { return true; }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-	@Override
-	public boolean isCredentialsNonExpired() { return true; }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-	@Override
-	public boolean isEnabled() { return true; }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
