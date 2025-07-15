@@ -1,0 +1,145 @@
+.container {
+  background-color: #405163e6;
+  width: 70%;
+  justify-self: center;
+  display: flex;
+  padding: 1rem 2rem 1rem 2rem;
+  gap: 3rem;
+  align-items: center;
+}
+
+.cover img {
+  width: 300px;
+}
+.infos {
+  flex: 1;
+}
+.name {
+  color: #fff;
+  font-size: 22px;
+  line-height: 1.15em;
+  font-weight: 400;
+  font-family: "Motiva Sans", Sans-serif;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  min-width: 0;
+  margin-bottom: 1rem;
+}
+.dados {
+  display: flex;
+  justify-content: space-between;
+}
+.dataLancamento {
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-size: 14px;
+  font-family: "Motiva Sans", Sans-serif;
+  font-weight: 200;
+
+  color: #b2b8bd;
+}
+.preco {
+  display: flex;
+  flex-direction: row;
+  background: #1b2838;
+  padding: 3px;
+  gap: 16px;
+  width: fit-content;
+  min-height: 42px;
+}
+.descontoVerde {
+  background: #4c6b2280;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #beee11;
+  font-size: 26px;
+  padding: 0 5px;
+  line-height: 34px;
+}
+.descontoPrecos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+.precoDesconto {
+  position: relative;
+  font-size: 11px;
+  color: #738895;
+  display: inline-block; /* necessário para limitar o pseudo-elemento ao tamanho do texto */
+}
+
+.precoDesconto::after {
+  box-shadow: 0 0 2px #000;
+
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 80%;
+  height: 1px;
+  background-color: #738895; /* ou a cor que quiser */
+  transform: rotate(-10deg);
+  transform-origin: center;
+}
+.precoValor {
+  font-size: 15px;
+  color: #ffffff;
+  font-family: "Motiva Sans", Sans-serif;
+  font-weight: 200;
+  align-self: center;
+}
+.carrinho {
+  color: #d2e9b2;
+  border-radius: 2px;
+  padding: 1px;
+  border: none;
+  display: inline-block;
+  cursor: pointer;
+  background: linear-gradient(to right, #75b022 5%, #588a1b 95%);
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+}
+.carrinho:hover {
+  color: white;
+  background: linear-gradient(to right, #8ed629 5%, #6aa621 95%);
+}
+.plataforma {
+  width: 24px;
+  margin-bottom: 8px;
+}
+.categorias {
+  display: flex;
+  gap: 8px;
+}
+.botao-genero {
+  text-decoration: none;
+  font-family: var(--header-font);
+  border: 0px;
+  text-align: center;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #67c1f5;
+  display: inline-block;
+  line-height: 19px;
+  padding: 0 7px;
+  color: #67c1f5;
+  background-color: rgba(103, 193, 245, 0.2);
+  box-shadow: none;
+  margin-right: 2px;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-bottom: 3px;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.botao-genero:hover {
+  background-color: #67c1f5;
+  color: #ffffff;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}

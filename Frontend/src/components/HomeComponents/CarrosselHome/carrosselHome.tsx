@@ -15,12 +15,12 @@ export default function CarrosselHome() {
     }, {} as Record<string, string>)
   );
 
-  const handleMouseOver = (gameId: string, sceneUrl: string) => {
+  const handleMouseOver = (gameId: number, sceneUrl: string) => {
     setMainImages((prev) => ({ ...prev, [gameId]: sceneUrl }));
   };
 
-  const handleMouseOut = (gameId: string) => {
-    const originalCover = games ? games.find((g) => g.id === gameId)?.cover : undefined;
+  const handleMouseOut = (gameId: number) => {
+    const originalCover = games ? games.find((g) => g.id === Number(gameId))?.cover : undefined;
     setMainImages((prev) => ({ ...prev, [gameId]: originalCover! }));
   };
 

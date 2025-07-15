@@ -34,12 +34,9 @@ export default function ValorTotal() {
     return;
   }
 
-  console.log(token);
-
   try {
-    // Filtra jogos válidos e cria array de promises de requisição PATCH
     const promises = jogos
-      .filter(jogo => jogo) // filtra jogos não nulos/undefined
+      .filter(jogo => jogo) 
       .map(jogo => {
         const ownedGame: OwnedGame = {
           boughtAt: new Date().toISOString().substring(0, 10),

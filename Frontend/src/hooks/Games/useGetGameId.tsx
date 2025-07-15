@@ -3,7 +3,7 @@ import type { Game } from "../../types/Game";
 import axios from "axios";
 import { ENV } from "../../env";
 
-export function useGetGameId(id: string) {
+export function useGetGameId(id: number) {
   const [game, setGames] = useState<Game | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

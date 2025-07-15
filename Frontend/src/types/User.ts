@@ -1,5 +1,5 @@
 import type { OwnedGame } from "./OwnedGame";
-import type { Wishlist } from "./Wishlist";
+import type {  WishlistGame } from "./Wishlist";
 
 export interface User {
   id: number;
@@ -18,5 +18,5 @@ export interface User {
   updatedAt: string;
 
   ownedGames?: OwnedGame[];
-  wishlist?: Wishlist;
+  wishlist?: WishlistGame[];
 }

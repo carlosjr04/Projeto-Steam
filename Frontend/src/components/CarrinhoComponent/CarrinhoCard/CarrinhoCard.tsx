@@ -3,13 +3,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import style from "./style.module.css";
 import { useEffect, useState } from "react";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
-import { games, type Jogo } from "../../../Utils/gameData";
+import { games } from "../../../Utils/gameData";
+import type { Game } from "../../../types/Game";
 
 interface CarrinhoProps {
-  id: string;
+  id: number;
   cover: string;
   title: string;
-  price: number;
+  preco: number;
   desconto: number;
 }
 
@@ -20,9 +21,10 @@ export default function CarrinhoCard(carrinho: CarrinhoProps) {
   const jogos = useCarrinhoStore((state) => state.jogos);
   const removerJogo = useCarrinhoStore((state) => state.remover);
   const adicionarJogo = useCarrinhoStore((state) => state.adicionar);
+  console.log(jogos)
 
   useEffect(() => {
-    const quantidade = jogos.filter((jogo) => jogo.id === carrinho.id).length;
+    const quantidade = jogos.filter((jogo) => jogo.id === Number(carrinho.id)).length;
     if (quantidade > 1) {
       setEstado("Para presente");
     } else {
@@ -35,12 +37,13 @@ export default function CarrinhoCard(carrinho: CarrinhoProps) {
       return "Gratuito";
     }
     const valorComDesconto = preco - (preco * desconto) / 100;
+
     return `R$${valorComDesconto.toFixed(2)}`;
   }
 
   
 
-  function pegarJogoId(id: string): Jogo | undefined {
+  function pegarJogoId(id: number): Game | undefined {
     const jogoEncontrado = games.find((jogo) => jogo.id == id);
 
     return jogoEncontrado;
@@ -78,7 +81,7 @@ export default function CarrinhoCard(carrinho: CarrinhoProps) {
               />
             </svg>{" "}
             <ul className="dropdown-menu dropdown-menu-dark">
-              {jogos.filter((jogo) => jogo.id === carrinho.id).length<=1?  <li>
+              {jogos.filter((jogo) => jogo.id === Number(carrinho.id)).length<=1?  <li>
                   <a
                     className="dropdown-item"
                     style={{ cursor: "pointer" }}
@@ -109,12 +112,12 @@ export default function CarrinhoCard(carrinho: CarrinhoProps) {
 
             <div>
               {carrinho.desconto > 0 ? (
-                <p className={style.precoDesconto}>{`R$${carrinho.price.toFixed(
+                <p className={style.precoDesconto}>{`R$${carrinho.preco.toFixed(
                   2
                 )}`}</p>
               ) : null}
               <h1>
-                {calcularPrecoComDesconto(carrinho.price, carrinho.desconto)}
+                {calcularPrecoComDesconto(carrinho.preco, carrinho.desconto)}
               </h1>
             </div>
           </div>
@@ -134,7 +137,7 @@ export default function CarrinhoCard(carrinho: CarrinhoProps) {
               className={style.botao}
               onClick={() => {
                 if (pegarJogoId(carrinho.id)) {
-                  removerJogo(carrinho.id);
+                  removerJogo(carrinho.id.toString());
                 }
               }}
             >
