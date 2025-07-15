@@ -1,7 +1,9 @@
 package com.devweb.backendsteam.dto;
 
-import com.devweb.backendsteam.model.Game;
 import java.util.List;
+
+import com.devweb.backendsteam.model.Game;
+
 import lombok.Getter;
 import lombok.Setter;
 

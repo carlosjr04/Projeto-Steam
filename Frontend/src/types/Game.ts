@@ -7,7 +7,7 @@ export interface Game {
   about: string;
   avaliacao: number;
 
-  categories: Category[];
+  categorias: string[];
   classificacao: string[];
   classificacaoEtaria: string | null;
 

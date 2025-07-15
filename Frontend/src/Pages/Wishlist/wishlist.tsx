@@ -23,13 +23,13 @@ export default function Wishlist() {
           ? wishlist.map((game) => (
               <WishlistCard
               id={game.game.id}
-                categories={game.game.categories}
+                categorias={game.game.categorias}
                 cover={game.game.cover}
                 dataLancamento={game.game.dataLancamento}
                 desconto={game.game.desconto}
                 listedAt={game.listedAt}
                 name={game.game.title}
-                preco={game.game.preco}
+                preco={game.game.price}
               />
             ))
           : null}

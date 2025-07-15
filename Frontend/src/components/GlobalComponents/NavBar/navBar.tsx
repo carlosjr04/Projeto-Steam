@@ -6,6 +6,7 @@ import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import React, { useState } from 'react';
 import { useRandomGame } from '../../../hooks/Games/useRandomGame';
 import CategoryNav from '../CategoryNav/CategoryNav';
+import { wishlistStore } from "../../../store/wishlistStore";
 
 interface NavBarProps {
   variant?: string;
@@ -17,6 +18,8 @@ export default function NavBar({ variant }: NavBarProps) {
     ? randomGame.cover
     : null;
   const numJogos = useCarrinhoStore((state) => state.numJogos);
+    const numJogosWish = wishlistStore((state) => state.numJogos);
+
   const [isCategoryNavOpen, setIsCategoryNavOpen] = useState(false);
   const navigate = useNavigate();
   const [hover, setHover] = useState(false);
@@ -81,7 +84,12 @@ export default function NavBar({ variant }: NavBarProps) {
             : undefined
         }
       >
+        
         <div className={styles.carrinho}>
+          <Link className={styles.wishlistBotao} to="/wishlist">
+            
+            {`Lista de desejo(${numJogosWish})`}
+          </Link>
           <Link className={styles.carrinhoLink} to="/carrinho">
             <svg
               xmlns="http://www.w3.org/2000/svg"

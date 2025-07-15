@@ -24,7 +24,7 @@ export default function CompraJogo(jogo: Props) {
     <div className={style["div-compra"]}>
       <h1>Comprar {game?.title}</h1>
       <div className={style["carrinho"]}>
-        <p>{game && game?.preco>0 ?`R$${game?.preco}`:"Gratuito"}</p>
+        <p>{game && game?.price>0 ?`R$${game?.price}`:"Gratuito"}</p>
         <button
           type="button"
           onClick={() => {
