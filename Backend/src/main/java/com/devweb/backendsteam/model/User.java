@@ -57,8 +57,7 @@ public class User implements org.springframework.security.core.userdetails.UserD
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<OwnedGame> ownedGames;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Wishlist> wishlist;
 
     public User(

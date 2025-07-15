@@ -13,10 +13,11 @@ import Idioma from "../../components/JogoComponents/Idioma/Idioma";
 import Classificacao from "../../components/JogoComponents/Classificacao/Classificacao";
 import Conquistas from "../../components/JogoComponents/Conquista/Conquista";
 import { useGetGameId } from "../../hooks/Games/useGetGameId";
+import WishlistButton from "../../components/JogoComponents/WishlistButton/WishlistButton";
 
 export default function Jogo() {
   const { jogoID } = useParams();
-  const {game,loading,error} = useGetGameId(jogoID ?? "")
+  const {game,loading,error} = useGetGameId(Number(jogoID))
   const { paginaAtual, avancar, voltar } = useCarrosselStore();
   console.log(game)
 
@@ -79,7 +80,7 @@ export default function Jogo() {
                   className={`breadcrumb-item ${style["caminho-jogo"]}`}
                   aria-current="page"
                 >
-                  {game?.categorias}
+                  {game?.categories[0].nome}
                 </li>
                 <li
                   className={`breadcrumb-item ${style["caminho-jogo"]}`}
@@ -218,8 +219,8 @@ export default function Jogo() {
               Marcadores populares para este produto:
             </span>
             <br />
-            {game?.categorias.map((categoria) => (
-              <button className={style["botao-genero"]}>{categoria}</button>
+            {game?.categories.map((categoria) => (
+              <button className={style["botao-genero"]}>{categoria.nome}</button>
             ))}
             <button className={style["botao-genero"]}>+</button>
           </div>
@@ -227,6 +228,7 @@ export default function Jogo() {
       </div>
       <div className={style["jogo-bottom"]}>
         <div className={style["esquerda"]}>
+          {game ? <WishlistButton id={game.id} /> : null}
           {game ? <CompraJogo id={game.id} /> : null}
           {game ? <SobreJogo descricao={game?.descricao} /> : null}
           {game ? <Requisitos /> : null}

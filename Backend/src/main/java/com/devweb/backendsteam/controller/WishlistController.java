@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devweb.backendsteam.dto.WishlistDTO;
 import com.devweb.backendsteam.model.Wishlist;
 import com.devweb.backendsteam.service.WishlistService;
 
@@ -39,7 +40,7 @@ public class WishlistController {
 	}
 
 	@PostMapping
-	public Wishlist adicionar(@RequestBody Wishlist wishlist) {
+	public Wishlist adicionar(@RequestBody WishlistDTO wishlist) {
 		return wishlistService.adicionar(wishlist);
 	}
 

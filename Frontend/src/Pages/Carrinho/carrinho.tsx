@@ -4,7 +4,6 @@ import style from "./style.module.css";
 import CarrinhoCard from "../../components/CarrinhoComponent/CarrinhoCard/CarrinhoCard";
 import ValorTotal from "../../components/CarrinhoComponent/ValorTotal/ValorTotal";
 import { useCarrinhoStore } from "../../store/useCarrinhoStore";
-import { useAuthStore } from "../../store/authStore";
 
 export default function Carrinho() {
  
@@ -22,7 +21,7 @@ export default function Carrinho() {
             id={jogo.id}
               cover={jogo.cover}
               desconto={jogo.desconto}
-              price={jogo.price}
+              preco={jogo.price}
               title={jogo.title}
             />
           ))}

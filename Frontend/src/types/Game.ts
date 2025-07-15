@@ -1,4 +1,5 @@
 import type { Achievement } from "./Achievement";
+import type { Category } from "./Category";
 
 export interface Game {
   id: number; 
@@ -6,7 +7,7 @@ export interface Game {
   about: string;
   avaliacao: number;
 
-  categorias: string[];
+  categories: Category[];
   classificacao: string[];
   classificacaoEtaria: string | null;
 

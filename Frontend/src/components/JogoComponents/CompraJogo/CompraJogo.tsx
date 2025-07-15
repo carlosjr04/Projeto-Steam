@@ -5,17 +5,17 @@ import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import { useGetGameId } from "../../../hooks/Games/useGetGameId";
 
 interface Props {
-  id: string;
+  id: number;
  
 }
 
 export default function CompraJogo(jogo: Props) {
   const jogos = useCarrinhoStore((state) => state.jogos);
   const adicionarJogo = useCarrinhoStore((state) => state.adicionar);
-  const {game} = useGetGameId(jogo.id ?? "")
+  const {game} = useGetGameId(jogo.id)
 
-  function pegarJogoId(id: string): boolean {
-    const jogoEncontrado = jogos.find((jogo) => jogo.id == id);
+  function pegarJogoId(id: number): boolean {
+    const jogoEncontrado = jogos.find((jogo) => jogo.id == Number(id));
     return jogoEncontrado ? false : true;
   }
 
@@ -24,7 +24,7 @@ export default function CompraJogo(jogo: Props) {
     <div className={style["div-compra"]}>
       <h1>Comprar {game?.title}</h1>
       <div className={style["carrinho"]}>
-        <p>{game && game?.price>0 ?`R$${game?.price}`:"Gratuito"}</p>
+        <p>{game && game?.preco>0 ?`R$${game?.preco}`:"Gratuito"}</p>
         <button
           type="button"
           onClick={() => {
@@ -60,7 +60,7 @@ export default function CompraJogo(jogo: Props) {
               ></button>
             </div>
             <div className="toast-body toast-texto1">
-              Loja indisponível no momento. :(
+              Loja indisponível no momento. 
             </div>
           </div>
         </div>

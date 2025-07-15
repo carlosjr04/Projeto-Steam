@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.devweb.backendsteam.dto.OwnedGameRequestDTO;
-import com.devweb.backendsteam.model.EmbeddedIds.OwnedGameId;
 import com.devweb.backendsteam.model.Game;
 import com.devweb.backendsteam.model.OwnedGame;
 import com.devweb.backendsteam.model.User;
@@ -58,31 +57,23 @@ public class OwnedGameService {
                 throw new RuntimeException("Usuário já possui esse jogo.");
             }
 
-            // Cria o ID composto
-            OwnedGameId ownedGameId = new OwnedGameId(ownedGameDto.getUserId(), ownedGameDto.getGameId());
-
-            // Cria o objeto
             OwnedGame ownedGame = new OwnedGame();
             ownedGame.setUser(user);
             ownedGame.setGame(game);
             ownedGame.setBoughtAt(ownedGameDto.getBoughtAt());
             ownedGame.setPrice(ownedGameDto.getPrice());
 
-            // Salva no repositório
             OwnedGame saved = ownedGameRepository.save(ownedGame);
 
-            // Atualiza a lista de jogos do usuário (opcional, depende do cascade)
             user.getOwnedGames().add(saved);
             userRepository.save(user);
 
             return saved;
 
         } catch (Exception e) {
-            // Log do erro (recomendo usar um logger real em produção)
             System.err.println("Erro ao adicionar jogo ao usuário: " + e.getMessage());
             e.printStackTrace();
 
-            // Lança exceção genérica controlada para evitar erro 500
             throw new RuntimeException("Erro ao adicionar jogo ao usuário. Verifique os dados informados.");
         }
     }

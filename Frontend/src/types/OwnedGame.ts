@@ -1,4 +1,3 @@
-import type { Game } from "./Game";
 
 export interface OwnedGame{
     userId:string

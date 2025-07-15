@@ -8,6 +8,7 @@ import Carrinho from "./Pages/Carrinho/carrinho";
 import InConstrution from "./Pages/InConstrution/InConstrution";
 import Cadastro from "./Pages/Cadastro/Cadastro";
 import CategoryPage from "./Pages/Category/Category";
+import Wishlist from "./Pages/Wishlist/wishlist";
 
 
 const router = createBrowserRouter([
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/category/:categoria",
         element: <CategoryPage />
+      },
+      {
+        path: "/wishlist",
+        element: <Wishlist />
       }
     ],
   },
