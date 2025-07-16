@@ -18,28 +18,26 @@ export const useCarrinhoStore = create<CarrinhoState>()(
       numJogos: 0,
       valorTotal: 0,
 
+
       adicionar: (jogo) => {
         if (!jogo) return;
-
         const jogos = [...get().jogos, jogo];
         set({
           jogos,
           numJogos: jogos.length,
-          valorTotal: get().valorTotal + jogo.preco,
+          valorTotal: jogos.reduce((acc, j) => acc + (j.preco || 0), 0),
         });
       },
 
       remover: (id) => {
         const index = get().jogos.findIndex((j) => j.id.toString() === id);
         if (index === -1) return;
-
         const jogosAtualizados = [...get().jogos];
-        const jogoRemovido = jogosAtualizados.splice(index, 1)[0];
-
+        jogosAtualizados.splice(index, 1);
         set({
           jogos: jogosAtualizados,
           numJogos: jogosAtualizados.length,
-          valorTotal: get().valorTotal - jogoRemovido.preco,
+          valorTotal: jogosAtualizados.reduce((acc, j) => acc + (j.preco || 0), 0),
         });
       },
       clear: ()=>{

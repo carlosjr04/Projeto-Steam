@@ -10,12 +10,12 @@ interface ComprarParams {
 }
 
 async function comprarJogo({ OwnedGame, token }: ComprarParams) {
-  return axios.patch(
-    `${ENV.API_URL}/users/addGame`,
+  return axios.post(
+    `${ENV.API_URL}/owned-games`,
     {
       userId: OwnedGame.userId,
       gameId: OwnedGame.gameId,
-      boughtAt: new Date().toISOString().substring(0, 10),
+      boughtAt: OwnedGame.boughtAt,
       price: OwnedGame.price,
     },
     {

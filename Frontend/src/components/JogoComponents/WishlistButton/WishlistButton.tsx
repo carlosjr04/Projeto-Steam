@@ -66,7 +66,7 @@ export default function WishlistButton(jogo: Props) {
         disabled={jaNaWishlist}
         style={jaNaWishlist ? { backgroundColor: '#5ca3d6', color: '#fff' } : {}}
       >
-        {jaNaWishlist ? <><span style={{ marginRight: 6, display: 'inline-flex', verticalAlign: 'middle' }}>
+        {jaNaWishlist ? <><span style={{ marginRight: 6, display: 'inline-flex', verticalAlign: 'middle', marginTop: '-2px' }}>
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="20" height="20" rx="4" fill="#5ca3d6"/>
             <path d="M6 10.5L9 13.5L14 4.5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

@@ -3,22 +3,26 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import style from "./style.module.css";
 import CarrinhoCard from "../../components/CarrinhoComponent/CarrinhoCard/CarrinhoCard";
 import ValorTotal from "../../components/CarrinhoComponent/ValorTotal/ValorTotal";
+import React from 'react';
+import SteamConfirmModal from '../../components/GlobalComponents/SteamConfirmModal/SteamConfirmModal';
 import { useCarrinhoStore } from "../../store/useCarrinhoStore";
 
 export default function Carrinho() {
- 
   const jogos = useCarrinhoStore((state) => state.jogos);
+  const [modalCompra, setModalCompra] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [modalMsg, setModalMsg] = React.useState<string | null>(null);
+
   return (
     <div>
-      
       <div className={style.background}></div>
       <div className={style.container}>
-        
         <div className={style.jogos}>
           <h1 className={style.titulo}>Carrinho de compra</h1>
           {jogos.map((jogo) => (
             <CarrinhoCard
-            id={jogo.id}
+              key={jogo.id}
+              id={jogo.id}
               cover={jogo.cover}
               desconto={jogo.desconto}
               preco={jogo.preco}
@@ -26,8 +30,24 @@ export default function Carrinho() {
             />
           ))}
         </div>
-        <ValorTotal/>
+        <ValorTotal
+          onOpenCompra={() => setModalCompra(true)}
+          onSetMsg={setModalMsg}
+          setLoading={setLoading}
+          loading={loading}
+          modalCompra={modalCompra}
+          setModalCompra={setModalCompra}
+        />
       </div>
+      <SteamConfirmModal
+        isOpen={modalMsg !== null}
+        title="Compra"
+        message={modalMsg || ''}
+        confirmText="OK"
+        cancelText=""
+        onConfirm={() => setModalMsg(null)}
+        onCancel={() => setModalMsg(null)}
+      />
     </div>
   );
 }
