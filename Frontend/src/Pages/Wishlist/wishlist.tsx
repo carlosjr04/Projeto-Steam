@@ -8,8 +8,10 @@ export default function Wishlist() {
   const [wishlist, setWishlist] = useState<WishlistGame[]>();
   const { user } = useGetUserId();
 
+
   useEffect(() => {
     if (user?.wishlist) {
+      console.log(user)
       setWishlist(user.wishlist);
     }
   }, [user]);
@@ -23,13 +25,13 @@ export default function Wishlist() {
           ? wishlist.map((game) => (
               <WishlistCard
               id={game.game.id}
-                categorias={game.game.categorias}
+                categories={game.game.categories}
                 cover={game.game.cover}
                 dataLancamento={game.game.dataLancamento}
                 desconto={game.game.desconto}
                 listedAt={game.listedAt}
                 name={game.game.title}
-                preco={game.game.price}
+                preco={game.game.preco}
               />
             ))
           : null}

@@ -14,7 +14,7 @@ async function adicionarWishlist({ Wishlist, token }: WishParams) {
       {
         userId: Wishlist.userId,
         gameId: Wishlist.gameId,
-        boughtAt: new Date().toISOString().substring(0, 10),
+        listedAt: new Date().toISOString().substring(0, 10),
         priority: Wishlist.priority,
       },
       {

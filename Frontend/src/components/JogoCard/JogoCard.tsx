@@ -32,7 +32,7 @@ const JogoCard: React.FC<JogoCardProps> = ({ jogo }) => {
             <span className={styles.developer}>{jogo.desenvolvedora}</span>
           </div>
           <div className={styles.tagsRow}>
-            {jogo.categorias.map((cat, index) => (
+            {jogo.categories.map((cat, index) => (
               <span key={`${cat}-${index}`} className={styles.tag}>{cat}</span>
             ))}
             {jogo.classificacao.map((cls, index) => (
@@ -44,13 +44,13 @@ const JogoCard: React.FC<JogoCardProps> = ({ jogo }) => {
             {jogo.desconto > 0 ? (
               <>
                 <span className={styles.discount}>-{jogo.desconto}%</span>
-                <span className={styles.oldPrice}>R$ {(jogo.price).toFixed(2)}</span>
+                <span className={styles.oldPrice}>R$ {(jogo.preco).toFixed(2)}</span>
                 <span className={styles.price}>
-                  {jogo.price * (1 - jogo.desconto / 100) === 0 ? 'Grátis' : `R$ ${(jogo.price * (1 - jogo.desconto / 100)).toFixed(2)}`}
+                  {jogo.preco * (1 - jogo.desconto / 100) === 0 ? 'Grátis' : `R$ ${(jogo.preco * (1 - jogo.desconto / 100)).toFixed(2)}`}
                 </span>
               </>
             ) : (
-              <span className={styles.price}>{jogo.price === 0 ? 'Grátis' : `R$ ${jogo.price.toFixed(2)}`}</span>
+              <span className={styles.price}>{jogo.preco === 0 ? 'Grátis' : `R$ ${jogo.preco.toFixed(2)}`}</span>
             )}
           </div>
           <div className={styles.redirectButtonRow} style={{ marginTop: '20px' }}>

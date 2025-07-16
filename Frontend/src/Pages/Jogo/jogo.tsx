@@ -80,7 +80,7 @@ export default function Jogo() {
                   className={`breadcrumb-item ${style["caminho-jogo"]}`}
                   aria-current="page"
                 >
-                  {game?.categorias[1]}
+                  {game?.categories[1]}
                 </li>
                 <li
                   className={`breadcrumb-item ${style["caminho-jogo"]}`}
@@ -219,7 +219,7 @@ export default function Jogo() {
               Marcadores populares para este produto:
             </span>
             <br />
-            {game?.categorias.map((categoria) => (
+            {game?.categories.map((categoria) => (
               <button className={style["botao-genero"]}>{categoria}</button>
             ))}
             <button className={style["botao-genero"]}>+</button>

@@ -41,7 +41,7 @@ export default function ValorTotal() {
         const ownedGame: OwnedGame = {
           boughtAt: new Date().toISOString().substring(0, 10),
           gameId: Number(jogo.id),
-          price: jogo.price,
+          price: jogo.preco,
           userId: userId,
         };
         console.log(ownedGame)

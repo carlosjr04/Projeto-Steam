@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useGetGameId } from "../../../hooks/Games/useGetGameId";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import style from "./style.module.css";
+import type { Category } from "../../../types/Category";
 
 interface Props {
   id: number;
@@ -11,7 +12,7 @@ interface Props {
   desconto: number;
   dataLancamento: string;
   listedAt: string;
-  categorias: string[];
+  categories: Category[];
 }
 
 export default function WishlistCard(wishlist: Props) {
@@ -88,8 +89,8 @@ export default function WishlistCard(wishlist: Props) {
         </div>
         <img className={style.plataforma} src="/window_carrinho.png" alt="" />
         <div className={style.categorias}>
-          {wishlist.categorias.map((categoria) => (
-            <button className={style["botao-genero"]}>{categoria}</button>
+          {wishlist.categories.map((categoria) => (
+            <button className={style["botao-genero"]}>{categoria.nome}</button>
           ))}
         </div>
       </div>

@@ -117,7 +117,7 @@ export default function CarrosselHome() {
                         ))}
                       </div>
                       <p className={style["price"]}>
-                        {game.price > 0 ? `R$${game.price}` : "Gratuito"}
+                        {game.preco > 0 ? `R$${game.preco}` : "Gratuito"}
                       </p>
                     </div>
                   </div>

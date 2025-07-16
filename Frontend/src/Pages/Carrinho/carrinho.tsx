@@ -21,7 +21,7 @@ export default function Carrinho() {
             id={jogo.id}
               cover={jogo.cover}
               desconto={jogo.desconto}
-              preco={jogo.price}
+              preco={jogo.preco}
               title={jogo.title}
             />
           ))}
