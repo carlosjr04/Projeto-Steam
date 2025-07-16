@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useGetGameId } from "../../../hooks/Games/useGetGameId";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import style from "./style.module.css";
@@ -18,10 +17,6 @@ interface Props {
 export default function WishlistCard(wishlist: Props) {
   const { game } = useGetGameId(wishlist.id);
   const adicionarJogo = useCarrinhoStore((state) => state.adicionar);
-  useEffect(()=>(
-  console.log(game)
-
-  ),[game])
 
   function calcularPrecoComDesconto(preco: number, desconto: number): string {
     if (preco == 0) {
@@ -84,14 +79,20 @@ export default function WishlistCard(wishlist: Props) {
               >
                 + Carrinho
               </button>
+              
             </div>
+            
           </div>
+          
         </div>
         <img className={style.plataforma} src="/window_carrinho.png" alt="" />
-        <div className={style.categorias}>
-          {wishlist.categories.map((categoria) => (
-            <button className={style["botao-genero"]}>{categoria.nome}</button>
-          ))}
+        <div className={style.footer}>
+          <div className={style.categorias}>
+            {wishlist.categories.map((categoria) => (
+              <button className={style["botao-genero"]}>{categoria.nome}</button>
+            ))}
+          </div>
+          <button className={style.remover}>REMOVER</button>
         </div>
       </div>
     </div>

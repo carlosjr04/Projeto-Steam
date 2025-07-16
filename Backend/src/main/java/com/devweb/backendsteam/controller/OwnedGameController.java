@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devweb.backendsteam.dto.OwnedGameRequestDTO;
-import com.devweb.backendsteam.model.EmbeddedIds.OwnedGameId;
 import com.devweb.backendsteam.model.OwnedGame;
 import com.devweb.backendsteam.service.OwnedGameService;
 
