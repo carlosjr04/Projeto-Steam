@@ -17,7 +17,7 @@ import WishlistButton from "../../components/JogoComponents/WishlistButton/Wishl
 
 export default function Jogo() {
   const { jogoID } = useParams();
-  const {game,loading,error} = useGetGameId(Number(jogoID))
+  const {game} = useGetGameId(Number(jogoID))
   const { paginaAtual, avancar, voltar } = useCarrosselStore();
   console.log(game)
 

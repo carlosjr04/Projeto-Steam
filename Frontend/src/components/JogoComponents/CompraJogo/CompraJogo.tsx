@@ -29,6 +29,7 @@ export default function CompraJogo(jogo: Props) {
           type="button"
           onClick={() => {
             if (pegarJogoId(jogo.id)) {
+              alert("jogo adicionado ao carrinho!")
               adicionarJogo(game);
             }
           }}

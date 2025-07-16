@@ -3,6 +3,7 @@ import { useGetGameId } from "../../../hooks/Games/useGetGameId";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import style from "./style.module.css";
 import type { Category } from "../../../types/Category";
+import { Link } from "react-router-dom";
 
 interface Props {
   id: number;
@@ -90,7 +91,7 @@ export default function WishlistCard(wishlist: Props) {
         <img className={style.plataforma} src="/window_carrinho.png" alt="" />
         <div className={style.categorias}>
           {wishlist.categories.map((categoria) => (
-            <button className={style["botao-genero"]}>{categoria.nome}</button>
+            <Link to={`/category/${categoria.slug || categoria.nome.toLowerCase().replace(/ /g, '-')}`} className={style["botao-genero"]}>{categoria.nome}</Link>
           ))}
         </div>
       </div>
