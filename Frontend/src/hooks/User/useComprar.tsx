@@ -1,6 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+
 import type { OwnedGame } from "../../types/OwnedGame";
+import { ENV } from "../../env";
 
 interface ComprarParams {
   OwnedGame: OwnedGame
@@ -9,11 +11,11 @@ interface ComprarParams {
 
 async function comprarJogo({ OwnedGame, token }: ComprarParams) {
   return axios.patch(
-    `http://localhost:8080/users/addGame`,
+    `${ENV.API_URL}/users/addGame`,
     {
       userId: OwnedGame.userId,
       gameId: OwnedGame.gameId,
-      boughtAt: new Date().toISOString().substring(0, 10), 
+      boughtAt: new Date().toISOString().substring(0, 10),
       price: OwnedGame.price,
     },
     {

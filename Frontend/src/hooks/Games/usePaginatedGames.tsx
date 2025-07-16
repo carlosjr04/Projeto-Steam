@@ -17,7 +17,6 @@ export function usePaginatedGames(pagina: number, tamanho: number, nome: string 
       })
       .then(res => {
         setData(res.data)
-        console.log(res.data)
       })
       .finally(() => setLoading(false));
   }, [pagina, tamanho, nome, slugCategory]);
