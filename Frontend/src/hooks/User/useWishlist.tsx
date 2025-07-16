@@ -1,16 +1,17 @@
 import axios from "axios";
 import type { Wishlist } from "../../types/Wishlist";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ENV } from "../../env";
 
 interface WishParams {
-  Wishlist: Wishlist
+  Wishlist: Wishlist;
   token?: string;
 }
 
 async function adicionarWishlist({ Wishlist, token }: WishParams) {
   try {
     const response = await axios.post(
-      `http://localhost:8080/wishlists`,
+      `${ENV.API_URL}/wishlists`,
       {
         userId: Wishlist.userId,
         gameId: Wishlist.gameId,
@@ -24,21 +25,24 @@ async function adicionarWishlist({ Wishlist, token }: WishParams) {
       }
     );
     return response.data;
-  } catch (error) {
-    console.error("Erro ao adicionar à wishlist:", error);
-    throw error; // importante para que o React Query saiba que a requisição falhou
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error("Erro ao adicionar à wishlist:", error.response?.data || error.message);
+    } else {
+      console.error("Erro ao adicionar à wishlist:", error);
+    }
+    throw error;
   }
 }
 
-export function useWishlist() {
+export function useWishlist(userId?: string) {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: adicionarWishlist,
     onSuccess: () => {
-      console.log("Adicionado à wishlist com sucesso.");
-    },
-    onError: (error: any) => {
-      console.error("Erro no mutation:", error?.response?.data || error.message);
-      alert("Ocorreu um erro ao adicionar à wishlist.");
+      if (userId) {
+        queryClient.invalidateQueries({ queryKey: ["user", userId] });
+      }
     },
   });
 }
