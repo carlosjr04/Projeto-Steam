@@ -20,23 +20,23 @@ import lombok.ToString;
 @Entity
 public class Achievement {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String imagem;
-    private String descricao;
-    private boolean escondido;
+	private String imagem;
+	private String descricao;
+	private boolean escondido;
 
-    @ManyToOne
-    @JoinColumn(name = "game_id")
-    @JsonIgnore
-    private Game game;
+	@ManyToOne
+	@JoinColumn(name = "game_id")
+	@JsonIgnore
+	private Game game;
 
-    public Achievement(String imagem, String descricao, boolean escondido, Game game) {
-        this.imagem = imagem;
-        this.descricao = descricao;
-        this.escondido = escondido;
-        this.game = game;
-    }
+	public Achievement(String imagem, String descricao, boolean escondido, Game game) {
+		this.imagem = imagem;
+		this.descricao = descricao;
+		this.escondido = escondido;
+		this.game = game;
+	}
 }

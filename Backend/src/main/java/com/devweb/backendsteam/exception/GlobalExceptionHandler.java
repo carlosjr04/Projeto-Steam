@@ -12,4 +12,19 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> handleGameNaoEncontrado(GameNaoEncontradoException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 	}
+
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<String> handleUserNotFound(UserNotFoundException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(GameNotFoundException.class)
+	public ResponseEntity<String> handleGameNotFound(GameNotFoundException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(WishlistAlreadyExistsException.class)
+	public ResponseEntity<String> handleWishlistAlreadyExists(WishlistAlreadyExistsException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+	}
 }
