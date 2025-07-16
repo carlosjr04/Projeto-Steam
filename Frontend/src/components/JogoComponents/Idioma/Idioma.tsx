@@ -3,9 +3,10 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import IdiomaUnd from "./IdiomaUnd";
 import { useState } from "react";
+import type { Language } from "../../../types/Language";
 
 interface IdiomaProps {
-  idiomas: string[];
+  idiomas: Language[];
 }
 
 export default function Idioma({ idiomas }: IdiomaProps) {
@@ -23,10 +24,10 @@ export default function Idioma({ idiomas }: IdiomaProps) {
         {idiomas.slice(0, 4).map((idioma, index) => (
           <div key={index}>
             <IdiomaUnd
-              lingua={idioma}
-              interface={true}
-              dublagem={false}
-              legenda={false}
+              lingua={idioma.lingua}
+              interface={idioma.interface}
+              dublagem={idioma.dublagem}
+              legenda={idioma.legenda}
             />
           </div>
         ))}
@@ -49,10 +50,10 @@ export default function Idioma({ idiomas }: IdiomaProps) {
           {idiomas.slice(2).map((idioma, index) => (
             <div key={index}>
               <IdiomaUnd
-                lingua={idioma}
-                interface={true}
-                dublagem={false}
-                legenda={false}
+                lingua={idioma.lingua}
+                interface={idioma.interface}
+                dublagem={idioma.dublagem}
+                legenda={idioma.legenda}
               />
             </div>
           ))}
