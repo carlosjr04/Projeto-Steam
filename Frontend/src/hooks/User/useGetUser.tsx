@@ -1,29 +1,27 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useAuthStore } from "../../store/authStore";
 import { ENV } from "../../env";
 import type { User } from "../../types/User";
-import { useAuthStore } from "../../store/authStore";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export function useGetUserId() {
-  const [user, setUsers] = useState<User | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const id = useAuthStore((state) => state.userId);
 
-  const id = useAuthStore((state)=>state.userId)
+  const fetchUser = async () => {
+    const response = await axios.get(`${ENV.API_URL}/users/${id}`);
+    return response.data as User;
+  };
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await axios.get(`${ENV.API_URL}/users/${id}`);
-        setUsers(response.data);
-      } catch (err: any) {
-        setError(err.message || "Erro ao buscar jogos");
-      } finally {
-        setLoading(false);
-      }
-    };
-    getUser();
-  }, [id]);
+  const {
+    data: user,
+    isLoading: loading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["user", id],
+    queryFn: fetchUser,
+    enabled: !!id,
+  });
 
-  return { user, loading, error };
+  return { user, loading, error, refetch };
 }

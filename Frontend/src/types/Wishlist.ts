@@ -8,6 +8,7 @@ export interface Wishlist {
 }
 
 export interface WishlistGame {
+    id?: number
     game: GameUser;
     priority:number
     listedAt: string;

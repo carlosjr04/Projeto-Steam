@@ -52,6 +52,10 @@
   border-radius: 1px;
   text-decoration: none;
 }
+.wishlistBotao:hover{
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #ffffff), color-stop(100%, #919aa3));
+  color:black;
+}
 .main {
   background-color: var(--main-color);
   min-height: 100vh;

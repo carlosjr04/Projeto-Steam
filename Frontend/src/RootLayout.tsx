@@ -8,13 +8,13 @@ export default function RootLayout() {
   const isCategoryPage = location.pathname.startsWith("/category");
 
   return (
-    <>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header />
       <NavBar variant={isCategoryPage ? "category" : undefined} />
-      <main>
+      <main style={{ flex: 1 }}>
         <Outlet />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
