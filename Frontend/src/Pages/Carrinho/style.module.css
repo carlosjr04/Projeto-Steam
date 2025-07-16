@@ -28,7 +28,7 @@
     align-items: center;
     justify-content: center;
     gap:12px;
-    
+    margin-bottom: 3rem;
 }
 
 @media (max-width:1044px) {
