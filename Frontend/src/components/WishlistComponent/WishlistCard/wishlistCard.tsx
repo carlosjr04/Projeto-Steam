@@ -56,7 +56,6 @@ export default function WishlistCard(wishlist: Props) {
                   <div className={style.descontoVerde}>
                     -{wishlist.desconto}%
                   </div>
-
                   <div className={style.descontoPrecos}>
                     <p className={style.precoDesconto}>
                       {`R$${wishlist.preco.toFixed(2)}`}
@@ -84,21 +83,19 @@ export default function WishlistCard(wishlist: Props) {
               >
                 + Carrinho
               </button>
-              
             </div>
-            
           </div>
-          
         </div>
         <img className={style.plataforma} src="/window_carrinho.png" alt="" />
-        <div className={style.categorias}>
-          {wishlist.categories.map((categoria) => (
-            <Link to={`/category/${categoria.slug || categoria.nome.toLowerCase().replace(/ /g, '-')}`} className={style["botao-genero"]}>{categoria.nome}</Link>
-          ))}
         <div className={style.footer}>
           <div className={style.categorias}>
             {wishlist.categories.map((categoria) => (
-              <button className={style["botao-genero"]}>{categoria.nome}</button>
+              <Link
+                to={`/category/${categoria.slug || categoria.nome.toLowerCase().replace(/ /g, '-')}`}
+                className={style["botao-genero"]}
+              >
+                {categoria.nome}
+              </Link>
             ))}
           </div>
           <button

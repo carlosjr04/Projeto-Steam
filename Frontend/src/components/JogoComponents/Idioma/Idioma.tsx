@@ -11,6 +11,7 @@ interface IdiomaProps {
 
 export default function Idioma({ idiomas }: IdiomaProps) {
   const [verMais, setVerMais] = useState<boolean>(false);
+  const isValidArray = Array.isArray(idiomas) && idiomas.length > 0;
   return (
     <div className={style.idiomas}>
       <span className={style["idiomas-texto"]}>Idiomas</span>
@@ -21,7 +22,7 @@ export default function Idioma({ idiomas }: IdiomaProps) {
           <span className={style["idiomas-texto"]}>Legendas</span>
         </div>
 
-        {idiomas.slice(0, 4).map((idioma, index) => (
+        {isValidArray && idiomas.slice(0, 4).map((idioma, index) => (
           <div key={index}>
             <IdiomaUnd
               lingua={idioma.lingua}
@@ -32,7 +33,7 @@ export default function Idioma({ idiomas }: IdiomaProps) {
           </div>
         ))}
 
-        {!verMais && idiomas.length > 4 && (
+        {!verMais && isValidArray && idiomas.length > 4 && (
           <button
             onClick={() => setVerMais(true)}
             className={`${style.mais_idiomas} btn btn-primary mt-2`}
@@ -47,7 +48,7 @@ export default function Idioma({ idiomas }: IdiomaProps) {
         )}
 
         <div className="collapse" id="idiomasCollapse">
-          {idiomas.slice(2).map((idioma, index) => (
+          {isValidArray && idiomas.slice(2).map((idioma, index) => (
             <div key={index}>
               <IdiomaUnd
                 lingua={idioma.lingua}

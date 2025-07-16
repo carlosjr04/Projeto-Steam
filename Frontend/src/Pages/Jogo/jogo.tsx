@@ -35,6 +35,7 @@ export default function Jogo() {
   useEffect(() => {
     const carousel = document.getElementById("carouselExample");
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleSlide = (event: any) => {
       const from = event.from;
       const to = event.to;
@@ -65,7 +66,7 @@ export default function Jogo() {
         <div className={style["inicio-jogo"]}>
           <div className={style["titulo"]}>
             <nav
-              style={{ ["--bs-breadcrumb-divider" as any]: "'>'" }}
+              style={{ ["--bs-breadcrumb-divider" as string]: "'>'" }}
               aria-label="breadcrumb"
             >
               <ol className="breadcrumb">

@@ -8,12 +8,13 @@ interface Props {
 }
 
 export default function Conquistas(jogo: Props) {
-  console.log(jogo);
+  const conquistasSafe = Array.isArray(jogo.conquistas) ? jogo.conquistas : [];
+  if (!conquistasSafe.length) return null;
   return (
     <div className={style.conquistas}>
-      <span>{`Inclui ${jogo.conquistas.length} Conquistas Steam`}</span>
+      <span>{`Inclui ${conquistasSafe.length} Conquistas Steam`}</span>
       <div>
-        {jogo.conquistas.slice(0, 3).map((conquista) => (
+        {conquistasSafe.slice(0, 3).map((conquista) => (
           <img
             src={conquista.imagem}
             onError={(e) => {
@@ -23,7 +24,7 @@ export default function Conquistas(jogo: Props) {
             alt=""
           ></img>
         ))}
-        <button>{`Ver todas as ${jogo.conquistas.length} `}</button>
+        <button>{`Ver todas as ${conquistasSafe.length} `}</button>
       </div>
     </div>
   );
