@@ -1,4 +1,4 @@
-import type { OwnedGame } from "./OwnedGame";
+import type { OwnedGameRequest } from "./OwnedGame";
 import type {  WishlistGame } from "./Wishlist";
 
 export interface User {
@@ -17,6 +17,6 @@ export interface User {
   createdAt: string; 
   updatedAt: string;
 
-  ownedGames?: OwnedGame[];
+  ownedGames?: OwnedGameRequest[];
   wishlist?: WishlistGame[];
 }

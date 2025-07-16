@@ -23,26 +23,26 @@ import lombok.ToString;
 @Entity
 public class OwnedGame {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
+	@ManyToOne
+	@JsonIgnore
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
+	private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "game_id")
-    private Game game;
+	@ManyToOne
+	@JoinColumn(name = "game_id")
+	private Game game;
 
-    private LocalDate boughtAt;
-    private BigDecimal price;
+	private LocalDate boughtAt;
+	private BigDecimal price;
 
-    public OwnedGame(User user, Game game, LocalDate boughtAt, BigDecimal price) {
-        this.user = user;
-        this.game = game;
-        this.boughtAt = boughtAt;
-        this.price = price;
-    }
+	public OwnedGame(User user, Game game, LocalDate boughtAt, BigDecimal price) {
+		this.user = user;
+		this.game = game;
+		this.boughtAt = boughtAt;
+		this.price = price;
+	}
 }

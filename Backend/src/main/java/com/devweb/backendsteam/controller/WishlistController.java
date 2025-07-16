@@ -44,7 +44,7 @@ public class WishlistController {
 		return wishlistService.adicionar(wishlist);
 	}
 
-	@DeleteMapping("/user/{userId}/game/{gameId}")
+	@DeleteMapping("/{id}")
 	public void remover(@PathVariable Long id) {
 		wishlistService.remover(id);
 	}

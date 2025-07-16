@@ -9,6 +9,7 @@ import InConstrution from "./Pages/InConstrution/InConstrution";
 import Cadastro from "./Pages/Cadastro/Cadastro";
 import CategoryPage from "./Pages/Category/Category";
 import Wishlist from "./Pages/Wishlist/wishlist";
+import Biblioteca from "./Pages/Biblioteca/Biblioteca";
 
 
 const router = createBrowserRouter([
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "/wishlist",
         element: <Wishlist />
+      },
+      {
+        path: "/biblioteca",
+        element: <Biblioteca />
       }
     ],
   },

@@ -25,7 +25,7 @@ export const useCarrinhoStore = create<CarrinhoState>()(
         set({
           jogos,
           numJogos: jogos.length,
-          valorTotal: get().valorTotal + jogo.price,
+          valorTotal: get().valorTotal + jogo.preco,
         });
       },
 
@@ -39,7 +39,7 @@ export const useCarrinhoStore = create<CarrinhoState>()(
         set({
           jogos: jogosAtualizados,
           numJogos: jogosAtualizados.length,
-          valorTotal: get().valorTotal - jogoRemovido.price,
+          valorTotal: get().valorTotal - jogoRemovido.preco,
         });
       },
       clear: ()=>{

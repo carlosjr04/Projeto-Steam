@@ -117,8 +117,20 @@ Substitua `SUA_PORTA_DO_BACKEND` pela porta correta.
   * **Erros de compilação do TypeScript no frontend:** Certifique-se de que todas as dependências foram instaladas (`npm install`).
 
 ## 🖼️ Screenshots
+### Imagem da Home Page
+<img width="1360" height="768" marginBottom="12px" alt="Captura de Tela (128)" src="https://github.com/user-attachments/assets/78e64028-be9f-4a94-b7f2-f7d74d35b8b2" />
 
-*adicione aqui capturas de tela ou um GIF do seu aplicativo em funcionamento.*
+### Imagem da página do jogo
+<img width="1360" height="768" marginBottom="12px" alt="Captura de Tela (130)" src="https://github.com/user-attachments/assets/3327b8e7-a496-42f4-b389-a3fb3ae6268d" />
+
+### Realizando compra
+https://github.com/user-attachments/assets/a191b55f-e1de-4ad5-a695-70f87378ef89
+
+
+### Exibindo categorias
+https://github.com/user-attachments/assets/bfe98f20-7180-4568-91ac-4917d06cd03e
+
+
 
 ## 👥 Membros do Grupo
 

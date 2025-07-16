@@ -2,10 +2,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import style from "./style.module.css";
 import Header from "../../components/GlobalComponents/Header/header";
-import Footer from "../../components/GlobalComponents/Footer/footer";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useLogin } from "../../hooks/User/useLogin";
 import { useCadastrarUsuario } from "../../hooks/User/useCadastro";
 
 type FormData = {
@@ -30,10 +28,9 @@ export default function Cadastro() {
   const { cadastrar, isLoading } = useCadastrarUsuario();
 
   const onSubmit = (data: FormData) => {
-  // Adiciona o campo fixo role
   const dataComRole = { ...data, role: "CLIENTE" };
 
-  console.log("Dados enviados:", dataComRole); // agora incluirá "role"
+  console.log("Dados enviados:", dataComRole); 
 
   cadastrar(dataComRole, {
     onSuccess: () => {
@@ -164,7 +161,7 @@ export default function Cadastro() {
                   placeholder=""
                   {...register("age", {
                     required: "idade é obrigatório",
-                    valueAsNumber: true, // 👈 ESSA LINHA FAZ TODA A DIFERENÇA
+                    valueAsNumber: true, 
                   })}
                 />
                 {errors.age && (

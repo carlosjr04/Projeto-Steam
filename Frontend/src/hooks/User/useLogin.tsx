@@ -16,7 +16,7 @@ interface TokenResponse {
     name: string;
     username: string;
     role: 'ADMIN' | 'CLIENTE';
-    // Adicione mais campos se for usar no front
+    
   };
 }
 

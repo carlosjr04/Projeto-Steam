@@ -1,5 +1,6 @@
 import type { Achievement } from "./Achievement";
 import type { Category } from "./Category";
+import type { Language } from "./Language";
 
 export interface Game {
   id: number; 
@@ -26,6 +27,8 @@ export interface Game {
 
   idiomaPrincipal: string | null;
   idiomas: string[];
+    languages:Language[]
+
 
   plataforma: string | null;
   plataformas: string[];

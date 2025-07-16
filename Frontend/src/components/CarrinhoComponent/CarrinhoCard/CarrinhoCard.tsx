@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import { games } from "../../../Utils/gameData";
 import type { Game } from "../../../types/Game";
+import { Link } from "react-router-dom";
 
 interface CarrinhoProps {
   id: number;
@@ -51,11 +52,12 @@ export default function CarrinhoCard(carrinho: CarrinhoProps) {
 
   return (
     <div className={style.container}>
-      <img src={carrinho.cover} className={style.cover} />
+      <Link to={`/Jogo/${carrinho.id}`}><img src={carrinho.cover} className={style.cover} /></Link>
+      
       <div className={style.detalhe}>
         <div className={style.esquerda}>
-          <div>
-            <h1>{carrinho.title}</h1>
+          <div className={style.titulo}>
+            <Link to={`/Jogo/${carrinho.id}`}>{carrinho.title}</Link>
             <img src="/window_carrinho.png" alt="" />
           </div>
           <div className={`dropdown ${style.dropDown} `}>

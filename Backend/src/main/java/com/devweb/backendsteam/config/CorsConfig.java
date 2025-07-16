@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
-    @Bean
+	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
@@ -19,5 +19,5 @@ public class CorsConfig implements WebMvcConfigurer {
 					.allowCredentials(true);
 			}
 		};
-    }
+	}
 }

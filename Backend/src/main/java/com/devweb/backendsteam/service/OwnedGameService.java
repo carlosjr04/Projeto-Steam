@@ -18,67 +18,67 @@ import jakarta.transaction.Transactional;
 @Service
 public class OwnedGameService {
 
-    @Autowired
-    private OwnedGameRepository ownedGameRepository;
+	@Autowired
+	private OwnedGameRepository ownedGameRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Autowired
-    private GameRepository gameRepository;
+	@Autowired
+	private GameRepository gameRepository;
 
-    public List<OwnedGame> listarTodos() {
-        return ownedGameRepository.findAll();
-    }
+	public List<OwnedGame> listarTodos() {
+		return ownedGameRepository.findAll();
+	}
 
-    public OwnedGame buscarPorId(Long id) {
-        return ownedGameRepository.findById(id).orElse(null);
-    }
+	public OwnedGame buscarPorId(Long id) {
+		return ownedGameRepository.findById(id).orElse(null);
+	}
 
-    public List<OwnedGame> listarPorUsuario(String userId) {
-        return ownedGameRepository.findByUser_UserId(userId);
-    }
+	public List<OwnedGame> listarPorUsuario(String userId) {
+		return ownedGameRepository.findByUser_UserId(userId);
+	}
 
-    @Transactional
-    public OwnedGame adicionar(OwnedGameRequestDTO ownedGameDto) {
-        try {
-            User user = userRepository.findByUserId(ownedGameDto.getUserId())
-                    .orElseThrow(() -> new RuntimeException("Usuário com ID " + ownedGameDto.getUserId() + " não encontrado."));
+	@Transactional
+	public OwnedGame adicionar(OwnedGameRequestDTO ownedGameDto) {
+		try {
+			User user = userRepository.findByUserId(ownedGameDto.getUserId())
+					.orElseThrow(() -> new RuntimeException("Usuário com ID " + ownedGameDto.getUserId() + " não encontrado."));
 
-            Game game = gameRepository.findById(ownedGameDto.getGameId())
-                    .orElseThrow(() -> new RuntimeException("Jogo com ID " + ownedGameDto.getGameId() + " não encontrado."));
+			Game game = gameRepository.findById(ownedGameDto.getGameId())
+					.orElseThrow(() -> new RuntimeException("Jogo com ID " + ownedGameDto.getGameId() + " não encontrado."));
 
-            // Verifica se o usuário já possui o jogo
-            boolean jaPossui = user.getOwnedGames()
-                    .stream()
-                    .anyMatch(ownedGame -> ownedGame.getGame().getId().equals(game.getId()));
+			// Verifica se o usuário já possui o jogo
+			boolean jaPossui = user.getOwnedGames()
+					.stream()
+					.anyMatch(ownedGame -> ownedGame.getGame().getId().equals(game.getId()));
 
-            if (jaPossui) {
-                throw new RuntimeException("Usuário já possui esse jogo.");
-            }
+			if (jaPossui) {
+				throw new RuntimeException("Usuário já possui esse jogo.");
+			}
 
-            OwnedGame ownedGame = new OwnedGame();
-            ownedGame.setUser(user);
-            ownedGame.setGame(game);
-            ownedGame.setBoughtAt(ownedGameDto.getBoughtAt());
-            ownedGame.setPrice(ownedGameDto.getPrice());
+			OwnedGame ownedGame = new OwnedGame();
+			ownedGame.setUser(user);
+			ownedGame.setGame(game);
+			ownedGame.setBoughtAt(ownedGameDto.getBoughtAt());
+			ownedGame.setPrice(ownedGameDto.getPrice());
 
-            OwnedGame saved = ownedGameRepository.save(ownedGame);
+			OwnedGame saved = ownedGameRepository.save(ownedGame);
 
-            user.getOwnedGames().add(saved);
-            userRepository.save(user);
+			user.getOwnedGames().add(saved);
+			userRepository.save(user);
 
-            return saved;
+			return saved;
 
-        } catch (Exception e) {
-            System.err.println("Erro ao adicionar jogo ao usuário: " + e.getMessage());
-            e.printStackTrace();
+		} catch (Exception e) {
+			System.err.println("Erro ao adicionar jogo ao usuário: " + e.getMessage());
+			e.printStackTrace();
 
-            throw new RuntimeException("Erro ao adicionar jogo ao usuário. Verifique os dados informados.");
-        }
-    }
+			throw new RuntimeException("Erro ao adicionar jogo ao usuário. Verifique os dados informados.");
+		}
+	}
 
-    public void remover(Long id) {
-        ownedGameRepository.deleteById(id);
-    }
+	public void remover(Long id) {
+		ownedGameRepository.deleteById(id);
+	}
 }
