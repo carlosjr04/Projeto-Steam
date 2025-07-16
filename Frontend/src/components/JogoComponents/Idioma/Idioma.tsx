@@ -23,7 +23,7 @@ export default function Idioma({ idiomas }: IdiomaProps) {
         </div>
 
         {isValidArray && idiomas.slice(0, 4).map((idioma, index) => (
-          <div key={index}>
+          <div key={`idioma-main-${idioma.lingua}-${index}`}>
             <IdiomaUnd
               lingua={idioma.lingua}
               interface={idioma.interface}
@@ -49,7 +49,7 @@ export default function Idioma({ idiomas }: IdiomaProps) {
 
         <div className="collapse" id="idiomasCollapse">
           {isValidArray && idiomas.slice(2).map((idioma, index) => (
-            <div key={index}>
+            <div key={`idioma-collapse-${idioma.lingua}-${index}`}>
               <IdiomaUnd
                 lingua={idioma.lingua}
                 interface={idioma.interface}

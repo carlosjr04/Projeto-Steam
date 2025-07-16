@@ -16,8 +16,8 @@ export default function Classificacao(jogo: Props) {
             <h1>{`Classificação Indicativa: ${classificacaoSafe[0]}`}</h1>
             <div>
                 <img src={`/${classificacaoSafe[0]}.png`} alt=""></img>
-                {classificacaoSafe.slice(1).map((classificacao) => (
-                    <span className={style["classificacao-texto"]}>{classificacao}</span>
+                {classificacaoSafe.slice(1).map((classificacao, idx) => (
+                    <span key={`classificacao-${classificacao}-${idx}`} className={style["classificacao-texto"]}>{classificacao}</span>
                 ))}
             </div>
             <span className={style["classificacao-texto"]}>Classificação etária: Coordenação de Classificação

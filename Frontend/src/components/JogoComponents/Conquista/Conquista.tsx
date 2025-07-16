@@ -14,8 +14,9 @@ export default function Conquistas(jogo: Props) {
     <div className={style.conquistas}>
       <span>{`Inclui ${conquistasSafe.length} Conquistas Steam`}</span>
       <div>
-        {conquistasSafe.slice(0, 3).map((conquista) => (
+        {conquistasSafe.slice(0, 3).map((conquista, idx) => (
           <img
+            key={`conquista-${conquista.imagem}-${idx}`}
             src={conquista.imagem}
             onError={(e) => {
               e.currentTarget.onerror = null; // evita loop caso /conquista.png também falhe

@@ -11,9 +11,10 @@ interface Props {
 export default function Compatibilidade(jogo: Props) {
     return(
         <div className={style.Compatibilidade}>
-            {jogo.compatibilidades.map((comp)=>(
+            {jogo.compatibilidades.map((comp, idx)=>(
                 <CompatibilidadeUnd
-                name={comp}/>
+                  key={`compatibilidade-${comp}-${idx}`}
+                  name={comp}/>
             ))}
         </div>
     )

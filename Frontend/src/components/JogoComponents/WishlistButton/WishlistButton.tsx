@@ -39,7 +39,6 @@ export default function WishlistButton(jogo: Props) {
       adicionar();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.error('Erro ao adicionar:', error);
       if (error?.response?.status === 409) {
         setModal({ open: true, type: 'neutral', message: 'Este jogo já está na sua wishlist.' });
       } else {
