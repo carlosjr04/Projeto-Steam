@@ -114,6 +114,7 @@
 .categorias {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 .botao-genero {
   text-decoration: none;
@@ -142,4 +143,26 @@
   background-color: #67c1f5;
   color: #ffffff;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width:1100px) {
+  .container{
+    flex-direction: column;
+    justify-content: center;
+    gap:10px;
+  }
+  .cover img{
+    width: 100%;
+  }
+}
+@media (max-width:615px) {
+  .dados{
+    flex-direction: column;
+    justify-content: flex-end;
+    gap:1rem;
+    margin-bottom: 12px;
+  }
+  .dataLancamento{
+    font-size: 11px;
+  }
 }

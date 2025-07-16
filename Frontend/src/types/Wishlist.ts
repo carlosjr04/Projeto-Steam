@@ -1,4 +1,4 @@
-import type { Game, GameUser } from "./Game";
+import type { GameUser } from "./Game";
 
 export interface Wishlist {
   userId:string
