@@ -27,8 +27,8 @@ public class Wishlist {
 	private Long id;
 
 	@ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+	@JsonIgnore
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 
 	@ManyToOne
