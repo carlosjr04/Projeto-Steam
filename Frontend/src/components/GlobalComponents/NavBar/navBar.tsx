@@ -46,14 +46,14 @@ export default function NavBar({ variant }: NavBarProps) {
                 : 'linear-gradient(to right, #304e7a 49%, #304e7a 51%)',
               boxShadow: '0 2px 12px rgba(48,78,122,0.4)',
               overflow: 'hidden',
+              cursor: 'pointer',
+              transition: 'opacity 0.3s ease',
+              opacity: hover ? 0.7 : 1,
             }
           : {
               position: 'relative',
               zIndex: 10,
             }),
-        cursor: 'pointer',
-        transition: 'opacity 0.3s ease',
-        opacity: hover ? 0.7 : 1,
       }}
       onMouseOver={(e) => {
         if (e.target === e.currentTarget) {

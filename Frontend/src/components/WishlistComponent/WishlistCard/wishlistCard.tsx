@@ -2,6 +2,7 @@ import { useGetGameId } from "../../../hooks/Games/useGetGameId";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import style from "./style.module.css";
 import type { Category } from "../../../types/Category";
+import { useRemoveWishlistItem } from '../../../hooks/Wishlist/useRemoveWishlistItem';
 
 interface Props {
   id: number;
@@ -12,11 +13,14 @@ interface Props {
   dataLancamento: string;
   listedAt: string;
   categories: Category[];
+  wishlistId?: number;
+  onRemove?: () => void;
 }
 
 export default function WishlistCard(wishlist: Props) {
   const { game } = useGetGameId(wishlist.id);
   const adicionarJogo = useCarrinhoStore((state) => state.adicionar);
+  const { mutate: removeWishlistItem, isPending: isRemoving } = useRemoveWishlistItem();
 
   function calcularPrecoComDesconto(preco: number, desconto: number): string {
     if (preco == 0) {
@@ -92,7 +96,22 @@ export default function WishlistCard(wishlist: Props) {
               <button className={style["botao-genero"]}>{categoria.nome}</button>
             ))}
           </div>
-          <button className={style.remover}>REMOVER</button>
+          <button
+            className={style.remover}
+            disabled={isRemoving}
+            onClick={() => {
+              if (!wishlist.wishlistId) return;
+              const confirmar = confirm('Deseja remover este item da wishlist?');
+              if (!confirmar) return;
+              removeWishlistItem(wishlist.wishlistId, {
+                onSuccess: () => {
+                  if (wishlist.onRemove) wishlist.onRemove();
+                },
+              });
+            }}
+          >
+            {isRemoving ? 'Removendo...' : 'REMOVER'}
+          </button>
         </div>
       </div>
     </div>
