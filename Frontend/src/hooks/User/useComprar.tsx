@@ -13,7 +13,7 @@ async function comprarJogo({ OwnedGame, token }: ComprarParams) {
     {
       userId: OwnedGame.userId,
       gameId: OwnedGame.gameId,
-      boughtAt: new Date().toISOString().substring(0, 10), // formato ISO: yyyy-MM-dd
+      boughtAt: new Date().toISOString().substring(0, 10), 
       price: OwnedGame.price,
     },
     {

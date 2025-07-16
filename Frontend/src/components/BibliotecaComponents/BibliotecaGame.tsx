@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useGetGameId } from "../../../hooks/Games/useGetGameId";
-import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import style from "./style.module.css";
-import type { Category } from "../../../types/Category";
+import { useGetGameId } from "../../hooks/Games/useGetGameId";
+import type { Category } from "../../types/Category";
+import { useCarrinhoStore } from "../../store/useCarrinhoStore";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -12,11 +12,11 @@ interface Props {
   preco: number;
   desconto: number;
   dataLancamento: string;
-  listedAt: string;
+  boughtAt: Date;
   categories: Category[];
 }
 
-export default function WishlistCard(wishlist: Props) {
+export default function BibliotecaGame(wishlist: Props) {
   const { game } = useGetGameId(wishlist.id);
   const adicionarJogo = useCarrinhoStore((state) => state.adicionar);
   useEffect(()=>(
@@ -52,38 +52,11 @@ export default function WishlistCard(wishlist: Props) {
           </div>
           <div className={style.DadosDireita}>
             <div className={style.preco}>
-              {wishlist.desconto > 0 ? (
-                <div className={style.preco}>
-                  <div className={style.descontoVerde}>
-                    -{wishlist.desconto}%
-                  </div>
-
-                  <div className={style.descontoPrecos}>
-                    <p className={style.precoDesconto}>
-                      {`R$${wishlist.preco.toFixed(2)}`}
-                    </p>
-                    <h1 className={style.precoValor}>
-                      {calcularPrecoComDesconto(
-                        wishlist.preco,
-                        wishlist.desconto
-                      )}
-                    </h1>
-                  </div>
-                </div>
-              ) : (
-                <h1 className={style.precoValor}>
-                  {calcularPrecoComDesconto(wishlist.preco, wishlist.desconto)}
-                </h1>
-              )}
+              
               <button
                 className={style.carrinho}
-                onClick={() => {
-                  const confirmar = confirm("Deseja realizar a compra?");
-                  if (!confirmar) return;
-                  adicionarJogo(game);
-                }}
               >
-                + Carrinho
+                DOWNLOAD
               </button>
             </div>
           </div>

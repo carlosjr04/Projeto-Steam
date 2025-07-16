@@ -15,7 +15,7 @@ export default function Login() {
   } = useForm<{ email: string; password: string }>();
 
   const navigate = useNavigate();
-  const { mutate: login, isPending, isError, error } = useLogin();
+  const { mutate: login, isPending} = useLogin();
 
   const aoEnviar = (dados: { email: string; password: string }) => {
   login(dados, {

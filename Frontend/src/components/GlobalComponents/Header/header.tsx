@@ -43,6 +43,7 @@ export default function Header() {
                 <li><Link className="dropdown-item" to="/wishlist">Wishlist</Link></li>
               </ul>
             </div>
+            <Link to="/biblioteca" className={`text-decoration-none text-light fw-bold fs-5 nav-link nav-item ${styles['header-text']}`}>Biblioteca</Link>
 
             <Link to="/inConstrution" className={`text-decoration-none text-light fw-bold fs-5 nav-link nav-item ${styles['header-text']}`}>Comunidade</Link>
             <Link to="/about" className={`text-decoration-none text-light fw-bold fs-5 nav-link nav-item ${styles['header-text']}`}>Sobre</Link>

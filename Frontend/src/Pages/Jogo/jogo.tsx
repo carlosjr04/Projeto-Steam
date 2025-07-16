@@ -17,9 +17,8 @@ import WishlistButton from "../../components/JogoComponents/WishlistButton/Wishl
 
 export default function Jogo() {
   const { jogoID } = useParams();
-  const {game,loading,error} = useGetGameId(Number(jogoID))
+  const {game} = useGetGameId(Number(jogoID))
   const { paginaAtual, avancar, voltar } = useCarrosselStore();
-  console.log(game)
 
   function getHighDef(): string {
     const highResSrc = game?.exemplo[paginaAtual].replace(
@@ -235,7 +234,7 @@ export default function Jogo() {
         </div>
         <div className={style["direita"]}>
           {game ? <Compatibilidade compatibilidades={game.compatibilidade} /> : null}
-          {game ? <Idioma idiomas={game.idiomas} /> : null}
+          {game ? <Idioma idiomas={game.languages} /> : null}
           {game ? <Classificacao classificacao={game.classificacao} /> : null}
           {game ? <Conquistas conquistas={game.conquista} /> : null}
         </div>

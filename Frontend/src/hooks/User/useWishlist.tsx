@@ -26,7 +26,7 @@ async function adicionarWishlist({ Wishlist, token }: WishParams) {
     return response.data;
   } catch (error) {
     console.error("Erro ao adicionar à wishlist:", error);
-    throw error; // importante para que o React Query saiba que a requisição falhou
+    throw error; 
   }
 }
 

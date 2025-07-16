@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useGetGame } from "../../../hooks/Games/useGetGame";
 
 export default function CarrosselHome() {
-  const { games, loading, error } = useGetGame();
+  const { games} = useGetGame();
   const [mainImages, setMainImages] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -76,7 +76,6 @@ export default function CarrosselHome() {
                     <div
                       className={style["game-figure"]}
                       onMouseLeave={() => {
-                        // Restaura a imagem principal ao sair do hover
                         setMainImages((prev) => ({
                           ...prev,
                           [game.id]: game.cover,
@@ -94,7 +93,6 @@ export default function CarrosselHome() {
                     <div className={style["game-asides"]}>
                       <h3 className={style["game-title"]}>{game.title}</h3>
                       <div onMouseLeave={() => {
-                        // Restaura a imagem principal ao sair do hover
                         setMainImages((prev) => ({
                           ...prev,
                           [game.id]: game.cover,

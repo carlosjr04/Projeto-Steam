@@ -1,16 +1,23 @@
-import React from "react";
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import  { useEffect, useState } from "react";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./style.module.css";
 import CategoriaCard from "../CategoriaCard/CategoriaCard";
-import { categorias } from "../../../Utils/categoriaData";
+import { useCategories } from "../../../hooks/Categories/useCategories";
+import type { Category } from "../../../types/Category";
 
 export default function CarouselCategory() {
-  const chunkSize = 4;
-  const slides = [];
-  for (let i = 0; i < categorias.length; i += chunkSize) {
-    slides.push(categorias.slice(i, i + chunkSize));
-  }
+  const [slides, setSlides] = useState<Category[]>([]);
+  const { categories } = useCategories();
+  useEffect(() => setSlides(categories), [categories]);
+  const chunkArray = <T,>(array: T[], chunkSize: number): T[][] => {
+    const result: T[][] = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+      result.push(array.slice(i, i + chunkSize));
+    }
+    return result;
+  };
+  const chunkedSlides = chunkArray(slides, 4);
 
   return (
     <div className={styles.container}>
@@ -23,8 +30,11 @@ export default function CarouselCategory() {
         className={`carousel `}
         data-bs-ride="carousel"
       >
-        <div className="carousel-inner" style={{backgroundColor:"transparent"}}>
-          {slides.map((grupo, idx) => (
+        <div
+          className="carousel-inner"
+          style={{ backgroundColor: "transparent" }}
+        >
+          {chunkedSlides.map((grupo, idx) => (
             <div
               key={idx}
               className={`carousel-item ${idx === 0 ? "active" : ""}`}
@@ -41,6 +51,8 @@ export default function CarouselCategory() {
                     key={categoria.id}
                     title={categoria.title}
                     image={categoria.image}
+                    slug={categoria.slug}
+                    nome={categoria.nome}
                   />
                 ))}
               </div>
@@ -53,7 +65,7 @@ export default function CarouselCategory() {
           type="button"
           data-bs-target="#carouselExampleIndicators"
           data-bs-slide="prev"
-          style={{left:"10rem"}}
+          style={{ left: "8rem" }}
         >
           <span className="carousel-control-prev-icon" aria-hidden="true" />
           <span className="visually-hidden">Previous</span>
@@ -64,13 +76,13 @@ export default function CarouselCategory() {
           type="button"
           data-bs-target="#carouselExampleIndicators"
           data-bs-slide="next"
-          style={{right:"10rem"}}
+          style={{ right: "8rem" }}
         >
           <span className="carousel-control-next-icon" aria-hidden="true" />
           <span className="visually-hidden">Next</span>
         </button>
         <div style={{ position: "initial" }} className="carousel-indicators">
-          {slides.map((_, idx) => (
+          {chunkedSlides.map((_, idx) => (
             <button
               key={idx}
               type="button"

@@ -9,6 +9,7 @@ interface Props {
 
 
 export default function Classificacao(jogo: Props) {
+    console.log(jogo.classificacao[0])
     return(
         <div className={style.classificacao}>
                     <h1>{`Classificação Indicativa: ${jogo.classificacao[0]}`}</h1>
