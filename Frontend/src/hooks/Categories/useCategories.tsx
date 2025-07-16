@@ -13,7 +13,6 @@ export const useCategories = () => {
       try {
         const response = await axios.get(`${ENV.API_URL}/categories`);
         setCategories(response.data);
-        console.log(response.data)
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido';
         setError(errorMessage);

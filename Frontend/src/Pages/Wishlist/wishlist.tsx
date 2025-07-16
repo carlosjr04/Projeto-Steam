@@ -8,8 +8,10 @@ export default function Wishlist() {
   const [wishlist, setWishlist] = useState<WishlistGame[]>();
   const { user } = useGetUserId();
 
+
   useEffect(() => {
     if (user?.wishlist) {
+      console.log(user)
       setWishlist(user.wishlist);
     }
   }, [user]);

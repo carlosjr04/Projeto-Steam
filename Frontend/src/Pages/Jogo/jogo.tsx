@@ -80,7 +80,7 @@ export default function Jogo() {
                   className={`breadcrumb-item ${style["caminho-jogo"]}`}
                   aria-current="page"
                 >
-                  {game?.categories[0].nome}
+                  {game?.categories[1]}
                 </li>
                 <li
                   className={`breadcrumb-item ${style["caminho-jogo"]}`}
@@ -220,7 +220,7 @@ export default function Jogo() {
             </span>
             <br />
             {game?.categories.map((categoria) => (
-              <button className={style["botao-genero"]}>{categoria.nome}</button>
+              <button className={style["botao-genero"]}>{categoria}</button>
             ))}
             <button className={style["botao-genero"]}>+</button>
           </div>

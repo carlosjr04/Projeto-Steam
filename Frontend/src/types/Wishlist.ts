@@ -1,4 +1,4 @@
-import type { Game } from "./Game";
+import type { Game, GameUser } from "./Game";
 
 export interface Wishlist {
   userId:string
@@ -8,7 +8,7 @@ export interface Wishlist {
 }
 
 export interface WishlistGame {
-    game: Game;
+    game: GameUser;
     priority:number
     listedAt: string;
 }

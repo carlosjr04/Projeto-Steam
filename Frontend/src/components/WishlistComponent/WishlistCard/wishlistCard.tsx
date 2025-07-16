@@ -1,7 +1,8 @@
+import { useEffect } from "react";
 import { useGetGameId } from "../../../hooks/Games/useGetGameId";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
-import type { Category } from "../../../types/Category";
 import style from "./style.module.css";
+import type { Category } from "../../../types/Category";
 
 interface Props {
   id: number;
@@ -17,6 +18,10 @@ interface Props {
 export default function WishlistCard(wishlist: Props) {
   const { game } = useGetGameId(wishlist.id);
   const adicionarJogo = useCarrinhoStore((state) => state.adicionar);
+  useEffect(()=>(
+  console.log(game)
+
+  ),[game])
 
   function calcularPrecoComDesconto(preco: number, desconto: number): string {
     if (preco == 0) {

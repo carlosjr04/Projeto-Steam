@@ -1,7 +1,9 @@
 package com.devweb.backendsteam.dto;
 
-import com.devweb.backendsteam.model.Game;
 import java.util.List;
+
+import com.devweb.backendsteam.model.Game;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +12,7 @@ import lombok.Setter;
 public class GameDTO {
 	private String id;
 	private String title;
-	private double price;
+	private double preco;
 	private String cover;
 	private double desconto;
 	private java.time.LocalDate DataLancamento;
@@ -20,7 +22,7 @@ private List<String> idiomas; // nomes dos idiomas
 	private String about;
 	private String desenvolvedora;
 	private List<String> classificacao;
-	private List<String> categorias;
+	private List<String> categories;
 	private Object descricao; // ReactNode no frontend, aqui pode ser String
 	private List<String> exemplo;
 private List<AchievementDTO> conquista; // Conquista DTO
@@ -34,7 +36,7 @@ private List<AchievementDTO> conquista; // Conquista DTO
 	public GameDTO(Game game) {
 		this.id = game.getId() != null ? game.getId().toString() : null;
 		this.title = game.getTitle();
-		this.price = game.getPreco() != null ? game.getPreco().doubleValue() : 0.0;
+		this.preco = game.getPreco() != null ? game.getPreco().doubleValue() : 0.0;
 		this.cover = game.getCover();
 		this.desconto = game.getDesconto();
 		this.DataLancamento = game.getDataLancamento();
@@ -44,7 +46,7 @@ private List<AchievementDTO> conquista; // Conquista DTO
 		this.about = game.getAbout();
 		this.desenvolvedora = game.getDesenvolvedora();
 		this.classificacao = game.getClassificacao();
-		this.categorias = game.getCategories() != null ? game.getCategories().stream().map(c -> c.getName()).toList() : List.of();
+		this.categories = game.getCategories() != null ? game.getCategories().stream().map(c -> c.getName()).toList() : List.of();
 		this.descricao = game.getDescricao();
 		this.exemplo = game.getExemplo();
 	this.conquista = game.getAchievements() != null ? game.getAchievements().stream().map(a -> new com.devweb.backendsteam.dto.AchievementDTO(a)).toList() : List.of();

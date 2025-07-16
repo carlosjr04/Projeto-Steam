@@ -40,7 +40,7 @@ export default function Header() {
               <ul className="dropdown-menu dropdown-menu-dark">
                 <li><Link className="dropdown-item" to="/inConstrution">Home</Link></li>
                 <li><Link className="dropdown-item" to="/inConstrution">Discovery Queue</Link></li>
-                <li><Link className="dropdown-item" to="/WISHLIST">Wishlist</Link></li>
+                <li><Link className="dropdown-item" to="/wishlist">Wishlist</Link></li>
               </ul>
             </div>
 

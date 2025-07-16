@@ -2,7 +2,10 @@
   display: flex;
   flex-direction: column;
 }
+
 .carrinho {
+  display: flex;
+  gap:12px;
   justify-self: flex-end;
   align-self: flex-end;
   padding-right: 15.5%;
@@ -11,7 +14,7 @@
   display: flex;
   gap: 8px;
 }
-.carrinho a {
+.carrinhoLink{
   font-size: 11px;
   text-align: center;
   color: #fff;
@@ -23,12 +26,31 @@
   padding: 0px 14px;
   border-radius: 1px;
   text-decoration: none;
+  font-weight: 500;
   display: flex;
   gap: 4px;
 }
 .carrinho svg {
   width: 15px;
   vertical-align: sub;
+}
+.wishlistBotao{
+  display: block;
+  font-weight: 500;
+  height: 20px;
+    position: relative;
+    margin-left: 1px;
+    border-radius: 1px;
+    background-color: rgba(255, 255, 255, 0.4);
+    float: left;
+    color: #ffffff;
+    font-size: 12px;
+  text-align: center;
+  line-height: 20px;
+  cursor: pointer;
+  padding: 0px 14px;
+  border-radius: 1px;
+  text-decoration: none;
 }
 .main {
   background-color: var(--main-color);
