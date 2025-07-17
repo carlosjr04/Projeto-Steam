@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.devweb.backendsteam.dto.OwnedGameRequestDTO;
+import com.devweb.backendsteam.exception.GameNotFoundException;
+import com.devweb.backendsteam.exception.OwnedGameAlreadyExistsException;
+import com.devweb.backendsteam.exception.UserNotFoundException;
 import com.devweb.backendsteam.model.Game;
 import com.devweb.backendsteam.model.OwnedGame;
 import com.devweb.backendsteam.model.User;
@@ -41,41 +44,30 @@ public class OwnedGameService {
 
 	@Transactional
 	public OwnedGame adicionar(OwnedGameRequestDTO ownedGameDto) {
-		try {
-			User user = userRepository.findByUserId(ownedGameDto.getUserId())
-					.orElseThrow(() -> new RuntimeException("Usuário com ID " + ownedGameDto.getUserId() + " não encontrado."));
+		User user = userRepository.findByUserId(ownedGameDto.getUserId())
+				.orElseThrow(() -> new UserNotFoundException("Usuário com ID " + ownedGameDto.getUserId() + " não encontrado."));
 
-			Game game = gameRepository.findById(ownedGameDto.getGameId())
-					.orElseThrow(() -> new RuntimeException("Jogo com ID " + ownedGameDto.getGameId() + " não encontrado."));
+		Game game = gameRepository.findById(ownedGameDto.getGameId())
+				.orElseThrow(() -> new GameNotFoundException("Jogo com ID " + ownedGameDto.getGameId() + " não encontrado."));
 
-			// Verifica se o usuário já possui o jogo
-			boolean jaPossui = user.getOwnedGames()
-					.stream()
-					.anyMatch(ownedGame -> ownedGame.getGame().getId().equals(game.getId()));
+		boolean jaPossui = user.getOwnedGames()
+				.stream()
+				.anyMatch(ownedGame -> ownedGame.getGame().getId().equals(game.getId()));
 
-			if (jaPossui) {
-				throw new RuntimeException("Usuário já possui esse jogo.");
-			}
-
-			OwnedGame ownedGame = new OwnedGame();
-			ownedGame.setUser(user);
-			ownedGame.setGame(game);
-			ownedGame.setBoughtAt(ownedGameDto.getBoughtAt());
-			ownedGame.setPrice(ownedGameDto.getPrice());
-
-			OwnedGame saved = ownedGameRepository.save(ownedGame);
-
-			user.getOwnedGames().add(saved);
-			userRepository.save(user);
-
-			return saved;
-
-		} catch (Exception e) {
-			System.err.println("Erro ao adicionar jogo ao usuário: " + e.getMessage());
-			e.printStackTrace();
-
-			throw new RuntimeException("Erro ao adicionar jogo ao usuário. Verifique os dados informados.");
+		if (jaPossui) {
+			throw new OwnedGameAlreadyExistsException("Usuário já possui esse jogo.");
 		}
+
+		OwnedGame ownedGame = new OwnedGame();
+		ownedGame.setUser(user);
+		ownedGame.setGame(game);
+		ownedGame.setBoughtAt(ownedGameDto.getBoughtAt());
+		ownedGame.setPrice(ownedGameDto.getPrice());
+
+		OwnedGame saved = ownedGameRepository.save(ownedGame);
+		user.getOwnedGames().add(saved);
+		userRepository.save(user);
+		return saved;
 	}
 
 	public void remover(Long id) {
