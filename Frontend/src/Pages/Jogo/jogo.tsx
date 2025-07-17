@@ -93,12 +93,14 @@ export default function Jogo() {
             <h1 className={style["titulo-jogo"]}>{game?.title}</h1>
           </div>
 
-          <img
-            id="carousel-preview"
-            className={style["imagem-exemplo"]}
-            src={getHighDef()}
-            alt="Imagem do carrossel"
-          />
+          {getHighDef() ? (
+            <img
+              id="carousel-preview"
+              className={style["imagem-exemplo"]}
+              src={getHighDef()}
+              alt="Imagem do carrossel"
+            />
+          ) : null}
 
           <div
             id="carouselExample"
@@ -219,8 +221,8 @@ export default function Jogo() {
               Marcadores populares para este produto:
             </span>
             <br />
-            {game?.categories.map((categoria) => (
-              <button className={style["botao-genero"]}>{categoria}</button>
+            {Array.isArray(game?.categories) && game.categories.map((categoria, idx) => (
+              <button key={`categoria-${categoria}-${idx}`} className={style["botao-genero"]}>{categoria}</button>
             ))}
             <button className={style["botao-genero"]}>+</button>
           </div>

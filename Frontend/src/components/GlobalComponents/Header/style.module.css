@@ -130,7 +130,8 @@
 }
 
 .modal-header-home .modal-content .modal-body a, 
-.modal-header-home .modal-content h5 {
+.modal-header-home .modal-content h5,
+.modal-header-home .modal-content .modal-title {
   padding-left: 5px;
   text-align: center;
   font-size: 1.5rem;
@@ -139,7 +140,8 @@
 }
 
 .modal-header-home .modal-content a:hover, 
-.modal-header-home .modal-content h5:hover {
+.modal-header-home .modal-content h5:hover,
+.modal-header-home .modal-content .modal-title:hover {
   cursor: pointer;
 }
 
@@ -604,11 +606,6 @@
 }
 
 @media (max-width: 768px) {
-  .brand-hamburguer {
-    width: 100%;
-    padding-left: 1rem;
-  }
-
   .md-main-games-div {
     display: initial;
   }
@@ -624,6 +621,11 @@
     gap: 0.5rem;
     width: 100%;
     height: auto;
+  }
+    
+  .brand-hamburguer {
+    width: 100% !important;
+    padding-left: 1rem;
   }
 
   .main-nav {

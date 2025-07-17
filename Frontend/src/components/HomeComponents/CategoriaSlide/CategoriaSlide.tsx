@@ -13,7 +13,7 @@ export default function CategoriaSlide() {
   useEffect(() => setSlides(categories), [categories]);
 
   return (
-    <div className="container">
+    <div className={`container ${styles["container"]}`}>
       <div className={`${styles["category-div-md"]} pb-4`}>
         {slides.map((categoria) => (
           <CategoriaCard

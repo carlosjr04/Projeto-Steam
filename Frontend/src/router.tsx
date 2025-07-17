@@ -10,6 +10,7 @@ import Cadastro from "./Pages/Cadastro/Cadastro";
 import CategoryPage from "./Pages/Category/Category";
 import Wishlist from "./Pages/Wishlist/wishlist";
 import Biblioteca from "./Pages/Biblioteca/Biblioteca";
+import SearchPage from "./Pages/Search/Search";
 
 
 const router = createBrowserRouter([
@@ -44,6 +45,14 @@ const router = createBrowserRouter([
       {
         path: "/biblioteca",
         element: <Biblioteca />
+      },
+      {
+        path: "/games/:gameId",
+        element: <SearchPage />
+      },
+      {
+        path: "/games",
+        element: <SearchPage />
       }
     ],
   },

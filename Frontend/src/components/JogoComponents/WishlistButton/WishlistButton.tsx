@@ -6,6 +6,8 @@ import { useWishlist } from "../../../hooks/User/useWishlist";
 import { wishlistStore } from "../../../store/wishlistStore";
 import SteamModal from '../../GlobalComponents/SteamModal/SteamModal';
 import React from 'react';
+import { useGetUserId } from "../../../hooks/User/useGetUser";
+
 
 interface Props {
   id: number;
@@ -15,14 +17,23 @@ export default function WishlistButton(jogo: Props) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const userId = useAuthStore((state) => state.userId);
   const token = useAuthStore((state) => state.token);
-  const adicionar = wishlistStore((state)=>state.adicionar)
+  const adicionar = wishlistStore((state) => state.adicionar);
+  // Tenta pegar a wishlist do Zustand, se existir
+  const { user } = useGetUserId();
   const { mutateAsync: adicionarWishlist } = useWishlist(userId ?? undefined);
 
   const [modal, setModal] = React.useState<{ open: boolean; type: 'success' | 'error' | 'neutral'; message: string }>({ open: false, type: 'success', message: '' });
 
+  const jaNaWishlist = user?.wishlist?.some((item) => Number(item.game.id) === Number(jogo.id)) ?? false;
+
+
   const handleWishlist = async () => {
     if (!userId || !token || !isAuthenticated) {
       setModal({ open: true, type: 'error', message: 'Você deve estar logado.' });
+      return;
+    }
+    if (jaNaWishlist) {
+      setModal({ open: true, type: 'neutral', message: 'Este jogo já está na sua wishlist.' });
       return;
     }
     try {
@@ -31,7 +42,7 @@ export default function WishlistButton(jogo: Props) {
           userId: userId,
           gameId: jogo.id,
           priority: 1,
-          listedAt:new Date().toISOString().substring(0, 10)
+          listedAt: new Date().toISOString().substring(0, 10)
         },
         token,
       });
@@ -39,7 +50,6 @@ export default function WishlistButton(jogo: Props) {
       adicionar();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.error('Erro ao adicionar:', error);
       if (error?.response?.status === 409) {
         setModal({ open: true, type: 'neutral', message: 'Este jogo já está na sua wishlist.' });
       } else {
@@ -50,8 +60,18 @@ export default function WishlistButton(jogo: Props) {
 
   return (
     <>
-      <button onClick={handleWishlist} className={style.botao}>
-        + Lista de desejo
+      <button
+        onClick={handleWishlist}
+        className={jaNaWishlist ? `${style.botao} ${style.botaoAtivo}` : style.botao}
+        disabled={jaNaWishlist}
+        style={jaNaWishlist ? { backgroundColor: '#5ca3d6', color: '#fff' } : {}}
+      >
+        {jaNaWishlist ? <><span style={{ marginRight: 6, display: 'inline-flex', verticalAlign: 'middle', marginTop: '-2px' }}>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="20" height="20" rx="4" fill="#5ca3d6"/>
+            <path d="M6 10.5L9 13.5L14 4.5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </span> Adicionado</> : '+ Lista de desejo'}
       </button>
       <SteamModal
         isOpen={modal.open}

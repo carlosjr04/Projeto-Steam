@@ -13,6 +13,7 @@ export function useGetGameId(id: number) {
       try {
         const response = await axios.get(`${ENV.API_URL}/games/${id}`);
         setGames(response.data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         setError(err.message || "Erro ao buscar jogos");
       } finally {

@@ -3,10 +3,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./style.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRandomGame } from '../../../hooks/Games/useRandomGame';
 import CategoryNav from '../CategoryNav/CategoryNav';
 import { useGetUserId } from "../../../hooks/User/useGetUser";
+import { useAuthStore } from "../../../store/authStore";
 
 interface NavBarProps {
   variant?: string;
@@ -19,8 +20,13 @@ export default function NavBar({ variant }: NavBarProps) {
     ? randomGame.cover
     : null;
   const numJogos = useCarrinhoStore((state) => state.numJogos);
+  const { isAuthenticated } = useAuthStore()
 
   const [isCategoryNavOpen, setIsCategoryNavOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(
+    typeof window !== 'undefined' ? window.innerWidth > 992 : true
+  );
+  const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
   const [hover, setHover] = useState(false);
 
@@ -33,10 +39,18 @@ export default function NavBar({ variant }: NavBarProps) {
     setIsCategoryNavOpen(false);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth > 992);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div
       style={{
-        ...(variant === 'category'
+        ...(variant === 'category' && (isDesktop)
           ? {
               position: 'relative',
               zIndex: 10,
@@ -86,10 +100,11 @@ export default function NavBar({ variant }: NavBarProps) {
       >
         
         <div className={styles.carrinho}>
-          <Link className={styles.wishlistBotao} to="/wishlist">
-            
-            {`Lista de desejo(${user?.wishlist?.length})`}
-          </Link>
+          { isAuthenticated && 
+            <Link className={styles.wishlistBotao} to="/wishlist">
+            {`Lista de desejo(${user?.wishlist?.length})`
+          }
+          </Link>}
           <Link className={styles.carrinhoLink} to="/carrinho">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -114,15 +129,20 @@ export default function NavBar({ variant }: NavBarProps) {
           <div
             className={`navbar-nav align-items-center ${styles["nav-home"]}`}
           >
-            <a href="#" className="nav-link nav-item fs-6">
-              Sua loja
-            </a>
-            <Link
-              to="inConstrution"
-              className="nav-link nav-item fs-6"
-            >
-              Novidades e tendências
-            </Link>
+            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+              <Link to='/' className="nav-link nav-item fs-6" style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+                Sua loja
+              </Link>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+              <Link
+                to="/inConstrution"
+                className="nav-link nav-item fs-6"
+                style={{ height: '100%', display: 'flex', alignItems: 'center' }}
+              >
+                Novidades e tendências
+              </Link>
+            </div>
             {/* NOVO CONTAINER para o link Categorias e o CategoryNav */}
             <div className={styles['category-dropdown-wrapper']}>
               <span
@@ -144,31 +164,48 @@ export default function NavBar({ variant }: NavBarProps) {
               <CategoryNav isOpen={isCategoryNavOpen} onClose={closeCategoryNav} />
             </div>
             {/* FIM DO NOVO CONTAINER */}
-            <Link
-              to="inConstrution"
-              className="nav-link nav-item fs-6"
-            >
-              Loja de pontos
-            </Link>
-            <Link
-              to="inConstrution"
-              className="nav-link nav-item fs-6"
-            >
-              Notícias
-            </Link>
-            <Link
-              to="inConstrution"
-              className="nav-link nav-item fs-6"
-            >
-              Laboratório
-            </Link>
+            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+              <Link
+                to="inConstrution"
+                className="nav-link nav-item fs-6"
+                style={{ height: '100%', display: 'flex', alignItems: 'center' }}
+              >
+                Loja de pontos
+              </Link>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+              <Link
+                to="inConstrution"
+                className="nav-link nav-item fs-6"
+                style={{ height: '100%', display: 'flex', alignItems: 'center' }}
+              >
+                Notícias
+              </Link>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+              <Link
+                to="inConstrution"
+                className="nav-link nav-item fs-6"
+                style={{ height: '100%', display: 'flex', alignItems: 'center' }}
+              >
+                Laboratório
+              </Link>
+            </div>
 
-            <div className={`d-flex ${styles["input-home"]}`}>
+            <div className={`d-flex ${styles["input-home"]}`}> 
               <input
                 type="search"
                 className="form-control"
                 placeholder="Buscar"
                 aria-label="Buscar"
+                value={inputValue}
+                onChange={e => setInputValue(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    navigate(inputValue.trim() ? `/games/${encodeURIComponent(inputValue.trim())}` : '/games');
+                    setInputValue('');
+                  }
+                }}
               />
               <button
                 className="btn btn-info"
@@ -177,6 +214,10 @@ export default function NavBar({ variant }: NavBarProps) {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                }}
+                onClick={() => {
+                  navigate(inputValue.trim() ? `/games/${encodeURIComponent(inputValue.trim())}` : '/games');
+                  setInputValue('');
                 }}
               >
                 <img

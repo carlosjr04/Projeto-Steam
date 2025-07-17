@@ -27,7 +27,7 @@ async function adicionarWishlist({ Wishlist, token }: WishParams) {
     return response.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      console.error("Erro ao adicionar à wishlist:", error.response?.data || error.message);
+      // Não faz nada pois erro já será tratado
     } else {
       console.error("Erro ao adicionar à wishlist:", error);
     }

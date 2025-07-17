@@ -1,6 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
+
 import axios from "axios";
 import { useState } from "react";
+import { ENV } from "../../env";
 
 interface Usuario {
   email: string;
@@ -16,8 +18,7 @@ export function useCadastrarUsuario() {
   const [loading, setLoading] = useState(false);
   const mutation = useMutation({
     mutationFn: async (usuario: Usuario) => {
-      console.log(usuario)
-      const response = await axios.post("http://localhost:8080/users/cadastro", usuario);
+      const response = await axios.post(`${ENV.API_URL}/users/cadastro`, usuario);
       setLoading(false);
       return response.data;
     },

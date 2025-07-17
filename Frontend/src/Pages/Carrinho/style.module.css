@@ -31,6 +31,12 @@
     margin-bottom: 3rem;
 }
 
+
+.jogos > * {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 @media (max-width:1044px) {
     .container{
         flex-direction: column;

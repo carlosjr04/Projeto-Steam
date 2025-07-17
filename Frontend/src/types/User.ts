@@ -1,5 +1,5 @@
 import type { OwnedGameRequest } from "./OwnedGame";
-import type {  WishlistGame } from "./Wishlist";
+import type { WishlistGame } from "./Wishlist";
 
 export interface User {
   id: number;

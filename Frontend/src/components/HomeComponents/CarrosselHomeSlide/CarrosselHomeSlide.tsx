@@ -1,23 +1,12 @@
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import style from "./style.module.css";
 import { useGetGame } from "../../../hooks/Games/useGetGame";
 
 export default function CarrosselHomeSlide() {
-  const { games} = useGetGame();
-    const [mainImages, setMainImages] = useState<Record<string, string>>({});
-  
-    useEffect(() => {
-      if (games) {
-        const inicial = games.reduce((acc, game) => {
-          acc[game.id] = game.cover;
-          return acc;
-        }, {} as Record<string, string>);
-  
-        setMainImages(inicial);
-      }
-    }, [games]);
+  const { games } = useGetGame();
+  const navigate = useNavigate();
   
     
 
@@ -35,6 +24,8 @@ export default function CarrosselHomeSlide() {
             data-bs-toggle="tooltip"
             data-bs-placement="left"
             title={game.title}
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate(`/jogo/${game.id}`)}
           >
             <div
               className={style["game-figure"]}
@@ -49,8 +40,11 @@ export default function CarrosselHomeSlide() {
 
             <div className={style["game-asides"]}>
               <h3 className={style["game-title"]}>{game.title}</h3>
-              {game.preco>0?<p className={style.price}>R${game.preco.toFixed(2)}</p>:<p className={style.price}>Gratuito</p>}
-              
+              {game.preco > 0 ? (
+                <p className={style.price}>R${game.preco.toFixed(2)}</p>
+              ) : (
+                <p className={style.price}>Gratuito</p>
+              )}
             </div>
           </div>
         ))}
