@@ -43,20 +43,41 @@ const gameSchema = z.object({
   dataLancamento: z.coerce.date().min(1, 'Data de lançamento é obrigatória'),
   about: z.string(),
   classificacao: z
-    .string()
-    .transform((val) => val.split(',').map((s) => s.trim()).filter(Boolean))
+    .union([
+      z.string(),
+      z.array(z.string())
+    ])
+    .transform((val) =>
+      Array.isArray(val)
+        ? val.map((s) => String(s).trim()).filter(Boolean)
+        : String(val).split(',').map((s) => s.trim()).filter(Boolean)
+    )
     .refine((arr) => arr.length > 0, 'Classificação deve conter pelo menos 1 elemento'),
   idiomas: z.array(z.number()).min(1, 'Selecione pelo menos um idioma'),
   categories: z.array(z.number()).min(1, 'Selecione pelo menos uma categoria'),
   compatibilidade: z.array(z.string()).min(1, 'Selecione pelo menos uma compatibilidade'),
   descricao: z.string().min(1),
   scenes: z
-    .string()
-    .transform((val) => val.split(',').map((s) => s.trim()).filter(Boolean))
+    .union([
+      z.string(),
+      z.array(z.string())
+    ])
+    .transform((val) =>
+      Array.isArray(val)
+        ? val.map((s) => String(s).trim()).filter(Boolean)
+        : String(val).split(',').map((s) => s.trim()).filter(Boolean)
+    )
     .refine((arr) => arr.length === 4, 'Cenas devem conter exatamente 4 elementos'),
   exemplo: z
-    .string()
-    .transform((val) => val.split(',').map((s) => s.trim()).filter(Boolean))
+    .union([
+      z.string(),
+      z.array(z.string())
+    ])
+    .transform((val) =>
+      Array.isArray(val)
+        ? val.map((s) => String(s).trim()).filter(Boolean)
+        : String(val).split(',').map((s) => s.trim()).filter(Boolean)
+    )
     .refine((arr) => arr.length >= 6, 'Exemplo deve conter exatamente 6 elementos'),
 });
 
@@ -191,13 +212,17 @@ const AddGameModal: React.FC<AddGameModalProps> = ({ isOpen, onClose, onAdd, isL
         : [],
       about: String(data.about).trim(),
       descricao: String(data.descricao).trim(),
-      scenes: data.scenes
+      scenes: Array.isArray(data.scenes)
+        ? data.scenes
+        : data.scenes
         ? String(data.scenes)
             .split(',')
             .map((s) => s.trim())
             .filter(Boolean)
         : [],
-      exemplo: data.exemplo
+      exemplo: Array.isArray(data.exemplo)
+        ? data.exemplo
+        : data.exemplo
         ? String(data.exemplo)
             .split(',')
             .map((s) => s.trim())
