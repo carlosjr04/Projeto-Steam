@@ -4,4 +4,5 @@ export interface Category {
   slug: string;
   image: string;
   title: string;
+  [key: string]: string | number;
 }

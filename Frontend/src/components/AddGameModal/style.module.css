@@ -11,6 +11,18 @@
   z-index: 1000;
 }
 
+.error {
+  color: #ff4d4f; /* Cor vermelha para destacar o erro */
+  font-size: 0.9rem; /* Tamanho menor para não competir com os inputs */
+  margin-top: -8px; /* Ajuste para aproximar do campo correspondente */
+  margin-bottom: 8px; /* Espaçamento entre o erro e o próximo elemento */
+  font-weight: bold; /* Destacar a mensagem */
+}
+
+.title {
+  margin-bottom: 24px;
+}
+
 .modal {
   background: #23262e;
   border-radius: 10px;
@@ -31,17 +43,42 @@ h3 {
   width: 100%;
   padding: 10px 12px;
   border-radius: 4px;
-  border: 1px solid #66c0f4;
-  margin-bottom: 18px;
+  border: 1px solid #66c0f4; /* Aumentar o espaçamento entre os inputs */
   font-size: 1rem;
   background: #1b2838;
   color: #c7d5e0;
+  margin-bottom: 12px;
+}
+
+.inputClass {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid #66c0f4; /* Aumentar o espaçamento entre os inputs */
+  font-size: 1rem;
+  background: #1b2838;
+  color: #c7d5e0;
+
+}
+
+/* Garantir espaçamento consistente para outros elementos */
+.label {
+  display: block;
+}
+
+.stepOne {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .actions {
+  margin-bottom: 24px;
   display: flex;
+  justify-content: space-between;
   gap: 12px;
   justify-content: flex-end;
+  margin-top: 24px;
 }
 
 .addBtn {
@@ -70,4 +107,19 @@ h3 {
 }
 .cancelBtn:hover {
   background: #7a1818;
+}
+
+/* Adicionar espaçamento maior entre os elementos do step 1 */
+.dropdown-container {
+  margin-bottom: 20px; /* Espaçamento entre os dropdowns */
+}
+
+.checkboxGroup {
+  margin-bottom: 20px; /* Espaçamento entre o grupo de checkboxes e outros elementos */
+}
+
+.inputDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }

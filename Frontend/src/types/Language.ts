@@ -1,8 +1,9 @@
 export interface Language {
-  nome:string 
-  slug:string
-  lingua:string
-  interface: boolean;
-  dublagem: boolean;
-  legenda:boolean
+  id: number;
+  nome: string;
+  lingua?: string;
+  interfaceDisponivel?: boolean;
+  dublagem?: boolean;
+  legenda?: boolean;
+  [key: string]: string | number | boolean | undefined;
 }
