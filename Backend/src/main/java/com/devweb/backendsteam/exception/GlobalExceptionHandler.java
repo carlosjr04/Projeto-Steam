@@ -27,4 +27,9 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> handleWishlistAlreadyExists(WishlistAlreadyExistsException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
 	}
+
+	@ExceptionHandler(OwnedGameAlreadyExistsException.class)
+	public ResponseEntity<String> handleOwnedGameAlreadyExists(OwnedGameAlreadyExistsException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+	}
 }
