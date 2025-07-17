@@ -1,3 +1,4 @@
+import AddGamesPage from "./Pages/AddGames/AddGamesPage";
 
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "./RootLayout";
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <RootLayout />,
     children: [
+      {
+        path: "/admin/jogo",
+        element: <AddGamesPage />,
+      },
       {
         path: "/",
         element: <Home />,
