@@ -1,0 +1,73 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #23262e;
+  border-radius: 10px;
+  padding: 32px 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  color: #c7d5e0;
+  min-width: 320px;
+  max-width: 90vw;
+}
+
+h3 {
+  color: #66c0f4;
+  margin-bottom: 18px;
+  font-size: 1.4rem;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid #66c0f4;
+  margin-bottom: 18px;
+  font-size: 1rem;
+  background: #1b2838;
+  color: #c7d5e0;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.addBtn {
+  background: #66c0f4;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.addBtn:hover {
+  background: #417a9b;
+}
+
+.cancelBtn {
+  background: #b22222;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cancelBtn:hover {
+  background: #7a1818;
+}
