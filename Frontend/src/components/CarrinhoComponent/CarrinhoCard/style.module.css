@@ -21,11 +21,14 @@
   width: 20px;
   height: 20px;
 }
+
 .esquerda {
   display: flex;
   flex-direction: column;
   gap: 32px;
+  width: 100%;
 }
+
 .titulo {
   display: flex;
   flex-direction: column;

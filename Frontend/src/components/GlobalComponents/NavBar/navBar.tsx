@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { useRandomGame } from '../../../hooks/Games/useRandomGame';
 import CategoryNav from '../CategoryNav/CategoryNav';
 import { useGetUserId } from "../../../hooks/User/useGetUser";
+import { useAuthStore } from "../../../store/authStore";
 
 interface NavBarProps {
   variant?: string;
@@ -19,6 +20,7 @@ export default function NavBar({ variant }: NavBarProps) {
     ? randomGame.cover
     : null;
   const numJogos = useCarrinhoStore((state) => state.numJogos);
+  const { isAuthenticated } = useAuthStore()
 
   const [isCategoryNavOpen, setIsCategoryNavOpen] = useState(false);
   const navigate = useNavigate();
@@ -86,10 +88,11 @@ export default function NavBar({ variant }: NavBarProps) {
       >
         
         <div className={styles.carrinho}>
-          <Link className={styles.wishlistBotao} to="/wishlist">
-            
-            {`Lista de desejo(${user?.wishlist?.length})`}
-          </Link>
+          { isAuthenticated && 
+            <Link className={styles.wishlistBotao} to="/wishlist">
+            {`Lista de desejo(${user?.wishlist?.length})`
+          }
+          </Link>}
           <Link className={styles.carrinhoLink} to="/carrinho">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -114,11 +117,11 @@ export default function NavBar({ variant }: NavBarProps) {
           <div
             className={`navbar-nav align-items-center ${styles["nav-home"]}`}
           >
-            <a href="#" className="nav-link nav-item fs-6">
+            <Link to='/' className="nav-link nav-item fs-6">
               Sua loja
-            </a>
+            </Link>
             <Link
-              to="inConstrution"
+              to="/inConstrution"
               className="nav-link nav-item fs-6"
             >
               Novidades e tendências

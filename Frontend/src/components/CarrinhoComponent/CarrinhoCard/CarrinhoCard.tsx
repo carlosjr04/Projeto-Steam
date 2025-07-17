@@ -3,9 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import style from "./style.module.css";
 import { useEffect, useState } from "react";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
-import { games } from "../../../Utils/gameData";
 import type { Game } from "../../../types/Game";
 import { Link } from "react-router-dom";
+import { useRecuperarGames } from "../../../hooks/Games/useRecuperarGames";
 
 interface CarrinhoProps {
   id: number;
@@ -13,25 +13,32 @@ interface CarrinhoProps {
   title: string;
   preco: number;
   desconto: number;
+  buyed: boolean;
 }
 
-export default function CarrinhoCard(carrinho: CarrinhoProps) {
+export default function CarrinhoCard(carrinho: CarrinhoProps & { index?: number }) {
   const [estado, setEstado] = useState<"Para minha conta" | "Para presente">(
     "Para minha conta"
   );
   const jogos = useCarrinhoStore((state) => state.jogos);
   const removerJogo = useCarrinhoStore((state) => state.remover);
   const adicionarJogo = useCarrinhoStore((state) => state.adicionar);
-  console.log(jogos)
+  const { games } = useRecuperarGames()
 
   useEffect(() => {
-    const quantidade = jogos.filter((jogo) => jogo.id === Number(carrinho.id)).length;
-    if (quantidade > 1) {
+    // Descobre todos os índices desse jogo
+    const indicesMesmoJogo = jogos
+      .map((jogo, idx) => ({ id: Number(jogo.id), idx, title: jogo.title }))
+      .filter(j => j.id === Number(carrinho.id));
+    // Descobre o índice deste card
+    const minhaPosicao = typeof carrinho.index === 'number' ? carrinho.index : jogos.findIndex((j) => Number(j.id) === Number(carrinho.id) && j.title === carrinho.title);
+
+    if (indicesMesmoJogo.length > 1 && minhaPosicao !== indicesMesmoJogo[0].idx || carrinho.buyed) {
       setEstado("Para presente");
     } else {
       setEstado("Para minha conta");
     }
-  }, []);
+  }, [jogos, carrinho.id, carrinho.title, carrinho.index, carrinho.buyed]);
 
   function calcularPrecoComDesconto(preco: number, desconto: number): string {
     if (preco == 0) {
@@ -46,7 +53,6 @@ export default function CarrinhoCard(carrinho: CarrinhoProps) {
 
   function pegarJogoId(id: number): Game | undefined {
     const jogoEncontrado = games.find((jogo) => jogo.id == id);
-
     return jogoEncontrado;
   }
 
@@ -60,49 +66,67 @@ export default function CarrinhoCard(carrinho: CarrinhoProps) {
             <Link to={`/Jogo/${carrinho.id}`}>{carrinho.title}</Link>
             <img src="/window_carrinho.png" alt="" />
           </div>
-          <div className={`dropdown ${style.dropDown} `}>
-            <a
-              className={`dropdown-toggle ${style.dropDownLink} `}
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              {estado}
-            </a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 128 128"
-              width="24"
-              height="24"
-              role="presentation"
-            >
-              <polygon
-                fill="#189cff"
-                points="50 59.49 13.21 22.89 4.74 31.39 50 76.41 95.26 31.39 86.79 22.89 50 59.49"
-              />
-            </svg>{" "}
-            <ul className="dropdown-menu dropdown-menu-dark">
-              {jogos.filter((jogo) => jogo.id === Number(carrinho.id)).length<=1?  <li>
+          {(() => {
+            const indicesMesmoJogo = jogos
+              .map((jogo, idx) => ({ id: Number(jogo.id), idx, title: jogo.title }))
+              .filter(j => j.id === Number(carrinho.id));
+            const minhaPosicao = typeof carrinho.index === 'number' ? carrinho.index : jogos.findIndex((j) => Number(j.id) === Number(carrinho.id) && j.title === carrinho.title);
+            if (indicesMesmoJogo.length > 1 && minhaPosicao !== indicesMesmoJogo[0].idx || carrinho.buyed) {
+              // Repetido: só mostra 'Para presente' sem dropdown
+              return (
+                <div className={style.dropDown}>
+                  <a className={style.dropDownLink}>{estado}</a>
+                </div>
+              );
+            } else {
+              // Primeiro: mostra dropdown
+              return (
+                <div className={`dropdown ${style.dropDown}`}>
                   <a
-                    className="dropdown-item"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => setEstado("Para minha conta")}
+                    className={`dropdown-toggle ${style.dropDownLink}`}
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
-                    Para minha conta
+                    {estado}
                   </a>
-                </li>:null}
-              <li>
-                <a
-                  className="dropdown-item"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setEstado("Para presente")}
-                >
-                  Para presente
-                </a>
-              </li>
-            </ul>
-          </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 128 128"
+                    width="24"
+                    height="24"
+                    role="presentation"
+                  >
+                    <polygon
+                      fill="#189cff"
+                      points="50 59.49 13.21 22.89 4.74 31.39 50 76.41 95.26 31.39 86.79 22.89 50 59.49"
+                    />
+                  </svg>{" "}
+                  <ul className="dropdown-menu dropdown-menu-dark">
+                    <li>
+                      <a
+                        className="dropdown-item"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => setEstado("Para minha conta")}
+                      >
+                        Para minha conta
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="dropdown-item"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => setEstado("Para presente")}
+                      >
+                        Para presente
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              );
+            }
+          })()}
         </div>
         <div className={style.direita}>
           <div className={style.preco}>
@@ -127,8 +151,10 @@ export default function CarrinhoCard(carrinho: CarrinhoProps) {
             <button
               className={style.botao}
               onClick={() => {
-                if (pegarJogoId(carrinho.id)) {
-                  adicionarJogo(pegarJogoId(carrinho.id));
+                const jogo = pegarJogoId(carrinho.id);
+                console.log(jogo)
+                if (jogo) {
+                  adicionarJogo(jogo);
                 }
               }}
             >

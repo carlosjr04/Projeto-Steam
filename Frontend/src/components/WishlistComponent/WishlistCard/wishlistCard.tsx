@@ -3,7 +3,7 @@ import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import style from "./style.module.css";
 import type { Category } from "../../../types/Category";
 import { Link } from "react-router-dom";
-import { useRemoveWishlistItem } from '../../../hooks/Wishlist/useRemoveWishlistItem';
+import { useRemoveWishlistItem } from '../../../hooks/Wishlist/useRemoveWishlistItem.tsx'
 import React from 'react';
 import SteamConfirmModal from '../../GlobalComponents/SteamConfirmModal/SteamConfirmModal';
 

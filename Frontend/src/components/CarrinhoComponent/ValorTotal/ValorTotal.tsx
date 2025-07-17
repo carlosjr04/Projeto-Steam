@@ -5,6 +5,8 @@ import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
 import { useAuthStore } from "../../../store/authStore";
 import { useComprar } from "../../../hooks/User/useComprar";
 import SteamConfirmModal from '../../GlobalComponents/SteamConfirmModal/SteamConfirmModal';
+import { useGetUserId } from "../../../hooks/User/useGetUser";
+import type { Game } from "../../../types/Game";
 
 interface ValorTotalProps {
   onOpenCompra: () => void;
@@ -21,6 +23,7 @@ export default function ValorTotal({ onOpenCompra, onSetMsg, setLoading, loading
   const userId = useAuthStore((state) => state.userId);
   const token = useAuthStore((state) => state.token);
   const clear = useCarrinhoStore((state) => state.clear);
+  const { user } = useGetUserId()
   const comprarMutation = useComprar();
 
   async function comprar() {
@@ -34,17 +37,27 @@ export default function ValorTotal({ onOpenCompra, onSetMsg, setLoading, loading
     }
     setLoading(true);
     try {
-      const promises = jogos.filter(jogo => jogo).map(jogo => {
-        return comprarMutation.mutateAsync({
-          OwnedGame: {
-            boughtAt: new Date().toISOString().substring(0, 10),
-            gameId: Number(jogo.id),
-            price: jogo.preco,
-            userId: userId,
-          },
-          token,
+      const promises = jogos
+        .filter((jogo: Game) => {
+          if (!jogo) return false;
+          // Exclude games the user already owns
+          if (user?.ownedGames && Array.isArray(user.ownedGames)) {
+            return !user.ownedGames.some((owned) => owned?.game?.id == jogo.id);
+          }
+          return true;
+        })
+        .map((jogo: Game) => {
+          return comprarMutation.mutateAsync({
+            OwnedGame: {
+              boughtAt: new Date().toISOString().substring(0, 10),
+              gameId: Number(jogo.id),
+              price: jogo.preco,
+              userId: userId,
+            },
+            token,
+          });
         });
-      });
+      console.log(promises)
       await Promise.all(promises);
       onSetMsg("Compra realizada com sucesso!");
       clear();

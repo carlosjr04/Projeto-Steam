@@ -9,6 +9,8 @@ interface SteamConfirmModalProps {
   onConfirm: () => void;
   onCancel: () => void;
   loading?: boolean;
+  singleButton?: boolean;
+  singleButtonText?: string;
 }
 
 export default function SteamConfirmModal({
@@ -20,6 +22,8 @@ export default function SteamConfirmModal({
   onConfirm,
   onCancel,
   loading = false,
+  singleButton = false,
+  singleButtonText = "OK",
 }: SteamConfirmModalProps) {
   if (!isOpen) return null;
   return (
@@ -28,16 +32,28 @@ export default function SteamConfirmModal({
         {title && <h2 className={styles.title}>{title}</h2>}
         <div className={styles.message}>{message}</div>
         <div className={styles.actions}>
-          <button
-            className={styles.confirm}
-            onClick={onConfirm}
-            disabled={loading}
-          >
-            {loading ? "Aguarde..." : confirmText}
-          </button>
-          <button className={styles.cancel} onClick={onCancel} disabled={loading}>
-            {cancelText}
-          </button>
+          {singleButton ? (
+            <button
+              className={styles.confirm}
+              onClick={onConfirm}
+              disabled={loading}
+            >
+              {loading ? "Aguarde..." : singleButtonText}
+            </button>
+          ) : (
+            <>
+              <button
+                className={styles.confirm}
+                onClick={onConfirm}
+                disabled={loading}
+              >
+                {loading ? "Aguarde..." : confirmText}
+              </button>
+              <button className={styles.cancel} onClick={onCancel} disabled={loading}>
+                {cancelText}
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
