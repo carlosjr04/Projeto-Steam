@@ -117,15 +117,20 @@ export default function NavBar({ variant }: NavBarProps) {
           <div
             className={`navbar-nav align-items-center ${styles["nav-home"]}`}
           >
-            <Link to='/' className="nav-link nav-item fs-6">
-              Sua loja
-            </Link>
-            <Link
-              to="/inConstrution"
-              className="nav-link nav-item fs-6"
-            >
-              Novidades e tendências
-            </Link>
+            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+              <Link to='/' className="nav-link nav-item fs-6" style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+                Sua loja
+              </Link>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+              <Link
+                to="/inConstrution"
+                className="nav-link nav-item fs-6"
+                style={{ height: '100%', display: 'flex', alignItems: 'center' }}
+              >
+                Novidades e tendências
+              </Link>
+            </div>
             {/* NOVO CONTAINER para o link Categorias e o CategoryNav */}
             <div className={styles['category-dropdown-wrapper']}>
               <span
@@ -147,24 +152,33 @@ export default function NavBar({ variant }: NavBarProps) {
               <CategoryNav isOpen={isCategoryNavOpen} onClose={closeCategoryNav} />
             </div>
             {/* FIM DO NOVO CONTAINER */}
-            <Link
-              to="inConstrution"
-              className="nav-link nav-item fs-6"
-            >
-              Loja de pontos
-            </Link>
-            <Link
-              to="inConstrution"
-              className="nav-link nav-item fs-6"
-            >
-              Notícias
-            </Link>
-            <Link
-              to="inConstrution"
-              className="nav-link nav-item fs-6"
-            >
-              Laboratório
-            </Link>
+            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+              <Link
+                to="inConstrution"
+                className="nav-link nav-item fs-6"
+                style={{ height: '100%', display: 'flex', alignItems: 'center' }}
+              >
+                Loja de pontos
+              </Link>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+              <Link
+                to="inConstrution"
+                className="nav-link nav-item fs-6"
+                style={{ height: '100%', display: 'flex', alignItems: 'center' }}
+              >
+                Notícias
+              </Link>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+              <Link
+                to="inConstrution"
+                className="nav-link nav-item fs-6"
+                style={{ height: '100%', display: 'flex', alignItems: 'center' }}
+              >
+                Laboratório
+              </Link>
+            </div>
 
             <div className={`d-flex ${styles["input-home"]}`}>
               <input
