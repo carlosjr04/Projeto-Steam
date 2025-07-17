@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./style.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useCarrinhoStore } from "../../../store/useCarrinhoStore";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRandomGame } from '../../../hooks/Games/useRandomGame';
 import CategoryNav from '../CategoryNav/CategoryNav';
 import { useGetUserId } from "../../../hooks/User/useGetUser";
@@ -23,6 +23,9 @@ export default function NavBar({ variant }: NavBarProps) {
   const { isAuthenticated } = useAuthStore()
 
   const [isCategoryNavOpen, setIsCategoryNavOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(
+    typeof window !== 'undefined' ? window.innerWidth > 992 : true
+  );
   const navigate = useNavigate();
   const [hover, setHover] = useState(false);
 
@@ -35,10 +38,18 @@ export default function NavBar({ variant }: NavBarProps) {
     setIsCategoryNavOpen(false);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth > 992);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div
       style={{
-        ...(variant === 'category'
+        ...(variant === 'category' && (isDesktop)
           ? {
               position: 'relative',
               zIndex: 10,

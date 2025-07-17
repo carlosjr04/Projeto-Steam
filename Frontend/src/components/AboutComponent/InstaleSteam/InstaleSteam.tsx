@@ -1,8 +1,21 @@
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import style from "./style.module.css";
+import { useState, useEffect } from "react";
 
 export default function InstaleSteam() {
+  const [showScroll, setShowScroll] = useState(
+    typeof window !== 'undefined' ? window.innerWidth > 960 : true
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setShowScroll(window.innerWidth > 960);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div className={style["about-header"]}>
       <div className={style["about-header-main"]}>
@@ -87,10 +100,12 @@ export default function InstaleSteam() {
         <div className={style["about-video-gradient"]}></div>
       </div>
 
-      <a className={style["scroll-to"]} href="#about-games">
-        Saiba mais
-        <span className={style["arrow-down"]}></span>
-      </a>
+      {showScroll && (
+        <a className={style["scroll-to"]} href="#about-games">
+          Saiba mais
+          <span className={style["arrow-down"]}></span>
+        </a>
+      )}
     </div>
   );
 }
