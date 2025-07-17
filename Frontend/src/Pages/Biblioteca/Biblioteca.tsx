@@ -17,7 +17,7 @@ export default function Biblioteca(){
       }, [user]);
     return(
         <div style={{marginBottom:"3rem"}}>
-      <h1 className={style.titulo}>LISTA DE JOGOS DE {user?.name}</h1>
+      <h1 className={style.titulo}>Lista de jogos de {user?.name}</h1>
       <div className={style.jogos}>
          {games
           ? games.map((game) => (
