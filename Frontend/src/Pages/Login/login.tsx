@@ -8,13 +8,24 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/User/useLogin";
 import SteamModal from "../../components/GlobalComponents/SteamModal/SteamModal";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const loginSchema = z.object({
+  email: z.string().email("E-mail inválido"),
+  password: z.string().min(6, "Senha deve ter pelo menos 6 caracteres"),
+});
+
+type LoginForm = z.infer<typeof loginSchema>;
 
 export default function Login() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<{ email: string; password: string }>();
+  } = useForm<LoginForm>({
+    resolver: zodResolver(loginSchema),
+  });
 
   const navigate = useNavigate();
   const { mutate: login, isPending } = useLogin();
