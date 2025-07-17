@@ -6,7 +6,7 @@ import java.time.LocalDate;
 public class OwnedGameRequestDTO {
 
 	private String userId;
-private Long gameId;
+	private Long gameId;
 	private LocalDate boughtAt;
 	private BigDecimal price;
 
