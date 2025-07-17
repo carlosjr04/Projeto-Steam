@@ -30,7 +30,7 @@ export default function Header() {
   function closeMenu() {
     setMenuOpen(false);
   }
-
+  const cargo = useAuthStore((state)=>state.cargo)
   return (
     <header className={styles.header}>
       <nav className={`navbar navbar-dark navbar-expand-lg d-flex justify-content-between align-items-center ${styles['home-header-nav']}`}> 
@@ -71,6 +71,7 @@ export default function Header() {
             <Link to="/inConstrution" className={`text-decoration-none text-light fw-bold fs-5 nav-link nav-item ${styles['header-text']}`}>Comunidade</Link>
             <Link to="/about" className={`text-decoration-none text-light fw-bold fs-5 nav-link nav-item ${styles['header-text']}`}>Sobre</Link>
             <Link to="/inConstrution" className={`text-decoration-none text-light fw-bold fs-5 nav-link nav-item ${styles['header-text']}`}>Suporte</Link>
+            {cargo=="ADMIN"?<Link to="/admin/jogo" className={`text-decoration-none text-light fw-bold fs-5 nav-link nav-item ${styles['header-text']}`}>Administrador</Link>:null}
             {isAuthenticated && (
               <button
                 className={`text-decoration-none text-light fw-bold fs-5 nav-link nav-item ${styles['header-text']}`}

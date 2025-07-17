@@ -1,3 +1,4 @@
+import { useAuthStore } from '../../../store/authStore';
 import styles from './HamburguerModal.module.css';
 import { Link } from 'react-router-dom';
 
@@ -19,6 +20,8 @@ export default function HamburguerModal({
   handleLogout,
 }: HamburguerModalProps) {
   if (!isOpen) return null;
+    const cargo = useAuthStore((state)=>state.cargo)
+  
   return (
     <>
       <div
@@ -111,6 +114,7 @@ export default function HamburguerModal({
                   <li><Link to="/carrinho" className="text-decoration-none">{`Carrinho(${numJogos})`}</Link></li>
                   <li><Link to="/about" className="text-decoration-none">Sobre</Link></li>
                   <li><Link to="/inConstrution" className="text-decoration-none">Suporte</Link></li>
+                  {cargo=="ADMIN"?<li><Link to="/admin/jogo" className="text-decoration-none">Administrador</Link></li>:null}
                   {isAuthenticated && (
                     <li>
                       <a

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { ENV } from '../../env';
 import type { Game } from '../../types/Game';
@@ -9,7 +9,7 @@ export function usePaginatedGames(pagina: number, tamanho: number, nome: string 
   const [data, setData] = useState<ResultadoPaginado<Game> | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     setLoading(true);
     axios
       .get<ResultadoPaginado<Game>>(`${ENV.API_URL}/games/paginacao`, {
@@ -21,5 +21,9 @@ export function usePaginatedGames(pagina: number, tamanho: number, nome: string 
       .finally(() => setLoading(false));
   }, [pagina, tamanho, nome, slugCategory]);
 
-  return { data, loading };
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return { data, loading, refetch: fetchData };
 }
