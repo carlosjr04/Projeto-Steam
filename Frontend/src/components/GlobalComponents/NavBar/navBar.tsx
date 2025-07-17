@@ -26,6 +26,7 @@ export default function NavBar({ variant }: NavBarProps) {
   const [isDesktop, setIsDesktop] = useState(
     typeof window !== 'undefined' ? window.innerWidth > 992 : true
   );
+  const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
   const [hover, setHover] = useState(false);
 
@@ -191,12 +192,20 @@ export default function NavBar({ variant }: NavBarProps) {
               </Link>
             </div>
 
-            <div className={`d-flex ${styles["input-home"]}`}>
+            <div className={`d-flex ${styles["input-home"]}`}> 
               <input
                 type="search"
                 className="form-control"
                 placeholder="Buscar"
                 aria-label="Buscar"
+                value={inputValue}
+                onChange={e => setInputValue(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    navigate(inputValue.trim() ? `/games/${encodeURIComponent(inputValue.trim())}` : '/games');
+                    setInputValue('');
+                  }
+                }}
               />
               <button
                 className="btn btn-info"
@@ -205,6 +214,10 @@ export default function NavBar({ variant }: NavBarProps) {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                }}
+                onClick={() => {
+                  navigate(inputValue.trim() ? `/games/${encodeURIComponent(inputValue.trim())}` : '/games');
+                  setInputValue('');
                 }}
               >
                 <img
