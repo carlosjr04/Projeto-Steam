@@ -11,4 +11,9 @@
     gap: 2rem;
     width: 100%;
   }
+
+  .container {
+    padding: 0 !important;
+    max-width: 97%;
+  }
 }
