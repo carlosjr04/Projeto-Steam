@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.devweb.backendsteam.dto.OwnedGameRequestDTO;
+import com.devweb.backendsteam.exception.EmailAlreadyExistsException;
 import com.devweb.backendsteam.model.Game;
 import com.devweb.backendsteam.model.OwnedGame;
 import com.devweb.backendsteam.model.User;
@@ -43,6 +44,9 @@ public class UserService {
 	public User adicionar(User user) {
 		if (user.getUserId() == null || user.getUserId().isEmpty()) {
 			user.setUserId(UUID.randomUUID().toString());
+		}
+		if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+			throw new EmailAlreadyExistsException("Já existe um usuário cadastrado com este email.");
 		}
 		user.setPassword(encoder.encode(user.getPassword()));
 		return userRepository.save(user);

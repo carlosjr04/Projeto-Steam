@@ -32,4 +32,9 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> handleOwnedGameAlreadyExists(OwnedGameAlreadyExistsException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
 	}
+
+	@ExceptionHandler(EmailAlreadyExistsException.class)
+	public ResponseEntity<String> handleEmailAlreadyExists(EmailAlreadyExistsException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+	}
 }
