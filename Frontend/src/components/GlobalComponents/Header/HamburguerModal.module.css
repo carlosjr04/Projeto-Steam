@@ -1,0 +1,95 @@
+.modal-header-home {
+  margin: 0;
+}
+
+.modal-content {
+  background-color: var(--header-color);
+  color: white;
+  border-radius: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main-content-modal {
+  padding: 1.5rem 0 0.5rem 0;
+}
+
+.modal-header {
+  justify-content: space-between;
+  border-bottom: 1px solid #2f3138;
+  min-height: 48px;
+  width: 250px;
+  padding: 0;
+}
+
+.modal-body {
+  padding: 0;
+}
+
+.list-unstyled {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modal-body ul {
+  padding: 0;
+  margin: 0;
+}
+
+.modal-body .list-unstyled > li {
+  border-top: 1px solid #2f3138;
+  border-bottom: 1px solid #000000;
+  min-height: 48px;
+  width: 250px;
+  padding: 0;
+}
+
+.modal-body .list-unstyled > li:last-child {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.modal-body .list-unstyled > li:last-child a {
+  text-align: left;
+  color: #8a8a8a;
+  font-size: 1.2rem;
+  padding-top: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal-content .modal-body a,
+.modal-content h5,
+.modal-content .modal-title {
+  padding-left: 5px;
+  text-align: center;
+  font-size: 1.5rem;
+  color: rgb(189, 189, 189);
+  font-weight: 200;
+}
+
+.modal-content a:hover,
+.modal-content h5:hover,
+.modal-content .modal-title:hover {
+  cursor: pointer;
+}
+
+.footer-modal-home {
+  max-width: 250px;
+  font-size: 0.6rem;
+  color: rgb(165, 158, 158);
+}
+
+.btn-close {
+  --bs-btn-close-color: #fff;
+  --bs-btn-close-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+  color: var(--bs-btn-close-color);
+  background: transparent var(--bs-btn-close-bg) center/1em auto no-repeat;
+  margin-right: 12px;
+}
