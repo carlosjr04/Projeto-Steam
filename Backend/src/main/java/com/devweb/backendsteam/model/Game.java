@@ -43,6 +43,7 @@ public class Game {
 // Removido campo titulo, usar apenas title
 	private String desenvolvedora;
 	private String publicadora;
+	private String idiomaPrincipal;
 
 	private String plataforma;
 	private LocalDate dataLancamento;
@@ -123,6 +124,7 @@ public class Game {
 		String desenvolvedora,
 		String publicadora,
 		String plataforma,
+		String idiomaPrincipal,
 		LocalDate dataLancamento,
 		BigDecimal preco,
 		double avaliacao,
@@ -135,6 +137,7 @@ public class Game {
 		this.image = image;
 		this.title = title;
 		this.desenvolvedora = desenvolvedora;
+		this.idiomaPrincipal = idiomaPrincipal;
 		this.publicadora = publicadora;
 		this.plataforma = plataforma;
 		this.dataLancamento = dataLancamento;

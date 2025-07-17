@@ -2,13 +2,14 @@ import { useDeleteGame } from "../../hooks/Games/useDeleteGame";
 import SteamModal from "../../components/GlobalComponents/SteamModal/SteamModal";
 import SteamConfirmModal from "../../components/GlobalComponents/SteamConfirmModal/SteamConfirmModal";
 
-import React from 'react';
-import styles from './style.module.css';
-import { usePaginatedGames } from '../../hooks/Games/usePaginatedGames';
-import AddGameModal from '../../components/AddGameModal/AddGameModal';
-import SteamModal from '../../components/GlobalComponents/SteamModal/SteamModal';
-import { useAddGame } from '../../hooks/Games/useAddGame';
-
+import React from "react";
+import styles from "./style.module.css";
+import { usePaginatedGames } from "../../hooks/Games/usePaginatedGames";
+import AddGameModal from "../../components/AddGameModal/AddGameModal";
+import { useAddGame } from "../../hooks/Games/useAddGame";
+import type { Game } from "../../types/Game";
+import { useGetGameId } from "../../hooks/Games/useGetGameId";
+import EditModal from "../../components/JogoComponents/JogoEditModal/editModal";
 
 const PAGE_SIZE = 4;
 
@@ -30,13 +31,32 @@ const AddGamesPage: React.FC = () => {
   );
   const jogos = data?.itens || [];
   const totalPages = data?.totalDePaginas || 1;
-  const [modalOpen, setModalOpen] = React.useState(false);
+
+  const [editModalOpen, setEditModalOpen] = React.useState(false);
+  const [gameToEdit, setGameToEdit] = React.useState<Game | null>(null);
+
   const [steamModalOpen, setSteamModalOpen] = React.useState(false);
-  const [steamModalMsg, setSteamModalMsg] = React.useState('');
+  const [steamModalMsg, setSteamModalMsg] = React.useState("");
   const { addGame, isLoading: isAdding } = useAddGame();
 
   const { deleteGame, loading: deleting, error } = useDeleteGame();
 
+
+const handleEdit = (gameId: number) => {
+  const jogoTemp = jogos.find((jogo) => jogo.id === gameId);
+  if (jogoTemp) {    
+    setGameToEdit(jogoTemp);
+    setEditModalOpen(true);
+  }
+};
+
+  const handleSaveEdit = async (updatedGame: Game) => {
+    // Aqui você pode chamar a função de update no backend
+    // await updateGame(updatedGame);
+    setEditModalOpen(false);
+    setGameToEdit(null);
+    refetch(); // Atualiza a lista após editar
+  };
   const handleAskDelete = (id: number) => {
     setGameToDelete(id);
     setConfirmOpen(true);
@@ -81,12 +101,17 @@ const AddGamesPage: React.FC = () => {
         onCancel={handleCancelDelete}
         loading={deleting}
       />
+      <EditModal
+        isOpen={editModalOpen}
+        onClose={() => setEditModalOpen(false)}
+        game={gameToEdit as Game}
+        onSave={handleSaveEdit}
+      />
       <div className={styles["header-row"]}>
         <h2>Adicionar Jogos</h2>
         <button
           className={styles["add-btn-icon"]}
           title="Adicionar novo jogo"
-
           onClick={() => setModalOpen(true)}
         >
           +
@@ -103,7 +128,7 @@ const AddGamesPage: React.FC = () => {
                 <div className={styles["actions"]}>
                   <button
                     className={styles["edit-btn"]}
-                    onClick={() => alert(`Editar jogo ${jogo.title}`)}
+                    onClick={() => handleEdit(jogo.id)}
                   >
                     Editar
                   </button>
@@ -141,9 +166,11 @@ const AddGamesPage: React.FC = () => {
       <AddGameModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        onAdd={async game => {
+        onAdd={async (game) => {
           const result = await addGame(game);
-          setSteamModalMsg(result.success ? `Jogo adicionado: ${game.title}` : result.message);
+          setSteamModalMsg(
+            result.success ? `Jogo adicionado: ${game.title}` : result.message
+          );
           setSteamModalOpen(true);
           setModalOpen(false);
         }}
