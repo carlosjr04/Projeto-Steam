@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
 import axios from "axios";
-import { useState } from "react";
 import { ENV } from "../../env";
 
 interface Usuario {
@@ -15,18 +14,16 @@ interface Usuario {
 }
 
 export function useCadastrarUsuario() {
-  const [loading, setLoading] = useState(false);
   const mutation = useMutation({
     mutationFn: async (usuario: Usuario) => {
       const response = await axios.post(`${ENV.API_URL}/users/cadastro`, usuario);
-      setLoading(false);
       return response.data;
     },
   });
 
   return {
     cadastrar: mutation.mutate,
-    isLoading: loading,
+    isLoading: mutation.isPending, // ou mutation.isLoading dependendo da versão do React Query
     isError: mutation.isError,
     isSuccess: mutation.isSuccess,
     error: mutation.error,

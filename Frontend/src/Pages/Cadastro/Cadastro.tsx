@@ -5,6 +5,8 @@ import Header from "../../components/GlobalComponents/Header/header";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useCadastrarUsuario } from "../../hooks/User/useCadastro";
+import SteamModal from "../../components/GlobalComponents/SteamModal/SteamModal";
+import { useState } from "react";
 
 type FormData = {
   email: string;
@@ -16,6 +18,8 @@ type FormData = {
   role: "CLIENTE";
 };
 
+type ModalType = 'success' | 'error' | 'neutral';
+
 export default function Cadastro() {
   const {
     register,
@@ -24,28 +28,51 @@ export default function Cadastro() {
   } = useForm<FormData>();
 
   const navigate = useNavigate();
-
   const { cadastrar, isLoading } = useCadastrarUsuario();
+  const [modal, setModal] = useState<{ open: boolean; type: ModalType; message: string }>({ open: false, type: 'success', message: '' });
 
   const onSubmit = (data: FormData) => {
-  const dataComRole = { ...data, role: "CLIENTE" };
-
-  console.log("Dados enviados:", dataComRole); 
-
-  cadastrar(dataComRole, {
-    onSuccess: () => {
-      alert("Cadastro realizado com sucesso!");
-      navigate("/login");
-    },
-    onError: () => {
-      alert("Erro ao cadastrar usuário.");
-    },
-  });
-};
+    const dataComRole = { ...data, role: "CLIENTE" };
+    cadastrar(dataComRole, {
+      onSuccess: () => {
+        setModal({ open: true, type: 'success', message: 'Cadastro realizado com sucesso!' });
+        setTimeout(() => {
+          setModal({ ...modal, open: false });
+          navigate("/login");
+        }, 1800);
+      },
+      onError: (error: unknown) => {
+        if (
+          typeof error === 'object' &&
+          error !== null &&
+          'response' in error &&
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (error as any).response?.status === 409
+        ) {
+          setModal({ open: true, type: 'neutral', message: 'Já existe usuário com mesmo email registrado' });
+        } else {
+          setModal({ open: true, type: 'error', message: 'Erro ao cadastrar usuário.' });
+        }
+      },
+    });
+  };
   return (
     <div>
       <Header />
       <main className={style.main}>
+        <SteamModal
+          isOpen={modal.open}
+          onClose={() => setModal({ ...modal, open: false })}
+          title={
+            modal.type === 'success'
+              ? 'Cadastro realizado'
+              : modal.type === 'neutral'
+                ? 'Atenção'
+                : 'Erro ao cadastrar'
+          }
+          message={modal.message}
+          type={modal.type}
+        />
         <div className={style["main-login"]}>
           <p className={style["login-txt"]}>Cadastre-se</p>
 
@@ -205,8 +232,19 @@ export default function Cadastro() {
                   className={style["submit-button"]}
                   type="submit"
                   disabled={isLoading}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: isLoading ? '#1b2838' : undefined,
+                    filter: isLoading ? 'brightness(0.85)' : undefined,
+                    cursor: isLoading ? 'not-allowed' : undefined,
+                  }}
                 >
-                  {isLoading ? "Cadastrando..." : "Cadastrar-se"}
+                  {isLoading ? (
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" style={{ marginRight: 8 }}></span>
+                  ) : null}
+                  {isLoading ? '' : 'Cadastrar-se'}
                 </button>
               </div>
             </form>

@@ -1,3 +1,4 @@
+
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "./RootLayout";
 import Home from "./Pages/HomePage/home";
@@ -11,6 +12,8 @@ import CategoryPage from "./Pages/Category/Category";
 import Wishlist from "./Pages/Wishlist/wishlist";
 import Biblioteca from "./Pages/Biblioteca/Biblioteca";
 import SearchPage from "./Pages/Search/Search";
+import NotFound from "./components/GlobalComponents/NotFound/NotFound";
+import PublicOnlyRoute from "./components/GlobalComponents/PublicOnlyRoute/PublicOnlyRoute";
 
 
 const router = createBrowserRouter([
@@ -53,16 +56,28 @@ const router = createBrowserRouter([
       {
         path: "/games",
         element: <SearchPage />
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       }
     ],
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <PublicOnlyRoute>
+        <Login />
+      </PublicOnlyRoute>
+    ),
   },
   {
     path: "/cadastro",
-    element: <Cadastro />,
+    element: (
+      <PublicOnlyRoute>
+        <Cadastro />
+      </PublicOnlyRoute>
+    ),
   },
   {
     path: "/inConstrution",

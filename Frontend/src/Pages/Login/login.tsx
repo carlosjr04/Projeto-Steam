@@ -4,8 +4,10 @@ import style from "./style.module.css";
 import Header from "../../components/GlobalComponents/Header/header";
 import Footer from "../../components/GlobalComponents/Footer/footer";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/User/useLogin";
+import SteamModal from "../../components/GlobalComponents/SteamModal/SteamModal";
 
 export default function Login() {
   const {
@@ -15,23 +17,31 @@ export default function Login() {
   } = useForm<{ email: string; password: string }>();
 
   const navigate = useNavigate();
-  const { mutate: login, isPending} = useLogin();
+  const { mutate: login, isPending } = useLogin();
+  const [showError, setShowError] = useState(false);
 
   const aoEnviar = (dados: { email: string; password: string }) => {
-  login(dados, {
-    onSuccess: () => {
-      navigate("/");
-    },
-    onError: (error) => {
-      alert("E-mail ou senha inválidos");
-      console.error(error);
-    },
-  });
-};
+    login(dados, {
+      onSuccess: () => {
+        navigate("/");
+      },
+      onError: (error) => {
+        setShowError(true);
+        console.error(error);
+      },
+    });
+  };
   return (
     <div>
       <Header />
       <main className={style.main}>
+        <SteamModal
+          isOpen={showError}
+          onClose={() => setShowError(false)}
+          title="Erro ao entrar"
+          message="E-mail ou senha inválidos."
+          type="error"
+        />
         <div className={style["main-login"]}>
           <p className={style["login-txt"]}>Iniciar sessão</p>
 
