@@ -7,16 +7,22 @@ import { useNavigate } from "react-router-dom";
 import { useCadastrarUsuario } from "../../hooks/User/useCadastro";
 import SteamModal from "../../components/GlobalComponents/SteamModal/SteamModal";
 import { useState } from "react";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-type FormData = {
-  email: string;
-  password: string;
-  username: string;
-  age: number;
-  genre: string;
-  name: string;
-  role: "CLIENTE";
-};
+
+
+const cadastroSchema = z.object({
+  email: z.string().email("E-mail inválido"),
+  password: z.string().min(6, "Senha deve ter pelo menos 6 caracteres"),
+  username: z.string().min(4, "Username deve ter mais de 4 caracteres"),
+  name: z.string().min(4, "Nome deve ter mais de 4 caracteres"),
+  age: z.number().min(8, "Idade mínima é 8").max(90, "Idade máxima é 90"),
+  genre: z.string().min(1, "Gênero é obrigatório"),
+  role: z.literal("CLIENTE"),
+});
+type FormData = z.infer<typeof cadastroSchema>;
+
 
 type ModalType = 'success' | 'error' | 'neutral';
 
@@ -25,7 +31,10 @@ export default function Cadastro() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    resolver: zodResolver(cadastroSchema),
+    defaultValues: { role: "CLIENTE" }
+  });
 
   const navigate = useNavigate();
   const { cadastrar, isLoading } = useCadastrarUsuario();
