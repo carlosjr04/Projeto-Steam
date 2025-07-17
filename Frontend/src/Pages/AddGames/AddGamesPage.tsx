@@ -7,6 +7,14 @@ import SteamModal from '../../components/GlobalComponents/SteamModal/SteamModal'
 import SteamConfirmModal from '../../components/GlobalComponents/SteamConfirmModal/SteamConfirmModal';
 import { useAddGame } from '../../hooks/Games/useAddGame';
 import { useDeleteGame } from '../../hooks/Games/useDeleteGame';
+import React from "react";
+import styles from "./style.module.css";
+import { usePaginatedGames } from "../../hooks/Games/usePaginatedGames";
+import AddGameModal from "../../components/AddGameModal/AddGameModal";
+import { useAddGame } from "../../hooks/Games/useAddGame";
+import type { Game } from "../../types/Game";
+import { useGetGameId } from "../../hooks/Games/useGetGameId";
+import EditModal from "../../components/JogoComponents/JogoEditModal/editModal";
 
 const PAGE_SIZE = 4;
 
@@ -15,6 +23,23 @@ const AddGamesPage: React.FC = () => {
   const [confirmOpen, setConfirmOpen] = React.useState(false);
   const [gameToDelete, setGameToDelete] = React.useState<number | null>(null);
   const [modalOpen, setModalOpen] = React.useState(false);
+
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [modalMsg, setModalMsg] = React.useState("");
+  const [modalType, setModalType] = React.useState<
+    "success" | "error" | "neutral"
+  >("success");
+
+  const { data, loading, refetch } = usePaginatedGames(
+    currentPage - 1,
+    PAGE_SIZE
+  );
+  const jogos = data?.itens || [];
+  const totalPages = data?.totalDePaginas || 1;
+
+  const [editModalOpen, setEditModalOpen] = React.useState(false);
+  const [gameToEdit, setGameToEdit] = React.useState<Game | null>(null);
+
   const [steamModalOpen, setSteamModalOpen] = React.useState(false);
   const [steamModalMsg, setSteamModalMsg] = React.useState('');
   const [steamModalType, setSteamModalType] = React.useState<'success' | 'error' | 'neutral'>('success');
@@ -22,9 +47,26 @@ const AddGamesPage: React.FC = () => {
   const { data, loading, refetch } = usePaginatedGames(currentPage - 1, PAGE_SIZE);
   const jogos = data?.itens || [];
   const totalPages = data?.totalDePaginas || 1;
+  const [steamModalMsg, setSteamModalMsg] = React.useState("");
   const { addGame, isLoading: isAdding } = useAddGame();
   const { deleteGame, loading: deleting } = useDeleteGame();
 
+
+const handleEdit = (gameId: number) => {
+  const jogoTemp = jogos.find((jogo) => jogo.id === gameId);
+  if (jogoTemp) {    
+    setGameToEdit(jogoTemp);
+    setEditModalOpen(true);
+  }
+};
+
+  const handleSaveEdit = async (updatedGame: Game) => {
+    // Aqui você pode chamar a função de update no backend
+    // await updateGame(updatedGame);
+    setEditModalOpen(false);
+    setGameToEdit(null);
+    refetch(); // Atualiza a lista após editar
+  };
   const handleAskDelete = (id: number) => {
     setGameToDelete(id);
     setConfirmOpen(true);
@@ -69,12 +111,17 @@ const AddGamesPage: React.FC = () => {
         onCancel={handleCancelDelete}
         loading={deleting}
       />
+      <EditModal
+        isOpen={editModalOpen}
+        onClose={() => setEditModalOpen(false)}
+        game={gameToEdit as Game}
+        onSave={handleSaveEdit}
+      />
       <div className={styles["header-row"]}>
         <h2>Adicionar Jogos</h2>
         <button
           className={styles["add-btn-icon"]}
           title="Adicionar novo jogo"
-
           onClick={() => setModalOpen(true)}
         >
           +
@@ -91,7 +138,7 @@ const AddGamesPage: React.FC = () => {
                 <div className={styles["actions"]}>
                   <button
                     className={styles["edit-btn"]}
-                    onClick={() => alert(`Editar jogo ${jogo.title}`)}
+                    onClick={() => handleEdit(jogo.id)}
                   >
                     Editar
                   </button>
@@ -132,9 +179,13 @@ const AddGamesPage: React.FC = () => {
         onClose={() => setModalOpen(false)}
         onAdd={async game => {
           console.log(game)
+        onAdd={async (game) => {
           const result = await addGame(game);
           setSteamModalMsg(result.success ? `Jogo adicionado: ${game.title}` : result.message);
           setSteamModalType(result.success ? 'success' : 'error');
+          setSteamModalMsg(
+            result.success ? `Jogo adicionado: ${game.title}` : result.message
+          );
           setSteamModalOpen(true);
           setModalOpen(false);
           if (result.success) refetch();
