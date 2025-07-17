@@ -1,7 +1,9 @@
-
 import React from 'react';
 import styles from './style.module.css';
 import { usePaginatedGames } from '../../hooks/Games/usePaginatedGames';
+import AddGameModal from '../../components/AddGameModal/AddGameModal';
+import SteamModal from '../../components/GlobalComponents/SteamModal/SteamModal';
+import { useAddGame } from '../../hooks/Games/useAddGame';
 
 const PAGE_SIZE = 4;
 
@@ -10,6 +12,10 @@ const AddGamesPage: React.FC = () => {
   const { data, loading } = usePaginatedGames(currentPage - 1, PAGE_SIZE);
   const jogos = data?.itens || [];
   const totalPages = data?.totalDePaginas || 1;
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [steamModalOpen, setSteamModalOpen] = React.useState(false);
+  const [steamModalMsg, setSteamModalMsg] = React.useState('');
+  const { addGame, isLoading: isAdding } = useAddGame();
 
   return (
     <div className={styles['add-games-container']}>
@@ -18,7 +24,7 @@ const AddGamesPage: React.FC = () => {
         <button
           className={styles['add-btn-icon']}
           title="Adicionar novo jogo"
-          onClick={() => alert('Abrir modal/cadastro de novo jogo')}
+          onClick={() => setModalOpen(true)}
         >
           +
         </button>
@@ -55,6 +61,25 @@ const AddGamesPage: React.FC = () => {
           </div>
         </>
       )}
+
+      <AddGameModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onAdd={async game => {
+          const result = await addGame(game);
+          setSteamModalMsg(result.success ? `Jogo adicionado: ${game.title}` : result.message);
+          setSteamModalOpen(true);
+          setModalOpen(false);
+        }}
+        isLoading={isAdding}
+      />
+
+      <SteamModal
+        isOpen={steamModalOpen}
+        onClose={() => setSteamModalOpen(false)}
+        message={steamModalMsg}
+        type="success"
+      />
     </div>
   );
 };
