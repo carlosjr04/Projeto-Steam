@@ -37,7 +37,11 @@ export default function ValorTotal({ onOpenCompra, onSetMsg, setLoading, loading
     }
     setLoading(true);
     try {
-      const promises = jogos
+      // Remove jogos repetidos pelo id
+      const jogosUnicos = jogos.filter((jogo, idx, arr) =>
+        jogo && arr.findIndex(j => j && j.id === jogo.id) === idx
+      );
+      const promises = jogosUnicos
         .filter((jogo: Game) => {
           if (!jogo) return false;
           // Exclude games the user already owns

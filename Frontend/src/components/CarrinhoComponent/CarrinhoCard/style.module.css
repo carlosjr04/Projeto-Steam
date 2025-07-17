@@ -44,6 +44,7 @@
 .esquerda a:hover {
   color: rgba(13, 110, 253);
 }
+
 .dropDown {
   border-radius: 3px;
   background: rgba(59, 63, 72, 0.5);
@@ -53,8 +54,9 @@
   align-items: center;
   justify-content: center;
   gap: 24px;
-  min-width: 161px;
+  min-width: 215px;
 }
+
 .dropDown svg {
   padding-top: 2px;
 }
@@ -146,10 +148,11 @@
   .dropDown {
     gap: 0px;
     justify-content: flex-start;
-    min-width: 128.5px;
+    width: 180px;
+    min-width: 150px;
   }
   .dropDownLink {
     font-size: 11px;
-    width: auto;
+    width: 128.5;
   }
 }

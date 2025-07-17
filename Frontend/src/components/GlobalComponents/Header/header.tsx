@@ -5,6 +5,7 @@ import styles from './style.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useCarrinhoStore } from '../../../store/useCarrinhoStore'
 import { useAuthStore } from '../../../store/authStore'
+import { useGetUserId } from '../../../hooks/User/useGetUser';
 
 
 export default function Header() {
@@ -13,6 +14,7 @@ export default function Header() {
   const logout = useAuthStore((state) => state.logout)
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user } = useGetUserId();
 
   function handleLogout() {
     logout();
@@ -90,11 +92,29 @@ export default function Header() {
               <div className={styles['modal-content']} onClick={e => e.stopPropagation()} style={{position: 'relative'}}>
                 <button type="button" className="btn-close position-absolute end-0 m-2" aria-label="Fechar" onClick={closeMenu} style={{zIndex: 10}} />
                 <div className={styles["main-content-modal"]}>
-                  {!isAuthenticated && (
-                    <div className={styles["modal-header"]}>
-                      <h5 style={{textAlign:"start"}} className="modal-title" id="menuModalLabel">Iniciar sessão</h5>
-                    </div>
-                  )}
+                  <div className={styles["modal-header"]}>
+                    {isAuthenticated ? (
+                      <Link
+                        to="/biblioteca"
+                        className="modal-title text-decoration-none h5"
+                        id="menuModalLabel"
+                        style={{ textAlign: "start", color: 'rgb(189, 189, 189)', marginLeft: '4px', fontWeight: '200', fontSize: '1.5rem' }}
+                        onClick={closeMenu}
+                      >
+                        {user?.name ? user.name : 'Minha Biblioteca'}
+                      </Link>
+                    ) : (
+                      <Link
+                        to="/login"
+                        className="modal-title text-decoration-none h5"
+                        id="menuModalLabel"
+                        style={{ textAlign: "start", color: 'rgb(189, 189, 189)', marginLeft: '4px', fontWeight: '200', fontSize: '1.5rem' }}
+                        onClick={closeMenu}
+                      >
+                        Iniciar sessão
+                      </Link>
+                    )}
+                  </div>
                   <div className={styles["modal-body"]}>
                     <ul className={styles["list-unstyled"]}>
                       <li>
