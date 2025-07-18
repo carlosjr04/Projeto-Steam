@@ -13,7 +13,7 @@ export interface Game {
   classificacaoEtaria: string | null;
 
   compatibilidade: string[];
-  achievements: Achievement[];
+  conquista: Achievement[];
 
   cover: string;
   dataLancamento: string; // formato ISO: "YYYY-MM-DD"
@@ -48,7 +48,7 @@ export interface GameUser {
   classificacaoEtaria: string | null;
 
   compatibilidade: string[];
-  achievements: Achievement[];
+  conquista: Achievement[];
 
   cover: string;
   dataLancamento: string; // formato ISO: "YYYY-MM-DD"

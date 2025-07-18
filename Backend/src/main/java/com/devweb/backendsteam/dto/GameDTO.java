@@ -3,6 +3,7 @@ package com.devweb.backendsteam.dto;
 import java.util.List;
 import java.util.Set;
 
+import com.devweb.backendsteam.model.Category;
 import com.devweb.backendsteam.model.Game;
 import com.devweb.backendsteam.model.Language;
 
@@ -25,7 +26,7 @@ public class GameDTO {
 	private String about;
 	private String desenvolvedora;
 	private List<String> classificacao;
-	private List<String> categories;
+	private Set<Category> categories;
 	private Object descricao; // ReactNode no frontend, aqui pode ser String
 	private List<String> exemplo;
 	private List<AchievementDTO> conquista; // Conquista DTO
@@ -51,7 +52,7 @@ public class GameDTO {
 		this.about = game.getAbout();
 		this.desenvolvedora = game.getDesenvolvedora();
 		this.classificacao = game.getClassificacao();
-		this.categories = game.getCategories() != null ? game.getCategories().stream().map(c -> c.getName()).toList() : List.of();
+		this.categories = game.getCategories() != null ? game.getCategories() : Set.of();
 		this.descricao = game.getDescricao();
 		this.exemplo = game.getExemplo();
 		this.conquista = game.getAchievements() != null ? game.getAchievements().stream().map(a -> new com.devweb.backendsteam.dto.AchievementDTO(a)).toList() : List.of();
