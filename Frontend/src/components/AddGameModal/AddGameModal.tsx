@@ -13,7 +13,7 @@ import SteamModal from '../GlobalComponents/SteamModal/SteamModal';
 interface AddGameModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAdd: (game: GameCreatePayload) => void;
+  onAdd: (game: GameCreatePayload) => Promise<void>;
   isLoading?: boolean;
 }
 
@@ -230,7 +230,7 @@ const AddGameModal: React.FC<AddGameModalProps> = ({ isOpen, onClose, onAdd, isL
         : [],
     };
 
-    onAdd(payload);
+    await onAdd(payload);
     reset();
     setStep(0);
   };
