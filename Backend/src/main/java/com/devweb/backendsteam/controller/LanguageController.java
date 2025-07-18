@@ -11,11 +11,11 @@ import java.util.List;
 @RequestMapping("languages")
 public class LanguageController {
 
-    @Autowired
-    private LanguageService languageService;
+	@Autowired
+	private LanguageService languageService;
 
-    @GetMapping
-    public List<Language> listarIdiomas() {
-        return languageService.listarIdiomas();
-    }
+	@GetMapping
+	public List<Language> listarIdiomas() {
+		return languageService.listarIdiomas();
+	}
 }

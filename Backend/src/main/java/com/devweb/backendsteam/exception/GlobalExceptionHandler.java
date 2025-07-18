@@ -37,4 +37,14 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> handleEmailAlreadyExists(EmailAlreadyExistsException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
 	}
+
+	@ExceptionHandler(LanguageNotFoundException.class)
+	public ResponseEntity<String> handleLanguageNotFound(LanguageNotFoundException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(CategoryNotFoundException.class)
+	public ResponseEntity<String> handleCategoryNotFound(CategoryNotFoundException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
 }

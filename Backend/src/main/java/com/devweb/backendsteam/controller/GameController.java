@@ -1,14 +1,18 @@
 package com.devweb.backendsteam.controller;
 
+import com.devweb.backendsteam.dto.GameCreateDTO;
 import com.devweb.backendsteam.dto.GameDTO;
 import com.devweb.backendsteam.model.Game;
 import com.devweb.backendsteam.model.ResultadoPaginado;
 import com.devweb.backendsteam.service.GameService;
 import java.util.List;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("http://localhost:5173")
@@ -48,8 +52,14 @@ public class GameController {
 	}
 
 	@PostMapping
-	public Game cadastraGame(@RequestBody Game game) {
-		return gameService.cadastrarGame(game);
+	public ResponseEntity<?> cadastraGame(@RequestBody @Valid GameCreateDTO dto) {
+		// Validação básica já feita pelo @Valid
+		try {
+			Game saved = gameService.cadastrarGameComDTO(dto);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
 	}
 
 	@PutMapping
