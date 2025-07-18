@@ -80,7 +80,7 @@ export default function Jogo() {
                   className={`breadcrumb-item ${style["caminho-jogo"]}`}
                   aria-current="page"
                 >
-                  {game?.categories[1]}
+                  {game?.categories[1].slug}
                 </li>
                 <li
                   className={`breadcrumb-item ${style["caminho-jogo"]}`}
@@ -222,7 +222,7 @@ export default function Jogo() {
             </span>
             <br />
             {Array.isArray(game?.categories) && game.categories.map((categoria, idx) => (
-              <button key={`categoria-${categoria}-${idx}`} className={style["botao-genero"]}>{categoria}</button>
+              <button key={`categoria-${categoria}-${idx}`} className={style["botao-genero"]}>{categoria.slug}</button>
             ))}
             <button className={style["botao-genero"]}>+</button>
           </div>
@@ -239,7 +239,7 @@ export default function Jogo() {
           {game ? <Compatibilidade compatibilidades={game.compatibilidade} /> : null}
           {game ? <Idioma idiomas={game.languages} /> : null}
           {game ? <Classificacao classificacao={game.classificacao} /> : null}
-          {game ? <Conquistas conquistas={game.conquista} /> : null}
+          {game ? <Conquistas conquistas={game.achievements} /> : null}
         </div>
       </div>
     </div>
