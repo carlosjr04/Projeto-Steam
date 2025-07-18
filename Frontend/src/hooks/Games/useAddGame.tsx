@@ -1,7 +1,9 @@
 
+
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import { ENV } from '../../env';
 import type { GameCreatePayload } from '../../types/GameCreatePayload';
+import axios from 'axios';
 
 interface UseAddGameResult {
   addGame: (jogo: GameCreatePayload) => Promise<{ success: boolean; message: string }>;
@@ -13,7 +15,7 @@ interface UseAddGameResult {
 export function useAddGame(): UseAddGameResult {
   const mutation = useMutation<{ success: boolean; message: string }, Error, GameCreatePayload>({
     mutationFn: async (jogo: GameCreatePayload) => {
-      await axios.post('/games', jogo);
+      await axios.post(`${ENV.API_URL}/games`, jogo);
       return { success: true, message: 'Jogo adicionado com sucesso!' };
     }
   });

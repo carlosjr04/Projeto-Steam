@@ -31,15 +31,15 @@ const AddGamesPage: React.FC = () => {
   const { deleteGame, loading: deleting } = useDeleteGame();
 
 
-const handleEdit = (gameId: number) => {
-  const jogoTemp = jogos.find((jogo) => jogo.id === gameId);
-  if (jogoTemp) {    
-    setGameToEdit(jogoTemp);
-    setEditModalOpen(true);
-  }
-};
+  const handleEdit = (gameId: number) => {
+    const jogoTemp = jogos.find((jogo) => jogo.id === gameId);
+    if (jogoTemp) {    
+      setGameToEdit(jogoTemp);
+      setEditModalOpen(true);
+    }
+  };
 
-  const handleSaveEdit = async (updatedGame: Game) => {
+  const handleSaveEdit = async () => {
     // Aqui você pode chamar a função de update no backend
     // await updateGame(updatedGame);
     setEditModalOpen(false);
