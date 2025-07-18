@@ -124,7 +124,8 @@ Substitua `SUA_PORTA_DO_BACKEND` pela porta correta.
 <img width="1360" height="768" marginBottom="12px" alt="Captura de Tela (130)" src="https://github.com/user-attachments/assets/3327b8e7-a496-42f4-b389-a3fb3ae6268d" />
 
 ### Realizando compra
-https://github.com/user-attachments/assets/a191b55f-e1de-4ad5-a695-70f87378ef89
+https://github.com/user-attachments/assets/acdf579c-e9af-454f-b039-1edbe7bdab46
+
 
 
 ### Exibindo categorias
