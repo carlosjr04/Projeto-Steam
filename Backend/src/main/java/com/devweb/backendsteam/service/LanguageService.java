@@ -8,10 +8,10 @@ import java.util.List;
 
 @Service
 public class LanguageService {
-    @Autowired
-    private LanguageRepository languageRepository;
+	@Autowired
+	private LanguageRepository languageRepository;
 
-    public List<Language> listarIdiomas() {
-        return languageRepository.findAll();
-    }
+	public List<Language> listarIdiomas() {
+		return languageRepository.findAll();
+	}
 }
