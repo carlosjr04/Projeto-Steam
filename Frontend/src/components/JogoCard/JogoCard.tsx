@@ -14,7 +14,8 @@ const JogoCard: React.FC<JogoCardProps> = ({ jogo }) => {
         {/* Imagem/vídeo principal */}
         <div className={styles.mediaRow}>
           {jogo.scenes && jogo.scenes.length > 0 ? (
-            jogo.scenes[0].endsWith(".mp4") || jogo.scenes[0].endsWith(".webm") ? (
+            jogo.scenes[0].endsWith(".mp4") ||
+            jogo.scenes[0].endsWith(".webm") ? (
               <video className={styles.media} controls poster={jogo.cover}>
                 <source src={jogo.scenes[0]} type="video/mp4" />
               </video>
@@ -32,11 +33,16 @@ const JogoCard: React.FC<JogoCardProps> = ({ jogo }) => {
             <span className={styles.developer}>{jogo.desenvolvedora}</span>
           </div>
           <div className={styles.tagsRow}>
-            {jogo.categories.map((cat, index) => (
-              <span key={`${cat}-${index}`} className={styles.tag}>{cat}</span>
-            ))}
-            {jogo.classificacao.map((cls, index) => (
-              <span key={`${cls}-${index}`} className={styles.tag}>{cls}</span>
+            {jogo.categories?.map((cat, index) => (
+              <Link
+                to={`/category/${cat.slug}`}
+                key={`${cat.id || cat.nome || index}`}
+                className={styles.tag}
+              >
+                {typeof cat === "string"
+                  ? cat
+                  : cat.nome || cat.title || cat.name || "Categoria"}
+              </Link>
             ))}
           </div>
           <div className={styles.aboutRow}>{jogo.about}</div>
@@ -44,39 +50,56 @@ const JogoCard: React.FC<JogoCardProps> = ({ jogo }) => {
             {jogo.desconto > 0 ? (
               <>
                 <span className={styles.discount}>-{jogo.desconto}%</span>
-                <span className={styles.oldPrice}>R$ {(jogo.preco).toFixed(2)}</span>
+                <span className={styles.oldPrice}>
+                  R$ {jogo.preco.toFixed(2)}
+                </span>
                 <span className={styles.price}>
-                  {jogo.preco * (1 - jogo.desconto / 100) === 0 ? 'Grátis' : `R$ ${(jogo.preco * (1 - jogo.desconto / 100)).toFixed(2)}`}
+                  {jogo.preco * (1 - jogo.desconto / 100) === 0
+                    ? "Grátis"
+                    : `R$ ${(jogo.preco * (1 - jogo.desconto / 100)).toFixed(
+                        2
+                      )}`}
                 </span>
               </>
             ) : (
-              <span className={styles.price}>{jogo.preco === 0 ? 'Grátis' : `R$ ${jogo.preco.toFixed(2)}`}</span>
+              <span className={styles.price}>
+                {jogo.preco === 0 ? "Grátis" : `R$ ${jogo.preco.toFixed(2)}`}
+              </span>
             )}
           </div>
-          <div className={styles.redirectButtonRow} style={{ marginTop: '20px' }}>
+          <div
+            className={styles.redirectButtonRow}
+            style={{
+              marginTop: "20px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <Link
               to={`/Jogo/${jogo.id}`}
               className={styles.redirectButton}
               style={{
-                display: 'inline-block',
-                padding: '10px 20px',
-                backgroundColor: '#304e7a',
-                color: '#fff',
-                textDecoration: 'none',
-                borderRadius: '5px',
-                fontWeight: 'bold',
-                textAlign: 'center',
-                transition: 'background-color 0.3s ease',
+                display: "inline-block",
+                padding: "10px 20px",
+                backgroundColor: "#304e7a",
+                color: "#fff",
+                textDecoration: "none",
+                borderRadius: "5px",
+                fontWeight: "bold",
+                textAlign: "center",
+                transition: "background-color 0.3s ease",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#1f3555';
+                e.currentTarget.style.backgroundColor = "#1f3555";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#304e7a';
+                e.currentTarget.style.backgroundColor = "#304e7a";
               }}
             >
               Ver mais detalhes
             </Link>
+            <img src={`/${jogo.classificacao[0]}.png`} alt="" />
           </div>
         </div>
       </div>

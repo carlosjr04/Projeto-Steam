@@ -21,12 +21,22 @@ const CategoryPage: React.FC = () => {
   const { data, loading } = usePaginatedGames(pagina, tamanho, '', categoria ?? '');
   const { ref, inView } = useInView(); // Hook para detectar visibilidade
    const categoryName = formatCategoryName(categoria);
+  
+  // Debug: verificar estrutura dos dados
+  console.log('Data completa:', data);
+  console.log('Data itens:', data?.itens);
+  console.log('Tipo de data.itens:', Array.isArray(data?.itens) ? 'array' : typeof data?.itens);
 
+  // Reset jogos quando categoria muda
   useEffect(() => {
-  if (data?.itens) {
+    setJogos([]);
+    setPagina(0);
+  }, [categoria]);
+  useEffect(() => {
+  if (data?.itens && Array.isArray(data.itens)) {
     setJogos((prevJogos) => {
       const novosJogos = data.itens.filter(
-        (novoJogo) => !prevJogos.some((jogoExistente) => jogoExistente.id === novoJogo.id)
+        (novoJogo) => novoJogo && typeof novoJogo === 'object' && novoJogo.id && !prevJogos.some((jogoExistente) => jogoExistente.id === novoJogo.id)
       );
       return [...prevJogos, ...novosJogos];
     });
@@ -88,9 +98,14 @@ const CategoryPage: React.FC = () => {
           </div>
         ) : (
           <div className={`d-flex flex-wrap justify-content-center`} style={{ gap: '32px', padding: '0 32px' }}>
-            {jogos.map((jogo) => (
-              <JogoCard key={jogo.id} jogo={jogo} />
-            ))}
+            {jogos.length > 0 && jogos.map((jogo) => {
+              // Verificação de segurança antes de renderizar
+              if (!jogo || typeof jogo !== 'object' || !jogo.id) {
+                console.warn('Jogo inválido encontrado:', jogo);
+                return null;
+              }
+              return <JogoCard key={jogo.id} jogo={jogo} />;
+            })}
           </div>
         )}
         {loading && <div>Carregando jogos...</div>}
