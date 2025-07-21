@@ -68,7 +68,7 @@ Navegue até a pasta `Backend` e use o Docker Compose para iniciar o serviço de
 
 ```bash
 cd Backend
-docker-compose up -d postgres
+docker compose up -d
 ````
 
 O banco de dados será iniciado na porta padrão `5432`. As credenciais são configuradas no arquivo `Backend/src/main/resources/application.properties` e são:
