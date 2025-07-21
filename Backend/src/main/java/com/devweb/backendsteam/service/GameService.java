@@ -161,6 +161,11 @@ public class GameService {
 		game.setDescricao(dto.descricao);
 		game.setScenes(dto.scenes);
 		game.setExemplo(dto.exemplo);
+		game.setPublicadora(dto.publicadora);
+		game.setPlataforma(dto.plataforma);
+		game.setAvaliacao(dto.avaliacao);
+		game.setClassificacaoEtaria(dto.classificacaoEtaria);
+		game.setIdiomaPrincipal(dto.idiomaPrincipal);
 		// Idiomas
 		List<Language> idiomas = languageRepository.findAllById(dto.idiomas);
 		if (idiomas.size() != dto.idiomas.size()) {
@@ -173,6 +178,8 @@ public class GameService {
 			throw new CategoryNotFoundException("Uma ou mais categorias não encontradas.");
 		}
 		game.setCategories(new java.util.HashSet<>(categorias));
+		// Conquistas
+		game.setConquista(dto.conquista);
 		return gameRepository.save(game);
 	}
 }

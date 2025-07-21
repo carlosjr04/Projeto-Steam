@@ -40,4 +40,22 @@ public class GameCreateDTO {
 	@NotNull
 	@Size(min = 1)
 	public List<@NotBlank String> exemplo;
+	@NotBlank
+	public String publicadora;
+
+	@NotBlank
+	public String plataforma;
+
+	@NotNull
+	public Double avaliacao;
+
+	@NotBlank
+	public String classificacaoEtaria;
+
+	@NotBlank
+	public String idiomaPrincipal;
+
+	@NotNull
+	@Size(min = 0)
+	public List<AchievementDTO> conquista;
 }
