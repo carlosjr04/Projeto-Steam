@@ -11,6 +11,8 @@ public class AchievementDTO {
 	private String descricao;
 	private boolean escondido;
 
+	public AchievementDTO() { }
+
 	public AchievementDTO(Achievement achievement) {
 		this.imagem = achievement.getImagem();
 		this.descricao = achievement.getDescricao();
