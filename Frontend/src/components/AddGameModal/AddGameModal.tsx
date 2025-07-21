@@ -32,16 +32,18 @@ const steps = [
   'Dados principais',
   'Listas e IDs',
   'Descrição e mídias',
+  'Dados complementares',
+  'Conquistas',
 ];
 
 const gameSchema = z.object({
-  title: z.string().min(1, 'Título é obrigatório'),
-  preco: z.number().min(0, 'Preço deve ser maior ou igual a 0'),
-  cover: z.url('URL da capa inválida'),
-  desconto: z.number().min(0).max(100).optional(),
-  desenvolvedora: z.string().min(1, 'Desenvolvedora é obrigatória'),
-  dataLancamento: z.coerce.date().min(1, 'Data de lançamento é obrigatória'),
-  about: z.string(),
+  title: z.string().min(1, 'Informe o título do jogo.'),
+  preco: z.number('Coloque um número válido.').min(0, 'O preço deve ser maior ou igual a zero.'),
+  cover: z.url('Informe uma URL válida para a capa.'),
+  desconto: z.number('Coloque um número válido.').min(0, 'O desconto não pode ser negativo.').max(100, 'O desconto não pode ser maior que 100%.').optional(),
+  desenvolvedora: z.string().min(1, 'Informe o nome da desenvolvedora.'),
+  dataLancamento: z.coerce.date('Coloque uma data válida.').min(1, 'Informe a data de lançamento.'),
+  about: z.string().min(1, 'Informe o campo "Sobre".'),
   classificacao: z
     .union([
       z.string(),
@@ -52,11 +54,11 @@ const gameSchema = z.object({
         ? val.map((s) => String(s).trim()).filter(Boolean)
         : String(val).split(',').map((s) => s.trim()).filter(Boolean)
     )
-    .refine((arr) => arr.length > 0, 'Classificação deve conter pelo menos 1 elemento'),
-  idiomas: z.array(z.number()).min(1, 'Selecione pelo menos um idioma'),
-  categories: z.array(z.number()).min(1, 'Selecione pelo menos uma categoria'),
-  compatibilidade: z.array(z.string()).min(1, 'Selecione pelo menos uma compatibilidade'),
-  descricao: z.string().min(1),
+    .refine((arr) => arr.length > 0, 'Adicione pelo menos uma classificação.'),
+  idiomas: z.array(z.number()).min(1, 'Selecione pelo menos um idioma.'),
+  categories: z.array(z.number()).min(1, 'Selecione pelo menos uma categoria.'),
+  compatibilidade: z.array(z.string()).min(1, 'Selecione pelo menos uma opção de compatibilidade.'),
+  descricao: z.string().min(1, 'Informe a descrição do jogo.'),
   scenes: z
     .union([
       z.string(),
@@ -67,7 +69,7 @@ const gameSchema = z.object({
         ? val.map((s) => String(s).trim()).filter(Boolean)
         : String(val).split(',').map((s) => s.trim()).filter(Boolean)
     )
-    .refine((arr) => arr.length === 4, 'Cenas devem conter exatamente 4 elementos'),
+    .refine((arr) => arr.length === 4, 'Adicione exatamente 4 URLs de cenas.'),
   exemplo: z
     .union([
       z.string(),
@@ -78,12 +80,56 @@ const gameSchema = z.object({
         ? val.map((s) => String(s).trim()).filter(Boolean)
         : String(val).split(',').map((s) => s.trim()).filter(Boolean)
     )
-    .refine((arr) => arr.length >= 6, 'Exemplo deve conter exatamente 6 elementos'),
+    .refine((arr) => arr.length >= 6, 'Adicione pelo menos 6 URLs de exemplo.'),
+  publicadora: z.string().min(1, 'Informe o nome da publicadora.'),
+  plataforma: z.string().min(1, 'Informe a plataforma.'),
+  avaliacao: z.number('Coloque um número válido.').min(0, 'A avaliação deve ser no mínimo 0.').max(10, 'A avaliação deve ser no máximo 10.'),
+  classificacaoEtaria: z.string().min(1, 'Informe a classificação etária.'),
+  idiomaPrincipal: z.string().min(1, 'Informe o idioma principal.'),
+  conquista: z
+    .union([
+      z.string(),
+      z.array(z.string())
+    ])
+    .transform((val) =>
+      Array.isArray(val)
+        ? val.map((s) => String(s).trim()).filter(Boolean)
+        : String(val).split(',').map((s) => s.trim()).filter(Boolean)
+    ),
 });
+
+// Tipo para conquista
+interface ConquistaForm {
+  imagem: string;
+  descricao: string;
+  escondido: boolean;
+}
 
 const AddGameModal: React.FC<AddGameModalProps> = ({ isOpen, onClose, onAdd, isLoading }) => {
   const [step, setStep] = useState(0);
   const [modalMessage, setModalMessage] = useState<string | null>(null);
+  // Estado para conquistas dinâmicas
+  const [conquistas, setConquistas] = useState<ConquistaForm[]>([
+    { imagem: '', descricao: '', escondido: false }
+  ]);
+
+  // Métodos para manipular conquistas
+  const handleConquistaChange = (index: number, field: keyof ConquistaForm, value: string | boolean) => {
+    setConquistas((prev) => {
+      const novas = [...prev];
+      novas[index] = { ...novas[index], [field]: value };
+      return novas;
+    });
+  };
+
+  const handleAddConquista = () => {
+    setConquistas((prev) => [...prev, { imagem: '', descricao: '', escondido: false }]);
+  };
+
+  const handleRemoveConquista = (index: number) => {
+    setConquistas((prev) => prev.length === 1 ? prev : prev.filter((_, i) => i !== index));
+  };
+
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm({
     resolver: zodResolver(gameSchema),
     defaultValues: {
@@ -101,6 +147,12 @@ const AddGameModal: React.FC<AddGameModalProps> = ({ isOpen, onClose, onAdd, isL
       descricao: '',
       scenes: '',
       exemplo: '',
+      publicadora: '',
+      plataforma: '',
+      avaliacao: 0,
+      classificacaoEtaria: '',
+      idiomaPrincipal: '',
+      conquista: '', // não usado mais diretamente
     },
   });
   const { categories: categorias = [] } = useCategories() || {};
@@ -135,9 +187,11 @@ const AddGameModal: React.FC<AddGameModalProps> = ({ isOpen, onClose, onAdd, isL
     z.object({
       title: gameSchema.shape.title,
       preco: gameSchema.shape.preco,
+      desconto: gameSchema.shape.desconto,
       cover: gameSchema.shape.cover,
       desenvolvedora: gameSchema.shape.desenvolvedora,
       dataLancamento: gameSchema.shape.dataLancamento,
+      about: gameSchema.shape.about,
     }),
     z.object({
       classificacao: gameSchema.shape.classificacao,
@@ -150,6 +204,16 @@ const AddGameModal: React.FC<AddGameModalProps> = ({ isOpen, onClose, onAdd, isL
       scenes: gameSchema.shape.scenes,
       exemplo: gameSchema.shape.exemplo,
     }),
+    z.object({
+      publicadora: gameSchema.shape.publicadora,
+      plataforma: gameSchema.shape.plataforma,
+      avaliacao: gameSchema.shape.avaliacao,
+      classificacaoEtaria: gameSchema.shape.classificacaoEtaria,
+      idiomaPrincipal: gameSchema.shape.idiomaPrincipal,
+    }),
+    z.object({
+      conquista: gameSchema.shape.conquista,
+    }),
   ];
 
   // Validação por passo usando o schema Zod
@@ -159,7 +223,7 @@ const AddGameModal: React.FC<AddGameModalProps> = ({ isOpen, onClose, onAdd, isL
       return true;
     } catch (error) {
       if (error instanceof z.ZodError) {
-        setModalMessage('Ocorreu um erro de validação');
+        setModalMessage(error.issues[0]?.message || 'Ocorreu um erro de validação');
       }
       return false;
     }
@@ -228,6 +292,16 @@ const AddGameModal: React.FC<AddGameModalProps> = ({ isOpen, onClose, onAdd, isL
             .map((s) => s.trim())
             .filter(Boolean)
         : [],
+      publicadora: String(data.publicadora).trim(),
+      plataforma: String(data.plataforma).trim(),
+      avaliacao: Number(data.avaliacao),
+      classificacaoEtaria: String(data.classificacaoEtaria).trim(),
+      idiomaPrincipal: String(data.idiomaPrincipal).trim(),
+      conquista: conquistas.map((c) => ({
+        imagem: c.imagem.trim(),
+        descricao: c.descricao.trim(),
+        escondido: !!c.escondido,
+      })),
     };
 
     await onAdd(payload);
@@ -246,7 +320,7 @@ const AddGameModal: React.FC<AddGameModalProps> = ({ isOpen, onClose, onAdd, isL
         type="neutral"
       />
       <div className={styles.overlay}>
-        <div className={styles.modal}>
+        <div className={styles.modal} style={{ maxHeight: '98vh', overflowY: 'auto' }}>
           <h3 className={styles.title}>Adicionar Novo Jogo</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             {step === 0 && (
@@ -331,6 +405,65 @@ const AddGameModal: React.FC<AddGameModalProps> = ({ isOpen, onClose, onAdd, isL
                 {errors.exemplo && <span className={styles.error}>{errors.exemplo.message}</span>}
                 <input type="text" placeholder="Exemplo (URLs separadas por vírgula)" {...register('exemplo')} className={styles.input} disabled={isLoading} />
               </>
+            )}
+            {step === 3 && (
+              <>
+                {errors.publicadora && <span className={styles.error}>{errors.publicadora.message}</span>}
+                <input type="text" placeholder="Publicadora" {...register('publicadora', { required: true })} className={styles.input} disabled={isLoading} />
+
+                {errors.plataforma && <span className={styles.error}>{errors.plataforma.message}</span>}
+                <input type="text" placeholder="Plataforma" {...register('plataforma', { required: true })} className={styles.input} disabled={isLoading} />
+
+                {errors.avaliacao && <span className={styles.error}>{errors.avaliacao.message}</span>}
+                <input type="number" placeholder="Avaliação (0-10)" {...register('avaliacao', { required: true, valueAsNumber: true, min: 0, max: 10 })} className={styles.input} disabled={isLoading} />
+
+                {errors.classificacaoEtaria && <span className={styles.error}>{errors.classificacaoEtaria.message}</span>}
+                <input type="text" placeholder="Classificação Etária" {...register('classificacaoEtaria', { required: true })} className={styles.input} disabled={isLoading} />
+
+                {errors.idiomaPrincipal && <span className={styles.error}>{errors.idiomaPrincipal.message}</span>}
+                <input type="text" placeholder="Idioma Principal" {...register('idiomaPrincipal', { required: true })} className={styles.input} disabled={isLoading} />
+              </>
+            )}
+            {step === 4 && (
+              <div style={{  display: 'flex', flexDirection: 'column', gap: '16px'}}>
+                <label className={styles.label}>Conquistas:</label>
+                {conquistas.map((conquista, idx) => (
+                  <div key={idx} className={styles.inputDiv} style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '12px' }}>
+                    <input
+                      type="text"
+                      value={conquista.imagem}
+                      onChange={(e) => handleConquistaChange(idx, 'imagem', e.target.value)}
+                      placeholder={`URL da imagem da conquista ${idx + 1}`}
+                      className={styles.input}
+                      disabled={isLoading}
+                    />
+                    <input
+                      type="text"
+                      value={conquista.descricao}
+                      onChange={(e) => handleConquistaChange(idx, 'descricao', e.target.value)}
+                      placeholder={`Descrição da conquista ${idx + 1}`}
+                      className={styles.input}
+                      disabled={isLoading}
+                    />
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <input
+                        type="checkbox"
+                        checked={conquista.escondido}
+                        onChange={(e) => handleConquistaChange(idx, 'escondido', e.target.checked)}
+                        disabled={isLoading}
+                      />
+                      Escondida
+                    </label>
+                    <button type="button" className={styles.cancelBtn} onClick={() => handleRemoveConquista(idx)} disabled={isLoading || conquistas.length === 1}>
+                      Remover
+                    </button>
+                  </div>
+                ))}
+                <button type="button" className={styles.addBtn} onClick={handleAddConquista} disabled={isLoading} style={{ marginTop: '8px' }}>
+                  Adicionar conquista
+                </button>
+                {errors.conquista && <span className={styles.error}>{errors.conquista.message}</span>}
+              </div>
             )}
             <div className={styles.actions}>
               {step > 0 && (

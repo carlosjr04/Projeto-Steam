@@ -13,4 +13,14 @@ export type GameCreatePayload = {
   descricao: string;
   scenes: string[];
   exemplo: string[];
+  publicadora: string;
+  plataforma: string;
+  avaliacao: number;
+  classificacaoEtaria: string;
+  idiomaPrincipal: string;
+  conquista: {
+    imagem: string;
+    descricao: string;
+    escondido: boolean;
+  }[];
 };
